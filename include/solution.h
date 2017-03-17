@@ -1,3 +1,6 @@
+#ifndef SOLUTION_H_
+#define SOLUTION_H_
+
 #include <vector>
 #include <iostream>
 
@@ -9,10 +12,12 @@ private:
     int cost;
 public:
   Solution():cost(0){};
-  ~Solution(){Solution.clear();}
+  ~Solution(){solution.clear();}
   vector<int> getSolution()const{return solution;}
   void setSolution(vector<int> s){solution=s;}
   int getSize(){return solution.size();}
   int getCost(){return cost;}
   int setCost(int c){cost=c;}
-}
+};
+
+#endif

@@ -1,0 +1,37 @@
+
+#include <iostream>
+#include <vector>
+#include "input.h"
+
+using namespace std;
+
+int main(int argc,char *argv[]){
+
+  if(argc<2 || argc>3){
+    cout << "ERROR: Numero de parametros" << endl;
+    return -1;
+  }
+
+  Input i(argv[1]);
+  Problem * qap=i.read();
+
+  int s=qap->getSize();
+  cout << "Size:" << s << endl;
+  cout << "Distance:" << endl;
+  for(int i=0;i<s;i++){
+    for (int j=0;j<s;j++) {
+      cout << " " << qap->atd(i,j) ;
+    }
+    cout << endl;
+  }
+  cout << "Flow:" << endl;
+  for(int i=0;i<s;i++){
+    for (int j=0;j<s;j++){
+      cout << " " << qap->atd(i,j);
+    }
+    cout << endl;
+  }
+
+
+
+}

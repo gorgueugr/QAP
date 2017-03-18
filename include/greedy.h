@@ -25,6 +25,7 @@ public:
   void calculatePotential();
   vector<int> getDistancePotential(){return distancePotential;}
   vector<int> getFlowPotential(){return flowPotential;}
+  void execute();
 };
 
 #endif

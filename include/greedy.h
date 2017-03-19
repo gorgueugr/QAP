@@ -21,7 +21,9 @@ public:
   ~Greedy(){distancePotential.clear();flowPotential.clear();};
   void setProblem(Problem &p){problem=&p;}
   void clearProblem(){problem=0;}
-  Problem getProblem(){return *problem;}
+  Problem& getProblem(){return *problem;}
+  void clearSolution(){sol.solution.clear();sol.cost=0;}
+  Solution& getSolution(){return sol;}
   void calculatePotential();
   vector<int> getDistancePotential(){return distancePotential;}
   vector<int> getFlowPotential(){return flowPotential;}

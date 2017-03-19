@@ -39,22 +39,20 @@ int main(int argc,char *argv[]){
     cout << endl;
   }
   */
-//CALCULO POTENCIALES//
-  greedy.calculatePotential();
-//___________________//
+//Ejecucion greedy
+  //greedy.calculatePotential();
+  greedy.execute();
+  //___________________//
 
   //cout <<"Distance size:" <<d.size() << endl;
-cout << "Potential distance:" << endl;
-for(int i=0;i<greedy.getDistancePotential().size();i++){
-  cout << " " << greedy.getDistancePotential()[i];
+cout << "Greedy solution:" << endl;
+Solution * sol=&greedy.getSolution();
+for(int i=0;i<sol->solution.size();i++){
+  cout << " "<< sol->solution[i];
 }
 cout << endl;
+cout << "Coste: " << sol->cost << endl;
 
-cout << "Potential flow:" << endl;
-for(int i=0;i<greedy.getFlowPotential().size();i++){
-  cout << " " << greedy.getFlowPotential()[i];
-}
-cout << endl;
 
 
 }

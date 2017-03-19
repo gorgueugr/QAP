@@ -22,7 +22,7 @@ class Problem{
     void setFlow(vector< vector<int> > f){flow=f;}
     int atd(int a, int b)const{return distance[a][b];}
     int atf(int a, int b)const{return flow[a][b];}
-    int cost(vector<int> &s)const;
+    int calculateCost(const vector<int> &s)const;
 
 };
 

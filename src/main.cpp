@@ -47,11 +47,11 @@ int main(int argc,char *argv[]){
   //cout <<"Distance size:" <<d.size() << endl;
 cout << "Greedy solution:" << endl;
 Solution * sol=&greedy.getSolution();
-for(int i=0;i<sol->solution.size();i++){
-  cout << " "<< sol->solution[i];
-}
-cout << endl;
-cout << "Coste: " << sol->cost << endl;
+  for(int i=0;i<sol->solution.size();i++){
+    cout << " "<< sol->solution[i];
+  }
+  cout << endl;
+  cout << "Coste: " << sol->cost << endl;
 
 
 

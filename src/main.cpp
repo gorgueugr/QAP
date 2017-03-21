@@ -15,6 +15,8 @@ int main(int argc,char *argv[]){
     return -1;
   }
 
+  int Seed=12358132134;
+
   Input i(argv[1]);
   Problem * qap=i.read();
   Greedy greedy;

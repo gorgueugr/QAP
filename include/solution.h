@@ -20,6 +20,11 @@ struct Solution{
     }
     return *this;
   }
+  void move(int r,int s){
+    int t=solution[r];
+    solution[r]=solution[s];
+    solution[s]=t;
+  }
 };
 
 #endif

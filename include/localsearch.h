@@ -2,6 +2,7 @@
 #define LOCALSEARCH_H_
 
 #include <iostream>
+#include "random.h"
 
 using namespace std;
 
@@ -22,6 +23,7 @@ class LocalSearch{
 
     void setInitialSolution(Solution &i);
     Solution& getInitialSolution();
+    void generateInitialSolution();
 
     Solution& getActualSolution();
 
@@ -29,7 +31,14 @@ class LocalSearch{
     void clearProblem(){problem=0;}
     Problem& getProblem(){return *problem;}
 
+    void setIterations(int i);
+    void setMaxIterations(int i);
+
     void execute();
 
+    void step();
 
-}
+
+};
+
+#endif

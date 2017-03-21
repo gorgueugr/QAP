@@ -23,6 +23,7 @@ class Problem{
     int atd(int a, int b)const{return distance[a][b];}
     int atf(int a, int b)const{return flow[a][b];}
     int calculateCost(const vector<int> &s)const;
+    int moveCost(const vector<int> &s,int r, int s);
 
 };
 

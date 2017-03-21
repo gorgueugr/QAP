@@ -3,6 +3,10 @@
 
 #include <iostream>
 #include "random.h"
+#include "solution.h"
+#include "problem.h"
+
+
 
 using namespace std;
 
@@ -19,6 +23,7 @@ class LocalSearch{
     Problem * problem;
   public:
     LocalSearch();
+    LocalSearch(Problem &p,int i);
     ~LocalSearch();
 
     void setInitialSolution(Solution &i);
@@ -35,7 +40,6 @@ class LocalSearch{
     void setMaxIterations(int i);
 
     void execute();
-
     void step();
 
 

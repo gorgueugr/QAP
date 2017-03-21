@@ -4,6 +4,8 @@
 #include "input.h"
 #include "greedy.h"
 #include "solution.h"
+#include "LocalSearch.h"
+
 
 
 using namespace std;
@@ -20,6 +22,8 @@ int main(int argc,char *argv[]){
   Input i(argv[1]);
   Problem * qap=i.read();
   Greedy greedy;
+  LocalSearch lb;
+  lb.setProblem(*qap);
   greedy.setProblem(*qap);
 
 
@@ -47,8 +51,21 @@ int main(int argc,char *argv[]){
   //___________________//
 
   //cout <<"Distance size:" <<d.size() << endl;
+  Solution * sol=&greedy.getSolution();
+
 cout << "Greedy solution:" << endl;
-Solution * sol=&greedy.getSolution();
+  for(int i=0;i<sol->solution.size();i++){
+    cout << " "<< sol->solution[i];
+  }
+  cout << endl;
+  cout << "Coste: " << sol->cost << endl;
+
+lb.setMaxIterations(500);
+lb.execute();
+sol=&lb.getActualSolution();
+
+
+cout << "LocalSearch solution:" << endl;
   for(int i=0;i<sol->solution.size();i++){
     cout << " "<< sol->solution[i];
   }

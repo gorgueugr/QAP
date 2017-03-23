@@ -1,3 +1,6 @@
+#ifndef RANDOM_H_
+#define RANDOM_H_
+
 #include <math.h>
 #include <stdio.h>
 #include <string.h>
@@ -27,3 +30,5 @@
 #define Randint(low,high) ( (int) (low + (high-(low)+1) * Rand()))
 
 #define Randfloat(low,high) ( (low + (high-(low))*Rand()))
+
+#endif

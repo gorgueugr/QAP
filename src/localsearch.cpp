@@ -9,8 +9,8 @@ LocalSearch::LocalSearch(Problem &p,int i){
   problem=&p;
   iteration=0;
   maxIterations=i;
-  dlb.resize(problem->size());
-  for(int i=0;i<problem->size())
+  dlb.resize(problem->getSize());
+  for(int i=0;i<problem->getSize();i++)
     dlb[i]=0;
 }
 
@@ -35,9 +35,9 @@ void LocalSearch::generateInitialSolution(){
   for(int i=0;i<problem->getSize();i++)
     initial.solution[i]=i;
 
-  random_shuffle(initial.solution.begin(),initial.solution.end(),Rand());
+  random_shuffle(initial.solution.begin(),initial.solution.end());
 
-  initial.cost=problem->calculateCost(initial);
+  initial.cost=problem->calculateCost(initial.solution);
 }
 
 Solution& LocalSearch::getActualSolution(){
@@ -59,7 +59,7 @@ void LocalSearch::step(){
         if(!dlb[i]){
           improve=false;
           for(int j=0;j<size;j++){
-            tempCost=problem->moveCost(actual,i,j);
+            tempCost=problem->moveCost(actual.solution,i,j);
               if(tempCost>actual.cost){
                 actual.move(i,j);
                 actual.cost=tempCost;
@@ -79,6 +79,8 @@ void LocalSearch::execute(){
     return;
     if(initial.solution.size()<1)
       generateInitialSolution();
+    cout << "ok1" << endl;
+
     actual=initial;
     while (iteration<maxIterations) {
       step();

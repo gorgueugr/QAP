@@ -2,9 +2,9 @@
 #include <iostream>
 #include <vector>
 #include "input.h"
-#include "greedy.h"
 #include "solution.h"
-#include "LocalSearch.h"
+#include "greedy.h"
+#include "localsearch.h"
 
 
 
@@ -17,7 +17,8 @@ int main(int argc,char *argv[]){
     return -1;
   }
 
-  int Seed=12358132134;
+  int Seed=123581321;
+
 
   Input i(argv[1]);
   Problem * qap=i.read();
@@ -61,6 +62,7 @@ cout << "Greedy solution:" << endl;
   cout << "Coste: " << sol->cost << endl;
 
 lb.setMaxIterations(500);
+cout << "ok" << endl;
 lb.execute();
 sol=&lb.getActualSolution();
 

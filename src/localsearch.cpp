@@ -15,8 +15,8 @@ LocalSearch::LocalSearch(Problem &p,int i){
 }
 
 LocalSearch::~LocalSearch(){
-  delete &initial;
-  delete &actual;
+  initial.solution.clear();
+  actual.solution.clear();
   dlb.clear();
 }
 
@@ -50,17 +50,28 @@ void LocalSearch::setMaxIterations(int i){
 void LocalSearch::setIterations(int i){
   iteration=i;
 }
+int LocalSearch::getIterations()const{
+  return iteration;
+}
+
+void LocalSearch::startDlb(){
+  dlb.resize(problem->getSize());
+  for(int i=0;i<problem->getSize();i++)
+    dlb[i]=0;
+}
 
 void LocalSearch::step(){
     bool improve=false;
     int size=problem->getSize();
     int tempCost=0;
+    actual.cost=problem->calculateCost(actual.solution);
     for(int i=0;i<size;i++){
         if(!dlb[i]){
           improve=false;
           for(int j=0;j<size;j++){
-            tempCost=problem->moveCost(actual.solution,i,j);
-              if(tempCost>actual.cost){
+            tempCost=actual.cost;
+            tempCost+=problem->moveCost(actual.solution,i,j);
+              if(tempCost<actual.cost){
                 actual.move(i,j);
                 actual.cost=tempCost;
                 dlb[i]=0;
@@ -71,18 +82,25 @@ void LocalSearch::step(){
           }
         improve ? :dlb[i]=1;
     }
-
 }
 
+bool LocalSearch::checkDlb(){
+  bool ok=0;
+  for(int i=0;i<dlb.size();i++){
+    if(!dlb[i])
+      ok=1;
+  }
+  return ok;
+}
 void LocalSearch::execute(){
   if(!problem)
     return;
+    startDlb();
     if(initial.solution.size()<1)
       generateInitialSolution();
-    cout << "ok1" << endl;
-
-    actual=initial;
-    while (iteration<maxIterations) {
+      iteration=0;
+      actual=initial;
+    while (iteration<maxIterations && checkDlb()) {
       step();
       iteration++;
     }

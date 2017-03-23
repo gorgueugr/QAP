@@ -21,6 +21,9 @@ class LocalSearch{
     int maxIterations;
 
     Problem * problem;
+
+    void startDlb();
+    bool checkDlb();
   public:
     LocalSearch();
     LocalSearch(Problem &p,int i);
@@ -35,6 +38,8 @@ class LocalSearch{
     void setProblem(Problem &p){problem=&p;}
     void clearProblem(){problem=0;}
     Problem& getProblem(){return *problem;}
+
+    int getIterations()const;
 
     void setIterations(int i);
     void setMaxIterations(int i);

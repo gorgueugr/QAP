@@ -26,11 +26,13 @@ Problem * Input::read()const{
 
   for(int i=0;i<s;i++)
     for(int j=0;j<s;j++)
-      data >> d[i][j];
-
+          data >> f[i][j];
+          
   for(int i=0;i<s;i++)
     for(int j=0;j<s;j++)
-          data >> f[i][j];
+      data >> d[i][j];
+
+
 
   p->setDistance(d);
   p->setFlow(f);

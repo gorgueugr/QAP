@@ -27,6 +27,5 @@ int Problem::moveCost(const vector<int> &ant, int r, int s)
                 flow[k][s] * (distance[ant[k]][ant[r]] - distance[ant[k]][ant[s]]);
         }
     }
-
     return cost;
 }

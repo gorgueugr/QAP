@@ -2,7 +2,8 @@
 #define LOCALSEARCH_H_
 
 #include <iostream>
-#include "random.h"
+#include <algorithm>    // std::random_shuffle
+#include <cstdlib>      // std::rand, std::srand
 #include "solution.h"
 #include "problem.h"
 
@@ -21,6 +22,8 @@ class LocalSearch{
     int maxIterations;
 
     Problem * problem;
+
+    bool improve;
 
     void startDlb();
     bool checkDlb();

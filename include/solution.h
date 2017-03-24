@@ -2,7 +2,6 @@
 #define SOLUTION_H_
 
 #include <vector>
-#include <iostream>
 
 using namespace std;
 
@@ -11,6 +10,10 @@ struct Solution{
     int cost;
   Solution():cost(0){};
   ~Solution(){solution.clear();}
+  bool operator<(const Solution &n) const
+    {
+        return cost < n.cost;
+    };
   Solution& operator=(const Solution &s){
     if(this!=&s){
         solution.resize(s.solution.size());
@@ -25,6 +28,7 @@ struct Solution{
     solution[r]=solution[s];
     solution[s]=t;
   }
+
 };
 
 #endif

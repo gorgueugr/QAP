@@ -2,6 +2,7 @@
 #define GENETIC_H_
 
 #include <cstdlib>
+#include <algorithm>    // std::random_shuffle
 #include <vector>
 #include "problem.h"
 #include "solution.h"
@@ -33,7 +34,7 @@ public:
   void executeGenerational();
   void executeStationary();
 
-}
+};
 
 
 

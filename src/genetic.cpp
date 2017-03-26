@@ -16,12 +16,29 @@ void Genetic::generatePopulation(){
     }
 }
 
-Solution & Genetic::crossPosition(Solution &a,Solution &b){
+Solution & Genetic::crossPosition(const Solution &a,const Solution &b){
   int s=a.solution.size();
-  Solution * t=new Solution();
-  t.solution.resize(s);
-    for(int i=0;i<s;i++)
-      a.solution[i]!=b.solution[i] ? : t.solution[i]=b.solution[i];
 
+  Solution * t=new Solution(); //Son
+  t->solution.resize(s);
+  for(int i=0;i<s;i++) //fill with -1
+    t->solution[i]=-1;
 
+  vector<int> v; //vector to save the numbers that do not coincide
+    for(int i=0;i<s;i++){
+      if(a.solution[i]==b.solution[i])
+        t->solution[i]=b.solution[i];
+      else
+        v.push_back(a.solution[i]); //if father1[i] and father2[i] are equal then copy it in son,
+
+    }
+                                                                          //else push it to the v vector
+    random_shuffle(v.begin(),v.end()); //shuffle the vector with the numbers that do not coincide
+    int c=0;
+    for(int i=0;i<s;i++) //if in son [i]==-1 then get a number from v
+      t->solution[i]>-1 ? : t->solution[i]=v[c],c++;
+
+    v.clear();
+
+    return *t;
 }

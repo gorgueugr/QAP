@@ -6,6 +6,7 @@
 #include "solution.h"
 #include "greedy.h"
 #include "localsearch.h"
+#include "genetic.h"
 
 
 

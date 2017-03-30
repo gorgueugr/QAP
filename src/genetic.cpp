@@ -42,3 +42,32 @@ Solution & Genetic::crossPosition(const Solution &a,const Solution &b){
 
     return *t;
 }
+
+
+Solution & Genetic::crossOX(const Solution &a,const Solution &b){
+  int s=a.solution.size();
+
+  Solution * t=new Solution(); //Son
+  t->solution.resize(s);
+  vector<int> v; //vector to save the relations between parents
+  v.resize(s);
+  for(int i=0;i<s;i++){ //fill with -1
+    t->solution[i]=-1;
+    v[i]=i;
+  }
+
+    int min,max; //points to cross
+    min = rand() % s; //first point
+    max = rand() % (s-min) + min; //second point
+
+    //Step 1: copy values of parent1 in the range[min,max] in the son
+    for(int i=min;i<max;i++){
+      t->solution[i]=a.solution[i]; //Copy in the son
+      v[a.solution[i]]=b.solution[i]; //Define relation between parent 1 and 2
+    }
+
+    
+
+
+    return *t;
+}

@@ -2,6 +2,7 @@
 #define GENETIC_H_
 
 #include <cstdlib>
+#include <climits>
 #include <algorithm>    // std::random_shuffle
 #include <vector>
 #include "problem.h"
@@ -17,25 +18,33 @@ private:
   int maxIterations;
   float mutationP,crossP;
 public:
-  Genetic(){maxIterations=50000;mutationP=0.001;crossP=0.7;};
-  ~Genetic();
+  Genetic(){maxIterations=50000;mutationP=0.001;crossP=1;};
+  ~Genetic(){population.clear();};
 
   void setProblem(Problem &p){problem=&p;}
   void clearProblem(){problem=0;}
   Problem& getProblem(){return *problem;}
 
 
-  void setNumPopulation(int p){numPopulation=p;update_sol=new bool[p];for(int i=0;i<p;i++)update_sol[i]=0}
+  void setNumPopulation(int p){numPopulation=p;update_sol=new bool[p];}
 
   Solution & crossPosition(const Solution &a,const Solution &b);
   Solution & crossPMX(const Solution &a,const Solution &b);
   Solution & crossOX(const Solution &a,const Solution &b);
 
+
   int BinaryTournament();
+
+  void Mutate();
 
   void generatePopulation();
   void executeGenerational();
   void executeStationary();
+
+  Solution & bestSolution();
+
+
+
 
 };
 

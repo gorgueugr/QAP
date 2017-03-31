@@ -44,7 +44,7 @@ Solution & Genetic::crossPosition(const Solution &a,const Solution &b){
 }
 
 
-Solution & Genetic::crossOX(const Solution &a,const Solution &b){
+Solution & Genetic::crossPMX(const Solution &a,const Solution &b){
   int s=a.solution.size();
 
   Solution * t=new Solution(); //Son
@@ -66,8 +66,63 @@ Solution & Genetic::crossOX(const Solution &a,const Solution &b){
       v[a.solution[i]]=b.solution[i]; //Define relation between parent 1 and 2
     }
 
-    
+    for(int i=0;i<min;i++){
+      t->solution[i]=v[i];
+    }
+    for(int i=max;i<s;i++){
+      t->solution[i]=v[i];
+    }
 
 
     return *t;
+}
+
+int  Genetic::BinaryTournament(){
+  int a = rand() % s; //first random player
+  int b = rand() % s; //Second random player
+
+  return (population[a]>population[b]) ? a : b;
+}
+
+void Genetic::Mutate(){
+
+}
+
+void Genetic::executeGenerational(){
+
+  generatePopulation();
+
+  std::vector<Solution> selection;
+  selection.resize(numPopulation);
+  int a,b,n;
+  int iteration=0;
+  int numCross=(int) crossP*(numPopulation/2);
+  int contCross;
+  while(iteration<maxIterations){
+  contCross=0;
+    for(int i=0;i<numPopulation;i++){
+      a=BinaryTournament();
+      if(contCross<numCross){
+        b=BinaryTournament();
+        selection[i]=crossPMX(population[a],population[b]);
+        contCross++;
+      }else{
+        selection[i]=population[a];
+      }
+    }
+    /*Mutation*/
+    n=(int) mutationP*problem->getSize()*numPopulation;
+    for(int i=0;i<n;i++){
+      a=rand() % problem->getSize();
+      c=rand() % problem->getSize();
+      b=rand() % numPopulation;
+
+      selection[b].move(a,c);
+    }
+    population=selection;
+    for(int i=0;i<numPopulation;i++){
+      population[i].cost=problem->calculateCost(population[i].solution);
+    }
+  }
+
 }

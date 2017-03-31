@@ -13,8 +13,11 @@ private:
   std::vector<Solution> population;
   Problem * problem;
   int numPopulation;
+  bool * update_sol;
+  int maxIterations;
+  float mutationP,crossP;
 public:
-  Genetic();
+  Genetic(){maxIterations=50000;mutationP=0.001;crossP=0.7;};
   ~Genetic();
 
   void setProblem(Problem &p){problem=&p;}
@@ -22,13 +25,13 @@ public:
   Problem& getProblem(){return *problem;}
 
 
-  void setNumPopulation(int p){numPopulation=p;}
+  void setNumPopulation(int p){numPopulation=p;update_sol=new bool[p];for(int i=0;i<p;i++)update_sol[i]=0}
 
   Solution & crossPosition(const Solution &a,const Solution &b);
   Solution & crossPMX(const Solution &a,const Solution &b);
   Solution & crossOX(const Solution &a,const Solution &b);
 
-  Solution & select();
+  int BinaryTournament();
 
   void generatePopulation();
   void executeGenerational();

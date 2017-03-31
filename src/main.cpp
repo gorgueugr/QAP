@@ -27,13 +27,15 @@ int main(int argc,char *argv[]){
   Problem * qap=i.read();
   Greedy greedy;
   LocalSearch lb;
+  Genetic gen;
   lb.setProblem(*qap);
   greedy.setProblem(*qap);
-
+  gen.setProblem(*qap);
 
   int s=qap->getSize();
-  cout << "Size:" << s << endl;
 
+  cout << "Size:" << s << endl;
+/*
   cout << "Distance:" << endl;
   for(int i=0;i<s;i++){
     for (int j=0;j<s;j++) {
@@ -89,6 +91,10 @@ cout << "iterations: " << lb.getIterations() << endl;
     cout << endl;
     cout << "Cost: " << sol->cost << endl;
     cout << "iterations: " << lb.getIterations() << endl;
+*/
+
+gen.executeGenerational();
+
 
 /*
 cout << "Testing calculateCost() function with nug12.dat optimal solution: 578 " << endl;

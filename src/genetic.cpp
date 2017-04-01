@@ -51,30 +51,67 @@ Solution & Genetic::crossPMX(const Solution &a,const Solution &b){
   Solution * t=new Solution(); //Son
   t->solution.resize(s);
   int * v=new int[s]; //vector to save the relations between parents
+  bool * m=new bool[s];
   for(int i=0;i<s;i++){ //fill with i
     v[i]=i;
+    m[i]=0;
   }
   t->solution=b.solution;
 
     int min,max; //points to cross
-    min = rand() % s; //first point
-    max = (rand() % (s-min)) + min; //second point
-    //cout << "min/max: " << min << "/" << max << endl;
-    //int z;
-    //cin >> z;
+    min = (rand() % (int)(s - 1)); //first point
+    max = min+1 + (rand() % (int)(s-1 - min) ); //second point
+    /* DEBUG
+    cout << endl;
+    std::cout << "a: " << '\n';
+    for(int i=0;i<s;i++){
+      cout << " " << a.solution[i];
+    }
+    cout << endl;
+    std::cout << "b: " << '\n';
+    for(int i=0;i<s;i++){
+      cout << " " << b.solution[i];
+    }
+    */
+
+
     //Step 1: copy values of parent1 in the range[min,max] in the son
+
     for(int i=min;i<max;i++){
       t->solution[i]=a.solution[i]; //Copy in the son
+      m[a.solution[i]]=1; //Mark the number
       v[a.solution[i]]=b.solution[i]; //Define relation between parent 1 and 2
     }
-
-    for(int i=0;i<min;i++){
-      t->solution[i]=v[t->solution[i]];
+    /* DEBUG
+    cout << endl;
+    std::cout << "v: " << '\n';
+    for(int i=0;i<s;i++){
+      cout << " " << v[i];
     }
-    for(int i=max;i<s;i++){
-      t->solution[i]=v[t->solution[i]];
+    cout << endl;
+    std::cout << "m: " << '\n';
+    for(int i=0;i<s;i++){
+      cout << " " << m[i];
+    }
+    cout << endl;
+    std::cout << "t: " << '\n';
+    for(int i=0;i<s;i++){
+      cout << " " << t->solution[i];
     }
 
+        cout << endl;
+        cout << " min/max: " << min << "/" << max << endl;
+        */
+    for(int i=0;i<s;i++){
+      if(i<min||i>=max){
+        while(m[t->solution[i]]==1)
+          t->solution[i]=v[t->solution[i]];
+      }
+    }
+
+
+    delete v;
+    delete m;
     return *t;
 }
 
@@ -101,6 +138,19 @@ Solution & Genetic::bestSolution(){
   return population[pos];
 }
 
+Solution & Genetic::worstSolution(){
+  int pos=0;
+  int cost=INT_MAX;
+  for(int i=0;i<numPopulation;i++){
+    if(population[i].cost<cost){
+      pos=i;
+      cost=population[i].cost;
+    }
+  }
+  return population[pos];
+}
+
+
 void Genetic::executeGenerational(){
 
   generatePopulation();
@@ -110,7 +160,9 @@ void Genetic::executeGenerational(){
   int a,b,c,n;
   int iteration=0;
   int numCross=(int) crossP*(numPopulation/2);
-  cout<< "numcross:" << numCross<<endl;
+  //cout<< "numcross:" << numCross<<endl;
+
+
   int contCross;
   while(iteration<maxIterations){
   contCross=0;

@@ -35,7 +35,7 @@ int main(int argc,char *argv[]){
   int s=qap->getSize();
 
   cout << "Size:" << s << endl;
-
+/*  1
   cout << "Distance:" << endl;
   for(int i=0;i<s;i++){
     for (int j=0;j<s;j++) {
@@ -50,6 +50,7 @@ int main(int argc,char *argv[]){
     }
     cout << endl;
   }
+  */
 
 //Ejecucion greedy
   //greedy.calculatePotential();

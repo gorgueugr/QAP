@@ -17,6 +17,7 @@ private:
   bool * update_sol;
   int maxIterations;
   float mutationP,crossP;
+  Solution best;
 public:
   Genetic(){maxIterations=50000;mutationP=0.001;crossP=1;};
   ~Genetic(){population.clear();};
@@ -42,6 +43,7 @@ public:
   void executeStationary();
 
   Solution & bestSolution();
+  Solution & worstSolution();
 
 
 

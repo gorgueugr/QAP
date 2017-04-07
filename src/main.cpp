@@ -7,6 +7,7 @@
 #include "greedy.h"
 #include "localsearch.h"
 #include "genetic.h"
+#include "memetic.h"
 
 
 
@@ -92,17 +93,79 @@ cout << "iterations: " << lb.getIterations() << endl;
     cout << endl;
     cout << "Cost: " << sol->cost << endl;
     cout << "iterations: " << lb.getIterations() << endl;
+    cout << endl;
 
 gen.setNumPopulation(50);
-gen.executeGenerational();
-sol=&gen.bestSolution();
-cout << "Generational:" << endl;
+cout << endl;
+
+gen.executeGenerationalPMX();
+sol=gen.bestSolution();
+cout << "GenerationalPMX:" << endl;
   for(int i=0;i<sol->solution.size();i++){
     cout << " "<< sol->solution[i];
   }
   cout << endl;
   cout << "Cost: " << sol->cost << endl;
   //cout << "iterations: " << lb.getIterations() << endl;
+
+  cout << endl;
+
+  gen.executeGenerationalOrder();
+  sol=gen.bestSolution();
+  cout << "GenerationalPosition:" << endl;
+    for(int i=0;i<sol->solution.size();i++){
+      cout << " "<< sol->solution[i];
+    }
+    cout << endl;
+    cout << "Cost: " << sol->cost << endl;
+    //cout << "iterations: " << lb.getIterations() << endl;
+
+    cout << endl;
+
+    gen.executeStationaryPMX();
+    sol=gen.bestSolution();
+    cout << "StationaryPMX:" << endl;
+      for(int i=0;i<sol->solution.size();i++){
+        cout << " "<< sol->solution[i];
+      }
+      cout << endl;
+      cout << "Cost: " << sol->cost << endl;
+      //cout << "iterations: " << lb.getIterations() << endl;
+
+      cout << endl;
+
+      gen.executeStationaryOrder();
+      sol=gen.bestSolution();
+
+      cout << "StationaryPos:" << endl;
+        for(int i=0;i<sol->solution.size();i++){
+          cout << " "<< sol->solution[i];
+        }
+        cout << endl;
+        cout << "Cost: " << sol->cost << endl;
+        //cout << "iterations: " << lb.getIterations() << endl;
+
+/*
+Memetic m(10,1);
+m.setProblem(*qap);
+m.setNumPopulation(50);
+
+m.executeGenerationalPMX();
+sol=m.bestSolution();
+cout << "GenerationalPMX:" << endl;
+  for(int i=0;i<sol->solution.size();i++){
+    cout << " "<< sol->solution[i];
+  }
+  cout << endl;
+  cout << "Cost: " << sol->cost << endl;
+  //cout << "iterations: " << lb.getIterations() << endl;
+
+  cout << endl;
+
+
+
+
+
 
 
 

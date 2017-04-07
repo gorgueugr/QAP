@@ -58,33 +58,32 @@ void Greedy::execute(){
 
     sol.solution.resize(psize);
     int max,maxFlow=0;
-    int min,minDistance=10000000;
-for(int j=0;j<psize;j++){
-  //Busqueda de maxFlow
-    max=0;
-    min=100000000;
-    for(int i=0;i<psize;i++){
-      if(flowPotential[i]>max && !f[i]){
-        max=flowPotential[i];
-        maxFlow=i;
+    int min,minDistance=INT_MAX;
+      for(int j=0;j<psize;j++){
+        //Busqueda de maxFlow
+          max=0;
+          min=INT_MAX;
+
+          for(int i=0;i<psize;i++){
+            if(flowPotential[i]>=max && !f[i]){
+              max=flowPotential[i];
+              maxFlow=i;
+            }
+          }
+
+          f[maxFlow]=1;
+          //Busqueda de minDistance
+          for(int i=0;i<psize;i++){
+            if(distancePotential[i]<=min && !d[i]){
+              min=distancePotential[i];
+              minDistance=i;
+            }
+          }
+          d[minDistance]=1;
+
+          sol.solution[maxFlow]=minDistance;
       }
-    }
-    f[maxFlow]=1;
-    //Busqueda de minDistance
-    for(int i=0;i<psize;i++){
-      if(distancePotential[i]<min && !d[i]){
-        min=distancePotential[i];
-        minDistance=i;
-      }
-    }
-    d[minDistance]=1;
 
-    sol.solution[maxFlow]=minDistance;
-    sol.cost=problem->calculateCost(sol.solution);
-}
-
-
-
-
+sol.cost=problem->calculateCost(sol.solution);
 
 }

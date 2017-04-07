@@ -10,7 +10,7 @@
 
 
 class Genetic{
-private:
+protected:
   std::vector<Solution> population;
   Problem * problem;
   int numPopulation;
@@ -18,9 +18,13 @@ private:
   int maxIterations;
   float mutationP,crossP;
   Solution best;
+  std::vector<Solution> selection;
 public:
-  Genetic(){maxIterations=50000;mutationP=0.001;crossP=1;};
+  Genetic(){maxIterations=50000;mutationP=0.001;crossP=0.7;};
   ~Genetic(){population.clear();};
+
+  void setMutationP(float a){mutationP=a;}
+  void setCrossP(float a){crossP=a;}
 
   void setProblem(Problem &p){problem=&p;}
   void clearProblem(){problem=0;}
@@ -34,16 +38,19 @@ public:
   Solution & crossOX(const Solution &a,const Solution &b);
 
 
-  int BinaryTournament();
+  int binaryTournament();
 
-  void Mutate();
+  void mutate();
 
   void generatePopulation();
-  void executeGenerational();
-  void executeStationary();
+  void executeGenerationalPMX();
+  void executeGenerationalOrder();
+  void executeStationaryPMX();
+  void executeStationaryOrder();
 
-  Solution & bestSolution();
-  Solution & worstSolution();
+
+  Solution * bestSolution();
+  Solution * worstSolution();
 
 
 

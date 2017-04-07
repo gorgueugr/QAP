@@ -2,6 +2,7 @@
 #define GREEDY_H_
 
 #include <vector>
+#include <climits>
 #include "problem.h"
 #include "solution.h"
 

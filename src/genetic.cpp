@@ -1,6 +1,13 @@
 #include "genetic.h"
 
 
+Genetic::Genetic(int pop,int max,float mutation,float cross){
+  numPopulation=pop;
+  maxIterations=max;
+  mutationP=mutation;
+  crossP=cross;
+}
+
 void Genetic::generatePopulation(){
   if(!problem)
     return;
@@ -130,7 +137,7 @@ Solution * Genetic::worstSolution(){
 
 void Genetic::executeGenerationalPMX(){
 
-  generatePopulation();
+  //generatePopulation();
   crossP=0.7;
   mutationP=0.001;
 
@@ -183,7 +190,7 @@ void Genetic::executeGenerationalPMX(){
 
 void Genetic::executeGenerationalOrder(){
 
-  generatePopulation();
+  //generatePopulation();
 
   crossP=0.7;
   mutationP=0.001;
@@ -240,7 +247,7 @@ void Genetic::executeGenerationalOrder(){
 
 void Genetic::executeStationaryPMX(){
 
-  generatePopulation();
+  //generatePopulation();
 
   crossP=1;
   mutationP=0.001;
@@ -290,7 +297,7 @@ void Genetic::executeStationaryPMX(){
 }
 void Genetic::executeStationaryOrder(){
 
-  generatePopulation();
+//  generatePopulation();
 
   crossP=1;
   mutationP=0.001;

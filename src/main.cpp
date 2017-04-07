@@ -97,7 +97,7 @@ cout << "iterations: " << lb.getIterations() << endl;
 
 gen.setNumPopulation(50);
 cout << endl;
-
+gen.generatePopulation();
 gen.executeGenerationalPMX();
 sol=gen.bestSolution();
 cout << "GenerationalPMX:" << endl;
@@ -109,7 +109,7 @@ cout << "GenerationalPMX:" << endl;
   //cout << "iterations: " << lb.getIterations() << endl;
 
   cout << endl;
-
+  gen.generatePopulation();
   gen.executeGenerationalOrder();
   sol=gen.bestSolution();
   cout << "GenerationalPosition:" << endl;
@@ -121,7 +121,7 @@ cout << "GenerationalPMX:" << endl;
     //cout << "iterations: " << lb.getIterations() << endl;
 
     cout << endl;
-
+    gen.generatePopulation();
     gen.executeStationaryPMX();
     sol=gen.bestSolution();
     cout << "StationaryPMX:" << endl;
@@ -133,7 +133,7 @@ cout << "GenerationalPMX:" << endl;
       //cout << "iterations: " << lb.getIterations() << endl;
 
       cout << endl;
-
+      gen.generatePopulation();
       gen.executeStationaryOrder();
       sol=gen.bestSolution();
 

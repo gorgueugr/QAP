@@ -12,6 +12,7 @@ private:
   int generations;
   float percent;
   LocalSearch lb;
+  Genetic gen;
 public:
 
   Memetic(){};
@@ -26,17 +27,14 @@ public:
 
 
 
-    void setMutationP(float a){mutationP=a;}
-    void setCrossP(float a){crossP=a;}
-
     void setProblem(Problem &p){problem=&p;}
     void clearProblem(){problem=0;}
     Problem& getProblem(){return *problem;}
 
 
-    void setNumPopulation(int p){numPopulation=p;}
+    void setNumPopulation(int p){gen.setNumPopulation(p);}
 
-    Solution * bestSolution(){return bestSolution();}
+    Solution * bestSolution(){return gen.bestSolution();}
 
 
 

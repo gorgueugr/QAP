@@ -145,14 +145,13 @@ cout << "GenerationalPMX:" << endl;
         cout << "Cost: " << sol->cost << endl;
         //cout << "iterations: " << lb.getIterations() << endl;
 
-/*
-Memetic m(10,1);
-m.setProblem(*qap);
-m.setNumPopulation(50);
+        cout << endl;
 
+Memetic m(10,0.1,false);
+m.setProblem(*qap);
 m.executeGenerationalPMX();
 sol=m.bestSolution();
-cout << "GenerationalPMX:" << endl;
+cout << "MEMETIC GenerationalPMX:" << endl;
   for(int i=0;i<sol->solution.size();i++){
     cout << " "<< sol->solution[i];
   }
@@ -161,6 +160,44 @@ cout << "GenerationalPMX:" << endl;
   //cout << "iterations: " << lb.getIterations() << endl;
 
   cout << endl;
+
+  m.executeGenerationalOrder();
+  sol=m.bestSolution();
+  cout << "MEMETIC GenerationalOrder:" << endl;
+    for(int i=0;i<sol->solution.size();i++){
+      cout << " "<< sol->solution[i];
+    }
+    cout << endl;
+    cout << "Cost: " << sol->cost << endl;
+    //cout << "iterations: " << lb.getIterations() << endl;
+
+    cout << endl;
+
+    m.executeStationaryPMX();
+    sol=m.bestSolution();
+    cout << "MEMETIC extacionaryPMX:" << endl;
+      for(int i=0;i<sol->solution.size();i++){
+        cout << " "<< sol->solution[i];
+      }
+      cout << endl;
+      cout << "Cost: " << sol->cost << endl;
+      //cout << "iterations: " << lb.getIterations() << endl;
+
+      cout << endl;
+
+
+      m.executeStationaryOrder();
+      sol=m.bestSolution();
+      cout << "MEMETIC extacionaryOrder:" << endl;
+        for(int i=0;i<sol->solution.size();i++){
+          cout << " "<< sol->solution[i];
+        }
+        cout << endl;
+        cout << "Cost: " << sol->cost << endl;
+        //cout << "iterations: " << lb.getIterations() << endl;
+
+        cout << endl;
+
 
 
 

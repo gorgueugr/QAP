@@ -32,12 +32,14 @@ public:
 
 
   void setNumPopulation(int p){numPopulation=p;}
+  void setMaxIterations(int m){maxIterations=m;}
+
 
   Solution & crossPosition(const Solution &a,const Solution &b);
   Solution & crossPMX(const Solution &a,const Solution &b);
   Solution & crossOX(const Solution &a,const Solution &b);
 
-  vector<Solution> & getPopulation(){return population;}
+  Solution * getPopulation(){return population.data();}
   int getPopulationSize(){return numPopulation;}
 
   int binaryTournament();

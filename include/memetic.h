@@ -11,13 +11,15 @@ class Memetic: protected Genetic {
 private:
   int generations;
   float percent;
+  bool best;
   LocalSearch lb;
   Genetic gen;
+  Problem * problem;
 public:
 
   Memetic(){};
   ~Memetic(){};
-  Memetic(int gen,float p){generations=gen;percent=p;}
+  Memetic(int gen,float p,bool b){generations=gen;percent=p;best=b;}
 
 
   void executeGenerationalPMX();

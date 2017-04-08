@@ -37,7 +37,7 @@ public:
   Solution & crossPMX(const Solution &a,const Solution &b);
   Solution & crossOX(const Solution &a,const Solution &b);
 
-  Solution * getPopulation(){return population;}
+  vector<Solution> & getPopulation(){return population;}
   int getPopulationSize(){return numPopulation;}
 
   int binaryTournament();

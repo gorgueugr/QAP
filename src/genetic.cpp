@@ -179,7 +179,7 @@ void Genetic::executeGenerationalPMX(){
           worst->solution=best.solution;
           worst->cost=best.cost;
 
-          cout << "\e[A" << "iteration: " << iteration << " of " << maxIterations << ". Best solution cost: " << bestSolution()->cost << " worst Solution:" << worstSolution()->cost << endl;
+      //    cout << "\e[A" << "iteration: " << iteration << " of " << maxIterations << ". Best solution cost: " << bestSolution()->cost << " worst Solution:" << worstSolution()->cost << endl;
           iteration++;
   }
 
@@ -232,7 +232,7 @@ void Genetic::executeGenerationalOrder(){
           worst->solution=best.solution;
           worst->cost=best.cost;
 
-          cout << "\e[A" << "iteration: " << iteration << " of " << maxIterations << ". Best solution cost: " << bestSolution()->cost << " worst Solution:" << worstSolution()->cost << endl;
+        //  cout << "\e[A" << "iteration: " << iteration << " of " << maxIterations << ". Best solution cost: " << bestSolution()->cost << " worst Solution:" << worstSolution()->cost << endl;
           iteration++;
   }
 
@@ -285,7 +285,7 @@ void Genetic::executeStationaryPMX(){
           }
 
 
-          cout << "\e[A" << "iteration: " << iteration << " of " << maxIterations << ". Best solution cost: " << bestSolution()->cost << " worst Solution:" << worstSolution()->cost << endl;
+          //cout << "\e[A" << "iteration: " << iteration << " of " << maxIterations << ". Best solution cost: " << bestSolution()->cost << " worst Solution:" << worstSolution()->cost << endl;
           iteration++;
   }
 
@@ -335,7 +335,7 @@ void Genetic::executeStationaryOrder(){
           }
 
 
-          cout << "\e[A" << "iteration: " << iteration << " of " << maxIterations << ". Best solution cost: " << bestSolution()->cost << " worst Solution:" << worstSolution()->cost << endl;
+          //cout << "\e[A" << "iteration: " << iteration << " of " << maxIterations << ". Best solution cost: " << bestSolution()->cost << " worst Solution:" << worstSolution()->cost << endl;
           iteration++;
   }
 

@@ -8,6 +8,7 @@
 #include "localsearch.h"
 #include "genetic.h"
 #include "memetic.h"
+#include <chrono>
 
 
 
@@ -55,7 +56,11 @@ int main(int argc,char *argv[]){
 
 //Ejecucion greedy
   //greedy.calculatePotential();
+  std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
   greedy.execute();
+  std::chrono::steady_clock::time_point end= std::chrono::steady_clock::now();
+  std::cout << "Time: = " << (double) std::chrono::duration_cast<std::chrono::milliseconds>(end - begin).count() /1000.0 <<std::endl;
+
   //___________________//
 
   //cout <<"Distance size:" <<d.size() << endl;
@@ -69,7 +74,10 @@ cout << "Greedy solution:" << endl;
   cout << "Coste: " << sol->cost << endl;
 
 lb.setMaxIterations(10000);
-lb.execute();
+begin = std::chrono::steady_clock::now();
+  lb.execute();
+end= std::chrono::steady_clock::now();
+std::cout << "Time: = " << (double) std::chrono::duration_cast<std::chrono::milliseconds>(end - begin).count() /1000.0 <<std::endl;
 sol=&lb.getActualSolution();
 Solution ran=lb.getInitialSolution();
 ran.cost = qap->calculateCost(ran.solution);
@@ -83,7 +91,13 @@ cout << "LocalSearch initializated with random solution :" << endl;
 cout << "iterations: " << lb.getIterations() << endl;
 
   lb.setInitialSolution(greedy.getSolution());
+
+  begin = std::chrono::steady_clock::now();
+
   lb.execute();
+  end= std::chrono::steady_clock::now();
+  std::cout << "Time: = " << (double) std::chrono::duration_cast<std::chrono::milliseconds>(end - begin).count() /1000.0 <<std::endl;
+
   sol=&lb.getActualSolution();
 
   cout << "LocalSearch initializated with greedy solution :" << endl;
@@ -98,8 +112,16 @@ cout << "iterations: " << lb.getIterations() << endl;
 gen.setNumPopulation(50);
 cout << endl;
 gen.generatePopulation();
+
+begin = std::chrono::steady_clock::now();
+
 gen.executeGenerationalPMX();
+end= std::chrono::steady_clock::now();
+std::cout << "Time: = " << (double) std::chrono::duration_cast<std::chrono::milliseconds>(end - begin).count() /1000.0 <<std::endl;
+
 sol=gen.bestSolution();
+Solution genPMX=*sol;
+
 cout << "GenerationalPMX:" << endl;
   for(int i=0;i<sol->solution.size();i++){
     cout << " "<< sol->solution[i];
@@ -110,8 +132,17 @@ cout << "GenerationalPMX:" << endl;
 
   cout << endl;
   gen.generatePopulation();
+
+  begin = std::chrono::steady_clock::now();
+
+
   gen.executeGenerationalOrder();
+
+  end= std::chrono::steady_clock::now();
+  std::cout << "Time: = " << (double) std::chrono::duration_cast<std::chrono::milliseconds>(end - begin).count() /1000.0 <<std::endl;
+
   sol=gen.bestSolution();
+  Solution genOrder=*sol;
   cout << "GenerationalPosition:" << endl;
     for(int i=0;i<sol->solution.size();i++){
       cout << " "<< sol->solution[i];
@@ -122,7 +153,16 @@ cout << "GenerationalPMX:" << endl;
 
     cout << endl;
     gen.generatePopulation();
+
+    begin = std::chrono::steady_clock::now();
+
+
     gen.executeStationaryPMX();
+
+    end = std::chrono::steady_clock::now();
+    std::cout << "Time: = " << (double) std::chrono::duration_cast<std::chrono::milliseconds>(end - begin).count() /1000.0 <<std::endl;
+
+
     sol=gen.bestSolution();
     cout << "StationaryPMX:" << endl;
       for(int i=0;i<sol->solution.size();i++){
@@ -134,7 +174,16 @@ cout << "GenerationalPMX:" << endl;
 
       cout << endl;
       gen.generatePopulation();
+
+      begin = std::chrono::steady_clock::now();
+
+
       gen.executeStationaryOrder();
+
+      end= std::chrono::steady_clock::now();
+      std::cout << "Time: = " << (double) std::chrono::duration_cast<std::chrono::milliseconds>(end - begin).count() /1000.0 <<std::endl;
+
+
       sol=gen.bestSolution();
 
       cout << "StationaryPos:" << endl;
@@ -147,11 +196,25 @@ cout << "GenerationalPMX:" << endl;
 
         cout << endl;
 
-Memetic m(10,0.1,false);
-m.setProblem(*qap);
-m.executeGenerationalPMX();
-sol=m.bestSolution();
-cout << "MEMETIC GenerationalPMX:" << endl;
+Memetic m1(10,1,false);
+m1.setProblem(*qap);
+
+begin = std::chrono::steady_clock::now();
+
+if(genOrder.cost>genPMX.cost){
+  m1.executeGenerationalOrder();
+
+}
+else{
+  m1.executeGenerationalPMX();
+}
+
+end= std::chrono::steady_clock::now();
+std::cout << "Time: = " << (double) std::chrono::duration_cast<std::chrono::milliseconds>(end - begin).count() /1000.0 <<std::endl;
+
+
+sol=m1.bestSolution();
+cout << "MEMETIC 10 1 false:" << endl;
   for(int i=0;i<sol->solution.size();i++){
     cout << " "<< sol->solution[i];
   }
@@ -161,8 +224,18 @@ cout << "MEMETIC GenerationalPMX:" << endl;
 
   cout << endl;
 
-  m.executeGenerationalOrder();
-  sol=m.bestSolution();
+/*
+  begin = std::chrono::steady_clock::now();
+
+
+  m1.executeGenerationalOrder();
+
+  end= std::chrono::steady_clock::now();
+  std::cout << "Time: = " << (double) std::chrono::duration_cast<std::chrono::milliseconds>(end - begin).count() /1000.0 <<std::endl;
+
+
+
+  sol=m1.bestSolution();
   cout << "MEMETIC GenerationalOrder:" << endl;
     for(int i=0;i<sol->solution.size();i++){
       cout << " "<< sol->solution[i];
@@ -173,8 +246,17 @@ cout << "MEMETIC GenerationalPMX:" << endl;
 
     cout << endl;
 
-    m.executeStationaryPMX();
-    sol=m.bestSolution();
+    begin = std::chrono::steady_clock::now();
+
+
+    m1.executeStationaryPMX();
+
+    end= std::chrono::steady_clock::now();
+    std::cout << "Time: = " << (double) std::chrono::duration_cast<std::chrono::milliseconds>(end - begin).count() /1000.0 <<std::endl;
+
+
+
+    sol=m1.bestSolution();
     cout << "MEMETIC extacionaryPMX:" << endl;
       for(int i=0;i<sol->solution.size();i++){
         cout << " "<< sol->solution[i];
@@ -185,9 +267,17 @@ cout << "MEMETIC GenerationalPMX:" << endl;
 
       cout << endl;
 
+      begin = std::chrono::steady_clock::now();
 
-      m.executeStationaryOrder();
-      sol=m.bestSolution();
+
+      m1.executeStationaryOrder();
+
+      end= std::chrono::steady_clock::now();
+      std::cout << "Time: = " << (double) std::chrono::duration_cast<std::chrono::milliseconds>(end - begin).count() /1000.0 <<std::endl;
+
+
+
+      sol=m1.bestSolution();
       cout << "MEMETIC extacionaryOrder:" << endl;
         for(int i=0;i<sol->solution.size();i++){
           cout << " "<< sol->solution[i];
@@ -197,15 +287,190 @@ cout << "MEMETIC GenerationalPMX:" << endl;
         //cout << "iterations: " << lb.getIterations() << endl;
 
         cout << endl;
+*/
+//Segundo memetico
+
+Memetic m2(10,0.1,false);
+m2.setProblem(*qap);
+
+begin = std::chrono::steady_clock::now();
+
+if(genOrder.cost>genPMX.cost)
+m2.executeGenerationalOrder();
+else
+m2.executeGenerationalPMX();
+
+end= std::chrono::steady_clock::now();
+std::cout << "Time: = " << (double) std::chrono::duration_cast<std::chrono::milliseconds>(end - begin).count() /1000.0 <<std::endl;
 
 
 
+sol=m2.bestSolution();
+cout << "MEMETIC 10 0,1 false:" << endl;
+  for(int i=0;i<sol->solution.size();i++){
+    cout << " "<< sol->solution[i];
+  }
+  cout << endl;
+  cout << "Cost: " << sol->cost << endl;
+  //cout << "iterations: " << lb.getIterations() << endl;
+
+  cout << endl;/*
+
+  begin = std::chrono::steady_clock::now();
+
+
+  m2.executeGenerationalOrder();
+
+  end= std::chrono::steady_clock::now();
+  std::cout << "Time: = " << (double) std::chrono::duration_cast<std::chrono::milliseconds>(end - begin).count() /1000.0 <<std::endl;
 
 
 
+  sol=m2.bestSolution();
+  cout << "MEMETIC GenerationalOrder:" << endl;
+    for(int i=0;i<sol->solution.size();i++){
+      cout << " "<< sol->solution[i];
+    }
+    cout << endl;
+    cout << "Cost: " << sol->cost << endl;
+    //cout << "iterations: " << lb.getIterations() << endl;
+
+    cout << endl;
+
+    begin = std::chrono::steady_clock::now();
+
+
+    m2.executeStationaryPMX();
+
+    end= std::chrono::steady_clock::now();
+    std::cout << "Time: = " << (double) std::chrono::duration_cast<std::chrono::milliseconds>(end - begin).count() /1000.0 <<std::endl;
 
 
 
+    sol=m2.bestSolution();
+    cout << "MEMETIC extacionaryPMX:" << endl;
+      for(int i=0;i<sol->solution.size();i++){
+        cout << " "<< sol->solution[i];
+      }
+      cout << endl;
+      cout << "Cost: " << sol->cost << endl;
+      //cout << "iterations: " << lb.getIterations() << endl;
+
+      cout << endl;
+
+      begin = std::chrono::steady_clock::now();
+
+
+      m2.executeStationaryOrder();
+
+      end= std::chrono::steady_clock::now();
+      std::cout << "Time: = " << (double) std::chrono::duration_cast<std::chrono::milliseconds>(end - begin).count() /1000.0 <<std::endl;
+
+
+      sol=m2.bestSolution();
+      cout << "MEMETIC extacionaryOrder:" << endl;
+        for(int i=0;i<sol->solution.size();i++){
+          cout << " "<< sol->solution[i];
+        }
+        cout << endl;
+        cout << "Cost: " << sol->cost << endl;
+        //cout << "iterations: " << lb.getIterations() << endl;
+
+        cout << endl;
+*/
+
+    //Tercero
+    Memetic m3(10,0.1,true);
+    m3.setProblem(*qap);
+
+
+    begin = std::chrono::steady_clock::now();
+
+    if(genOrder.cost>genPMX.cost)
+    m3.executeGenerationalOrder();
+    else
+    m3.executeGenerationalPMX();
+
+
+    end= std::chrono::steady_clock::now();
+    std::cout << "Time: = " << (double) std::chrono::duration_cast<std::chrono::milliseconds>(end - begin).count() /1000.0 <<std::endl;
+
+
+    sol=m3.bestSolution();
+    cout << "MEMETIC 10 0.1 true:" << endl;
+      for(int i=0;i<sol->solution.size();i++){
+        cout << " "<< sol->solution[i];
+      }
+      cout << endl;
+      cout << "Cost: " << sol->cost << endl;
+      //cout << "iterations: " << lb.getIterations() << endl;
+
+      cout << endl;
+      /*
+      begin = std::chrono::steady_clock::now();
+
+
+      m3.executeGenerationalOrder();
+
+      end= std::chrono::steady_clock::now();
+      std::cout << "Time: = " << (double) std::chrono::duration_cast<std::chrono::milliseconds>(end - begin).count() /1000.0 <<std::endl;
+
+
+
+      sol=m3.bestSolution();
+      cout << "MEMETIC GenerationalOrder:" << endl;
+        for(int i=0;i<sol->solution.size();i++){
+          cout << " "<< sol->solution[i];
+        }
+        cout << endl;
+        cout << "Cost: " << sol->cost << endl;
+        //cout << "iterations: " << lb.getIterations() << endl;
+
+        cout << endl;
+
+        begin = std::chrono::steady_clock::now();
+
+
+        m3.executeStationaryPMX();
+
+        end= std::chrono::steady_clock::now();
+        std::cout << "Time: = " << (double) std::chrono::duration_cast<std::chrono::milliseconds>(end - begin).count() /1000.0 <<std::endl;
+
+
+
+        sol=m3.bestSolution();
+        cout << "MEMETIC extacionaryPMX:" << endl;
+          for(int i=0;i<sol->solution.size();i++){
+            cout << " "<< sol->solution[i];
+          }
+          cout << endl;
+          cout << "Cost: " << sol->cost << endl;
+          //cout << "iterations: " << lb.getIterations() << endl;
+
+          cout << endl;
+
+          begin = std::chrono::steady_clock::now();
+
+
+          m3.executeStationaryOrder();
+
+          end= std::chrono::steady_clock::now();
+          std::cout << "Time: = " << (double) std::chrono::duration_cast<std::chrono::milliseconds>(end - begin).count() /1000.0 <<std::endl;
+
+
+          sol=m3.bestSolution();
+          cout << "MEMETIC extacionaryOrder:" << endl;
+            for(int i=0;i<sol->solution.size();i++){
+              cout << " "<< sol->solution[i];
+            }
+            cout << endl;
+            cout << "Cost: " << sol->cost << endl;
+            //cout << "iterations: " << lb.getIterations() << endl;
+
+            cout << endl;
+
+
+*/
 /*
 cout << "Testing calculateCost() function with nug12.dat optimal solution: 578 " << endl;
 //12,7,9,3,4,8,11,1,5,6,10,2

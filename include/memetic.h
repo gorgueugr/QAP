@@ -15,6 +15,8 @@ private:
   LocalSearch lb;
   Genetic gen;
   Problem * problem;
+  Solution ** getBestOnes();
+  Solution ** getPopulation();
 public:
 
   Memetic(){};
@@ -27,7 +29,9 @@ public:
   void executeStationaryPMX();
   void executeStationaryOrder();
 
-
+  void setBest(bool b){best=b;}
+  void setPercent(float p){percent=p;}
+  void setGenerations(int g){generations=g;}
 
     void setProblem(Problem &p){problem=&p;}
     void clearProblem(){problem=0;}

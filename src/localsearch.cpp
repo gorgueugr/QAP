@@ -100,7 +100,7 @@ void LocalSearch::execute(){
       generateInitialSolution();
       iteration=0;
       actual=initial;
-    while (iteration<maxIterations && (improve || checkDlb())) {
+    while (iteration<maxIterations && (improve || checkDlb() )) {
       step();
       iteration++;
     }

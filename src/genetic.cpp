@@ -13,6 +13,7 @@ void Genetic::generatePopulation(){
     return;
     int size=problem->getSize();
     population.resize(numPopulation);
+    #pragma omp parallel for
     for(int i=0;i<numPopulation;i++){
       population[i].solution.resize(size);
       for(int j=0;j<size;j++){
@@ -59,6 +60,7 @@ Solution & Genetic::crossPMX(const Solution &a,const Solution &b){
   t->solution.resize(s);
   int * v=new int[s]; //vector to save the relations between parents
   bool * m=new bool[s];
+  #pragma omp parallel for
   for(int i=0;i<s;i++){ //fill with i
     v[i]=i;
     m[i]=0;
@@ -104,7 +106,7 @@ void Genetic::mutate(){
   for(int i=0;i<n;i++){
     a=rand() % problem->getSize();
     c=rand() % problem->getSize();
-    b=rand() % numPopulation;
+    b=rand() % selection.size();
 
     selection[b].move(a,c);
   }
@@ -151,6 +153,7 @@ void Genetic::executeGenerationalPMX(){
   int contCross;
   while(iteration<maxIterations){
         contCross=0;
+        #pragma omp parallel for
           for(int i=0;i<numPopulation;i++){
               a=binaryTournament();
             if(contCross<numCross){
@@ -171,6 +174,7 @@ void Genetic::executeGenerationalPMX(){
 
           population=selection;
 
+          #pragma omp parallel for
           for(int i=0;i<numPopulation;i++){
             population[i].cost=problem->calculateCost(population[i].solution);
           }
@@ -204,6 +208,8 @@ void Genetic::executeGenerationalOrder(){
   int contCross;
   while(iteration<maxIterations){
         contCross=0;
+
+        #pragma omp parallel for
           for(int i=0;i<numPopulation;i++){
               a=binaryTournament();
             if(contCross<numCross){
@@ -224,6 +230,7 @@ void Genetic::executeGenerationalOrder(){
 
           population=selection;
 
+          #pragma omp parallel for
           for(int i=0;i<numPopulation;i++){
             population[i].cost=problem->calculateCost(population[i].solution);
           }
@@ -266,13 +273,8 @@ void Genetic::executeStationaryPMX(){
               selection[1]=crossPMX(population[b],population[a]);
 
 
-          /*Mutation*/
-          if(rand() % 1000 <1){
-            a=rand() % problem->getSize();
-            c=rand() % problem->getSize();
-            b=rand() % selection.size();
-            selection[b].move(a,c);
-          }
+          mutate();
+
 
           Solution * worst;
           for(int i=0;i<selection.size();i++){
@@ -317,12 +319,7 @@ void Genetic::executeStationaryOrder(){
 
 
           /*Mutation*/
-          if(rand() % 1000 <1){
-            a=rand() % problem->getSize();
-            c=rand() % problem->getSize();
-            b=rand() % selection.size();
-            selection[b].move(a,c);
-          }
+          mutate();
 
           Solution * worst;
           for(int i=0;i<selection.size();i++){

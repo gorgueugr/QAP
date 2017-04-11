@@ -1,4 +1,5 @@
 #include "memetic.h"
+#include <stdio.h>
 
 Solution ** Memetic::getBestOnes(){
   int size=(int)gen.getPopulationSize()*percent;
@@ -27,6 +28,7 @@ Solution ** Memetic::getBestOnes(){
 Solution ** Memetic::getPopulation(){
   int size=(int)gen.getPopulationSize()*percent;
   Solution **s = new  Solution*[size];
+  #pragma omp parallel for
   for(int i=0;i<size;i++){
     s[i]=&gen.getPopulation()[i];
   }
@@ -36,99 +38,113 @@ Solution ** Memetic::getPopulation(){
 
 void Memetic::executeGenerationalPMX(){
   gen.setProblem(*problem);
-  lb.setProblem(*problem);
   gen.setNumPopulation(50);
   gen.generatePopulation();
   gen.setMaxIterations(generations);
+  int size=gen.getPopulationSize()*percent;
   Solution ** s;
-  lb.setMaxIterations(400);
+  LocalSearch * l = new LocalSearch[size];
+  #pragma omp parallel for
+  for(int j=0;j<size;j++){
+    l[j].setMaxIterations(400);
+    l[j].setProblem(*problem);
+  }
   for(int i=0;i<5000;i++){
     gen.executeGenerationalPMX();
     if(best) s=getBestOnes();
     else s=getPopulation();
-    for(int j=0;j<gen.getPopulationSize()*percent;j++){
-      lb.setInitialSolution(*s[j]);
-      lb.execute();
-      (*s[j])=lb.getActualSolution();
-      //cout << "\e[A" << "iteration: " << j << endl;
+   #pragma omp parallel for
+    for(int j=0;j<size;j++){
+      l[j].setInitialSolution(*s[j]);
+      l[j].execute();
+      (*s[j])=l[j].getActualSolution();
     }
-    delete s;
+    delete[] s;
   }
-
-
+  delete[] l;
 }
 
 void Memetic::executeGenerationalOrder(){
   gen.setProblem(*problem);
-  lb.setProblem(*problem);
   gen.setNumPopulation(50);
   gen.generatePopulation();
   gen.setMaxIterations(generations);
+  int size=gen.getPopulationSize()*percent;
   Solution ** s;
-  lb.setMaxIterations(400);
+  LocalSearch * l = new LocalSearch[size];
+  #pragma omp parallel for
+  for(int j=0;j<size;j++){
+    l[j].setMaxIterations(400);
+    l[j].setProblem(*problem);
+  }
   for(int i=0;i<5000;i++){
     gen.executeGenerationalOrder();
     if(best) s=getBestOnes();
     else s=getPopulation();
-    for(int j=0;j<gen.getPopulationSize()*percent;j++){
-      lb.setInitialSolution(*s[j]);
-      lb.execute();
-      (*s[j])=lb.getActualSolution();
-      //cout << "\e[A" << "iteration: " << j << endl;
+   #pragma omp parallel for
+    for(int j=0;j<size;j++){
+      l[j].setInitialSolution(*s[j]);
+      l[j].execute();
+      (*s[j])=l[j].getActualSolution();
     }
-    delete s;
-
+    delete[] s;
   }
-
-
+  delete[] l;
 }
 
 
 void Memetic::executeStationaryPMX(){
   gen.setProblem(*problem);
-  lb.setProblem(*problem);
   gen.setNumPopulation(50);
   gen.generatePopulation();
   gen.setMaxIterations(generations);
+  int size=gen.getPopulationSize()*percent;
   Solution ** s;
-  lb.setMaxIterations(400);
+  LocalSearch * l = new LocalSearch[size];
+  #pragma omp parallel for
+  for(int j=0;j<size;j++){
+    l[j].setMaxIterations(400);
+    l[j].setProblem(*problem);
+  }
   for(int i=0;i<5000;i++){
     gen.executeStationaryPMX();
     if(best) s=getBestOnes();
     else s=getPopulation();
-    for(int j=0;j<gen.getPopulationSize()*percent;j++){
-      lb.setInitialSolution(*s[j]);
-      lb.execute();
-      (*s[j])=lb.getActualSolution();
-      //cout << "\e[A" << "iteration: " << j << endl;
+   #pragma omp parallel for
+    for(int j=0;j<size;j++){
+      l[j].setInitialSolution(*s[j]);
+      l[j].execute();
+      (*s[j])=l[j].getActualSolution();
     }
-    delete s;
-
+    delete[] s;
   }
-
-
-
+  delete[] l;
 }
 
 void Memetic::executeStationaryOrder(){
   gen.setProblem(*problem);
-  lb.setProblem(*problem);
   gen.setNumPopulation(50);
   gen.generatePopulation();
   gen.setMaxIterations(generations);
+  int size=gen.getPopulationSize()*percent;
   Solution ** s;
-  lb.setMaxIterations(400);
+  LocalSearch * l = new LocalSearch[size];
+  #pragma omp parallel for
+  for(int j=0;j<size;j++){
+    l[j].setMaxIterations(400);
+    l[j].setProblem(*problem);
+  }
   for(int i=0;i<5000;i++){
     gen.executeStationaryOrder();
     if(best) s=getBestOnes();
     else s=getPopulation();
-    for(int j=0;j<gen.getPopulationSize()*percent;j++){
-      lb.setInitialSolution(*s[j]);
-      lb.execute();
-      (*s[j])=lb.getActualSolution();
-      //cout << "\e[A" << "iteration: " << j << endl;
+   #pragma omp parallel for
+    for(int j=0;j<size;j++){
+      l[j].setInitialSolution(*s[j]);
+      l[j].execute();
+      (*s[j])=l[j].getActualSolution();
     }
-    delete s;
-
+    delete[] s;
   }
+  delete[] l;
 }

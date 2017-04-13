@@ -7,9 +7,9 @@ void Greedy::calculateDistancePotential(){
   int s=problem->getSize();
   distancePotential.resize(s);
   int sum;
-  for(int i=0;i<s;i++){
+  for(int i=0;i<s;++i){
     sum=0;
-    for(int j=0;j<s;j++){
+    for(int j=0;j<s;++j){
       sum+=problem->atd(i,j);
     }
     distancePotential[i]=sum;
@@ -24,9 +24,9 @@ void Greedy::calculateFlowPotential(){
   flowPotential.resize(s);
 
   int sum;
-  for(int i=0;i<s;i++){
+  for(int i=0;i<s;++i){
     sum=0;
-    for(int j=0;j<s;j++){
+    for(int j=0;j<s;++j){
       sum+=problem->atf(i,j);
     }
     flowPotential[i]=sum;
@@ -51,7 +51,7 @@ void Greedy::execute(){
     int psize=problem->getSize();
   bool * f=new bool[psize];
   bool * d=new bool[psize];
-  for(int i=0;i<psize;i++){
+  for(int i=0;i<psize;++i){
     f[i]=0;
     d[i]=0;
   }
@@ -59,12 +59,12 @@ void Greedy::execute(){
     sol.solution.resize(psize);
     int max,maxFlow=0;
     int min,minDistance=INT_MAX;
-      for(int j=0;j<psize;j++){
+      for(int j=0;j<psize;++j){
         //Busqueda de maxFlow
           max=0;
           min=INT_MAX;
 
-          for(int i=0;i<psize;i++){
+          for(int i=0;i<psize;++i){
             if(flowPotential[i]>=max && !f[i]){
               max=flowPotential[i];
               maxFlow=i;
@@ -73,7 +73,7 @@ void Greedy::execute(){
 
           f[maxFlow]=1;
           //Busqueda de minDistance
-          for(int i=0;i<psize;i++){
+          for(int i=0;i<psize;++i){
             if(distancePotential[i]<=min && !d[i]){
               min=distancePotential[i];
               minDistance=i;

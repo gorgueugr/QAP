@@ -91,15 +91,14 @@ cur_seed = _mm_set_epi32( seed, seed+1, seed, seed+1 );
 }
 
 int getRandom(){
-  if(actual<4){
-    actual++;
-    return ( unsigned short) r[actual];
+  if(actual==4){
+    actual=1;
+    rand_sse(r);
+    return (unsigned short) r[0];
   }
 
-  actual=1;
-  rand_sse(r);
-
-  return (unsigned short) r[0];
+  ++actual;
+  return ( unsigned short) r[actual];
 
 }
 int getRandomMax(int b){
@@ -107,6 +106,12 @@ int getRandomMax(int b){
 }
 
 int getRandomRange(int a,int b){
-  return (unsigned short) (getRandom() % (b - a)) + a;
+  //return (unsigned short) (getRandom() % (b - a)) + a;
+  //C=A%B; == C=A-((A/B)*B);
+  int divider  = b-a;
+  libdivide::divider<int> d(divider);
+  int r=(unsigned short) getRandom();
+  int division=(r/d);
+  return (unsigned short) (r - ( division * divider)) + a;
 
 }

@@ -29,6 +29,18 @@ struct Solution{
     solution[r]=solution[s];
     solution[s]=t;
   }
+  bool checkSolution(){
+    bool ok=true;
+    bool * mc = new bool[solution.size()];
+    for(int i=0;i<solution.size();++i)
+      mc[i]=false;
+
+    for(int i=0;i<solution.size();+i){
+      mc[solution[i]] ? ok=false: mc[solution[i]]=true;
+    }
+    delete[] mc;
+    return ok;
+  }
 
 };
 

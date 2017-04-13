@@ -2,9 +2,9 @@
 
 int Problem::calculateCost(const vector<int> &s)const{
     int cost = 0;
-    for (int i = 0; i < size;i++)
+    for (int i = 0; i < size;++i)
     {
-        for (int j = 0; j < size;j++)
+        for (int j = 0; j < size;++j)
         {
             cost += flow[i][j] *  distance[s[i]][s[j]];
         }

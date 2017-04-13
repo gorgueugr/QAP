@@ -14,9 +14,9 @@ void Genetic::generatePopulation(){
     int size=problem->getSize();
     population.resize(numPopulation);
     #pragma omp parallel for
-    for(int i=0;i<numPopulation;i++){
+    for(int i=0;i<numPopulation;++i){
       population[i].solution.resize(size);
-      for(int j=0;j<size;j++){
+      for(int j=0;j<size;++j){
         population[i].solution[j]=j;
       }
       #pragma omp critical
@@ -32,29 +32,31 @@ Solution & Genetic::crossPosition(const Solution &a,const Solution &b){
   int s=a.solution.size();
   Solution * t=new Solution(); //Son
   t->solution.resize(s);
-  for(int i=0;i<s;i++) //fill with -1
+  for(int i=0;i<s;++i) //fill with -1
     t->solution[i]=-1;
 
   vector<int> v; //vector to save the numbers that do not coincide
 
-  //#pragma omp parallel for
-    for(int i=0;i<s;i++){
+  #pragma omp parallel for
+    for(int i=0;i<s;++i){
       if(a.solution[i]==b.solution[i])
         t->solution[i]=b.solution[i];
-      else
+      else{
+        #pragma omp critical
         v.push_back(a.solution[i]); //if father1[i] and father2[i] are equal then copy it in son
+      }
     }
 
     if(v.size()>0){                                                  //else push it to the v vector
     random_shuffle(v.begin(),v.end(),getRandomMax); //shuffle the vector with the numbers that do not coincide
     int c=0;
     //#pragma omp parallel for
-    for(int i=0;i<s;i++) //if in son [i]==-1 then get a number from v
+    for(int i=0;i<s;++i) //if in son [i]==-1 then get a number from v
       if(t->solution[i]==-1){
         t->solution[i]=v[c];
         c++;
       }
-    v.clear();
+      v.clear();
     }
     return *t;
 }
@@ -68,7 +70,7 @@ Solution & Genetic::crossPMX(const Solution &a,const Solution &b){
   int * v=new int[s]; //vector to save the relations between parents
   bool * m=new bool[s];
   #pragma omp parallel for
-  for(int i=0;i<s;i++){ //fill with i
+  for(int i=0;i<s;++i){ //fill with i
     v[i]=i;
     m[i]=0;
   }
@@ -76,25 +78,22 @@ Solution & Genetic::crossPMX(const Solution &a,const Solution &b){
 
     int min,max; //points to cross
     //C=A%B; == C=A-B*(A/B);
-    min = getRandom();
-    libdivide::divider<int> d1(s-1); //Para division.
-    min = (min-(s-1))*(min/d1);
+    min = getRandomMax(s-1);
     //min = (rand() % (int)(s - 1)); //first point OLD
-    max = getRandom();
-    libdivide::divider<int> d2((s - 1 - min)); //Para division.
-    max= min+1 + (max - (s - 1 - min))*(max/d2);
+    max = getRandomRange(min,s);
+    //max= min+1 + (max - (s - 1 - min))*(max/d2);
     //max = min+1 + (rand() % (int)(s-1 - min) ); //second point //OLD
 
 
     //Step 1: copy values of parent1 in the range[min,max] in the son
     #pragma omp parallel for
-    for(int i=min;i<max;i++){
+    for(int i=min;i<max;++i){
       t->solution[i]=a.solution[i]; //Copy in the son
       m[a.solution[i]]=1; //Mark the number
       v[a.solution[i]]=b.solution[i]; //Define relation between parent 1 and 2
     }
 
-    for(int i=0;i<s;i++){
+    for(int i=0;i<s;++i){
       if(i<min||i>=max){
         while(m[t->solution[i]]==1)
           t->solution[i]=v[t->solution[i]];
@@ -108,14 +107,13 @@ Solution & Genetic::crossPMX(const Solution &a,const Solution &b){
 }
 
 int  Genetic::binaryTournament(){
-  int a = getRandom();
-  int b = getRandom();
-  cout <<" a: " << a <<" b: " << b << endl;
+  int a = getRandomMax(numPopulation);
+  int b = getRandomMax(numPopulation);
+  //cout <<" a: " << a <<" b: " << b << endl;
   //C=A%B; == C=A-B*(A/B);
-  libdivide::divider<int> d1(numPopulation);
-  a = (a-numPopulation)*(a/d1);
-  b = (b-numPopulation)*(b/d1);
-  cout <<" a: " << a <<" b: " << b << endl;
+//  a = (a-numPopulation)*(a/d1);
+//  b = (b-numPopulation)*(b/d1);
+  //cout <<" a: " << a <<" b: " << b << endl;
 
   //int a = rand() % numPopulation; //first random player
   //int b = rand() % numPopulation; //Second random player
@@ -126,10 +124,13 @@ int  Genetic::binaryTournament(){
 void Genetic::mutate(){
   int a,b,c,n;
   n=(int) mutationP*problem->getSize()*selection.size();
-  for(int i=0;i<n;i++){
-    a= getRandom() % problem->getSize();
-    c=getRandom() % problem->getSize();
-    b=getRandom() % selection.size();
+  for(int i=0;i<n;++i){
+    //a= getRandom() % problem->getSize();
+    //c=getRandom() % problem->getSize();
+    //b=getRandom() % selection.size();
+    a = getRandomMax(problem->getSize()) ;
+    c = getRandomMax(problem->getSize()) ;
+    b = getRandomMax(selection.size()) ;
 
     selection[b].move(a,c);
   }
@@ -138,7 +139,7 @@ void Genetic::mutate(){
 Solution * Genetic::bestSolution(){
   int pos=0;
   int cost=INT_MAX;
-  for(int i=0;i<numPopulation;i++){
+  for(int i=0;i<numPopulation;++i){
     if(population[i].cost<cost){
       pos=i;
       cost=population[i].cost;
@@ -150,7 +151,7 @@ Solution * Genetic::bestSolution(){
 Solution * Genetic::worstSolution(){
   int pos=0;
   int cost=0;
-  for(int i=0;i<numPopulation;i++){
+  for(int i=0;i<numPopulation;++i){
     if(population[i].cost>cost){
       pos=i;
       cost=population[i].cost;
@@ -177,14 +178,14 @@ void Genetic::executeGenerationalPMX(){
   while(iteration<maxIterations){
         contCross=0;
         #pragma omp parallel for
-          for(int i=0;i<numPopulation;i++){
+          for(int i=0;i<numPopulation;++i){
             #pragma omp critical
               a=binaryTournament();
             if(contCross<numCross){
               #pragma omp critical
               b=binaryTournament();
               selection[i]=crossPMX(population[a],population[b]);
-              contCross++;
+              ++contCross;
 
             }else{
               selection[i]=population[a];
@@ -194,13 +195,14 @@ void Genetic::executeGenerationalPMX(){
           /*Mutation*/
           mutate();
 
-          best.cost=bestSolution()->cost;
-          best.solution=bestSolution()->solution;
+          best=*bestSolution();
+          //best.cost=bestSolution()->cost;
+          //best.solution=bestSolution()->solution;
 
           population=selection;
 
           #pragma omp parallel for
-          for(int i=0;i<numPopulation;i++){
+          for(int i=0;i<numPopulation;++i){
             population[i].cost=problem->calculateCost(population[i].solution);
           }
 
@@ -235,7 +237,7 @@ void Genetic::executeGenerationalOrder(){
         contCross=0;
 
         #pragma omp parallel for
-          for(int i=0;i<numPopulation;i++){
+          for(int i=0;i<numPopulation;++i){
               a=binaryTournament();
             if(contCross<numCross){
               b=binaryTournament();
@@ -256,7 +258,7 @@ void Genetic::executeGenerationalOrder(){
           population=selection;
 
           #pragma omp parallel for
-          for(int i=0;i<numPopulation;i++){
+          for(int i=0;i<numPopulation;++i){
             population[i].cost=problem->calculateCost(population[i].solution);
           }
 
@@ -302,7 +304,7 @@ void Genetic::executeStationaryPMX(){
 
 
           Solution * worst;
-          for(int i=0;i<selection.size();i++){
+          for(int i=0;i<selection.size();++i){
               worst = worstSolution();
               selection[i].cost=problem->calculateCost(selection[i].solution);
               if(worst->cost > selection[i].cost ){
@@ -347,7 +349,7 @@ void Genetic::executeStationaryOrder(){
           mutate();
 
           Solution * worst;
-          for(int i=0;i<selection.size();i++){
+          for(int i=0;i<selection.size();++i){
               worst = worstSolution();
               selection[i].cost=problem->calculateCost(selection[i].solution);
               if(worst->cost > selection[i].cost ){

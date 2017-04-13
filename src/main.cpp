@@ -9,13 +9,11 @@
 #include "genetic.h"
 #include "memetic.h"
 #include <chrono>
-
+#include <omp.h>
 
 
 using namespace std;
 
-//int actual;
-//unsigned int r[4];
 
 int main(int argc,char *argv[]){
 
@@ -23,6 +21,9 @@ int main(int argc,char *argv[]){
     cout << "ERROR: Numero de parametros" << endl;
     return -1;
   }
+  cout << "NumThreads: " <<  omp_get_max_threads() << endl;
+  omp_set_num_threads(omp_get_max_threads());
+
 
   int Seed=123581321;
   //int actual=0;
@@ -44,14 +45,14 @@ int main(int argc,char *argv[]){
   cout << "Size:" << s << endl;
 /*  1
   cout << "Distance:" << endl;
-  for(int i=0;i<s;i++){
+  for(int i=0;i<s;++i){
     for (int j=0;j<s;j++) {
       cout << " " << qap->atd(i,j) ;
     }
     cout << endl;
   }
   cout << "Flow:" << endl;
-  for(int i=0;i<s;i++){
+  for(int i=0;i<s;++i){
     for (int j=0;j<s;j++){
       cout << " " << qap->atf(i,j);
     }
@@ -76,11 +77,12 @@ int main(int argc,char *argv[]){
   Solution * sol=&greedy.getSolution();
 
 cout << "Greedy solution:" << endl;
-  for(int i=0;i<sol->solution.size();i++){
+  for(int i=0;i<sol->solution.size();++i){
     cout << " "<< sol->solution[i];
   }
   cout << endl;
   cout << "Coste: " << sol->cost << endl;
+  cout << "correct Solution: " << sol->checkSolution() << endl;
 
 lb.setMaxIterations(10000);
 begin = std::chrono::steady_clock::now();
@@ -92,12 +94,14 @@ Solution ran=lb.getInitialSolution();
 ran.cost = qap->calculateCost(ran.solution);
 cout << "Random solution cost: " << ran.cost << endl;
 cout << "LocalSearch initializated with random solution :" << endl;
-  for(int i=0;i<sol->solution.size();i++){
+  for(int i=0;i<sol->solution.size();++i){
     cout << " "<< sol->solution[i];
   }
   cout << endl;
   cout << "Cost: " << sol->cost << endl;
 cout << "iterations: " << lb.getIterations() << endl;
+cout << "correct Solution: " << sol->checkSolution() << endl;
+
 
 
 
@@ -112,22 +116,21 @@ cout << "iterations: " << lb.getIterations() << endl;
   sol=&lb.getActualSolution();
 
   cout << "LocalSearch initializated with greedy solution :" << endl;
-    for(int i=0;i<sol->solution.size();i++){
+    for(int i=0;i<sol->solution.size();++i){
       cout << " "<< sol->solution[i];
     }
     cout << endl;
     cout << "Cost: " << sol->cost << endl;
     cout << "iterations: " << lb.getIterations() << endl;
+    cout << "correct Solution: " << sol->checkSolution() << endl;
     cout << endl;
 
 
 
 gen.setNumPopulation(50);
-cout << "ok"<<endl;
 cout << endl;
 gen.generatePopulation();
 
-cout << "ok2"<<endl;
 
 begin = std::chrono::steady_clock::now();
 
@@ -139,11 +142,13 @@ sol=gen.bestSolution();
 Solution genPMX=*sol;
 
 cout << "GenerationalPMX:" << endl;
-  for(int i=0;i<sol->solution.size();i++){
+  for(int i=0;i<sol->solution.size();++i){
     cout << " "<< sol->solution[i];
   }
   cout << endl;
   cout << "Cost: " << sol->cost << endl;
+  cout << "correct Solution: " << sol->checkSolution() << endl;
+
   //cout << "iterations: " << lb.getIterations() << endl;
 
   cout << endl;
@@ -160,11 +165,13 @@ cout << "GenerationalPMX:" << endl;
   sol=gen.bestSolution();
   Solution genOrder=*sol;
   cout << "GenerationalPosition:" << endl;
-    for(int i=0;i<sol->solution.size();i++){
+    for(int i=0;i<sol->solution.size();++i){
       cout << " "<< sol->solution[i];
     }
     cout << endl;
     cout << "Cost: " << sol->cost << endl;
+    cout << "correct Solution: " << sol->checkSolution() << endl;
+
     //cout << "iterations: " << lb.getIterations() << endl;
 
     cout << endl;
@@ -181,11 +188,13 @@ cout << "GenerationalPMX:" << endl;
 
     sol=gen.bestSolution();
     cout << "StationaryPMX:" << endl;
-      for(int i=0;i<sol->solution.size();i++){
+      for(int i=0;i<sol->solution.size();++i){
         cout << " "<< sol->solution[i];
       }
       cout << endl;
       cout << "Cost: " << sol->cost << endl;
+      cout << "correct Solution: " << sol->checkSolution() << endl;
+
       //cout << "iterations: " << lb.getIterations() << endl;
 
       cout << endl;
@@ -203,11 +212,13 @@ cout << "GenerationalPMX:" << endl;
       sol=gen.bestSolution();
 
       cout << "StationaryPos:" << endl;
-        for(int i=0;i<sol->solution.size();i++){
+        for(int i=0;i<sol->solution.size();++i){
           cout << " "<< sol->solution[i];
         }
         cout << endl;
         cout << "Cost: " << sol->cost << endl;
+        cout << "correct Solution: " << sol->checkSolution() << endl;
+
         //cout << "iterations: " << lb.getIterations() << endl;
 
         cout << endl;
@@ -231,11 +242,12 @@ std::cout << "Time: = " << (double) std::chrono::duration_cast<std::chrono::mill
 
 sol=m1.bestSolution();
 cout << "MEMETIC 10 0.1 false:" << endl;
-  for(int i=0;i<sol->solution.size();i++){
+  for(int i=0;i<sol->solution.size();++i){
     cout << " "<< sol->solution[i];
   }
   cout << endl;
   cout << "Cost: " << sol->cost << endl;
+  cout << "correct Solution: " << sol->checkSolution() << endl;
   //cout << "iterations: " << lb.getIterations() << endl;
 
   cout << endl;
@@ -253,7 +265,7 @@ cout << "MEMETIC 10 0.1 false:" << endl;
 
   sol=m1.bestSolution();
   cout << "MEMETIC GenerationalOrder:" << endl;
-    for(int i=0;i<sol->solution.size();i++){
+    for(int i=0;i<sol->solution.size();++i){
       cout << " "<< sol->solution[i];
     }
     cout << endl;
@@ -274,7 +286,7 @@ cout << "MEMETIC 10 0.1 false:" << endl;
 
     sol=m1.bestSolution();
     cout << "MEMETIC extacionaryPMX:" << endl;
-      for(int i=0;i<sol->solution.size();i++){
+      for(int i=0;i<sol->solution.size();++i){
         cout << " "<< sol->solution[i];
       }
       cout << endl;
@@ -295,7 +307,7 @@ cout << "MEMETIC 10 0.1 false:" << endl;
 
       sol=m1.bestSolution();
       cout << "MEMETIC extacionaryOrder:" << endl;
-        for(int i=0;i<sol->solution.size();i++){
+        for(int i=0;i<sol->solution.size();++i){
           cout << " "<< sol->solution[i];
         }
         cout << endl;
@@ -323,11 +335,12 @@ std::cout << "Time: = " << (double) std::chrono::duration_cast<std::chrono::mill
 
 sol=m2.bestSolution();
 cout << "MEMETIC 10 0,1 true:" << endl;
-  for(int i=0;i<sol->solution.size();i++){
+  for(int i=0;i<sol->solution.size();++i){
     cout << " "<< sol->solution[i];
   }
   cout << endl;
   cout << "Cost: " << sol->cost << endl;
+  cout << "correct Solution: " << sol->checkSolution() << endl;
   //cout << "iterations: " << lb.getIterations() << endl;
 
   cout << endl;/*
@@ -344,7 +357,7 @@ cout << "MEMETIC 10 0,1 true:" << endl;
 
   sol=m2.bestSolution();
   cout << "MEMETIC GenerationalOrder:" << endl;
-    for(int i=0;i<sol->solution.size();i++){
+    for(int i=0;i<sol->solution.size();++i){
       cout << " "<< sol->solution[i];
     }
     cout << endl;
@@ -365,7 +378,7 @@ cout << "MEMETIC 10 0,1 true:" << endl;
 
     sol=m2.bestSolution();
     cout << "MEMETIC extacionaryPMX:" << endl;
-      for(int i=0;i<sol->solution.size();i++){
+      for(int i=0;i<sol->solution.size();++i){
         cout << " "<< sol->solution[i];
       }
       cout << endl;
@@ -385,7 +398,7 @@ cout << "MEMETIC 10 0,1 true:" << endl;
 
       sol=m2.bestSolution();
       cout << "MEMETIC extacionaryOrder:" << endl;
-        for(int i=0;i<sol->solution.size();i++){
+        for(int i=0;i<sol->solution.size();++i){
           cout << " "<< sol->solution[i];
         }
         cout << endl;
@@ -414,11 +427,13 @@ cout << "MEMETIC 10 0,1 true:" << endl;
 
     sol=m3.bestSolution();
     cout << "MEMETIC 10 1 false:" << endl;
-      for(int i=0;i<sol->solution.size();i++){
+      for(int i=0;i<sol->solution.size();++i){
         cout << " "<< sol->solution[i];
       }
       cout << endl;
       cout << "Cost: " << sol->cost << endl;
+      cout << "correct Solution: " << sol->checkSolution() << endl;
+
       //cout << "iterations: " << lb.getIterations() << endl;
 
       cout << endl;
@@ -435,7 +450,7 @@ cout << "MEMETIC 10 0,1 true:" << endl;
 
       sol=m3.bestSolution();
       cout << "MEMETIC GenerationalOrder:" << endl;
-        for(int i=0;i<sol->solution.size();i++){
+        for(int i=0;i<sol->solution.size();++i){
           cout << " "<< sol->solution[i];
         }
         cout << endl;
@@ -456,7 +471,7 @@ cout << "MEMETIC 10 0,1 true:" << endl;
 
         sol=m3.bestSolution();
         cout << "MEMETIC extacionaryPMX:" << endl;
-          for(int i=0;i<sol->solution.size();i++){
+          for(int i=0;i<sol->solution.size();++i){
             cout << " "<< sol->solution[i];
           }
           cout << endl;
@@ -476,7 +491,7 @@ cout << "MEMETIC 10 0,1 true:" << endl;
 
           sol=m3.bestSolution();
           cout << "MEMETIC extacionaryOrder:" << endl;
-            for(int i=0;i<sol->solution.size();i++){
+            for(int i=0;i<sol->solution.size();++i){
               cout << " "<< sol->solution[i];
             }
             cout << endl;

@@ -56,6 +56,7 @@
 #define RAND_SSE_H
 
 #include "emmintrin.h"
+#include "libdivide.h"
 
 #define COMPATABILITY
 

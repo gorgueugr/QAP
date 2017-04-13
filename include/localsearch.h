@@ -6,7 +6,7 @@
 #include <cstdlib>      // std::rand, std::srand
 #include "solution.h"
 #include "problem.h"
-
+#include "random.h"
 
 
 using namespace std;

@@ -7,7 +7,8 @@
 #include <vector>
 #include "problem.h"
 #include "solution.h"
-
+#include "libdivide.h"
+#include "random.h"
 
 class Genetic{
 protected:

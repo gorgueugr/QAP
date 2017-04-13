@@ -14,6 +14,9 @@
 
 using namespace std;
 
+//int actual;
+//unsigned int r[4];
+
 int main(int argc,char *argv[]){
 
   if(argc<2 || argc>3){
@@ -22,8 +25,10 @@ int main(int argc,char *argv[]){
   }
 
   int Seed=123581321;
+  //int actual=0;
 
-  srand(Seed);
+  //srand(Seed);
+  srand_sse(Seed);
 
   Input i(argv[1]);
   Problem * qap=i.read();
@@ -63,6 +68,10 @@ int main(int argc,char *argv[]){
 
   //___________________//
 
+
+
+
+
   //cout <<"Distance size:" <<d.size() << endl;
   Solution * sol=&greedy.getSolution();
 
@@ -90,6 +99,8 @@ cout << "LocalSearch initializated with random solution :" << endl;
   cout << "Cost: " << sol->cost << endl;
 cout << "iterations: " << lb.getIterations() << endl;
 
+
+
   lb.setInitialSolution(greedy.getSolution());
 
   begin = std::chrono::steady_clock::now();
@@ -109,9 +120,14 @@ cout << "iterations: " << lb.getIterations() << endl;
     cout << "iterations: " << lb.getIterations() << endl;
     cout << endl;
 
+
+
 gen.setNumPopulation(50);
+cout << "ok"<<endl;
 cout << endl;
 gen.generatePopulation();
+
+cout << "ok2"<<endl;
 
 begin = std::chrono::steady_clock::now();
 
@@ -196,7 +212,7 @@ cout << "GenerationalPMX:" << endl;
 
         cout << endl;
 
-Memetic m1(10,1,false);
+Memetic m1(10,0.1,false);
 m1.setProblem(*qap);
 
 begin = std::chrono::steady_clock::now();
@@ -214,7 +230,7 @@ std::cout << "Time: = " << (double) std::chrono::duration_cast<std::chrono::mill
 
 
 sol=m1.bestSolution();
-cout << "MEMETIC 10 1 false:" << endl;
+cout << "MEMETIC 10 0.1 false:" << endl;
   for(int i=0;i<sol->solution.size();i++){
     cout << " "<< sol->solution[i];
   }
@@ -290,7 +306,7 @@ cout << "MEMETIC 10 1 false:" << endl;
 */
 //Segundo memetico
 
-Memetic m2(10,0.1,false);
+Memetic m2(10,0.1,true);
 m2.setProblem(*qap);
 
 begin = std::chrono::steady_clock::now();
@@ -306,7 +322,7 @@ std::cout << "Time: = " << (double) std::chrono::duration_cast<std::chrono::mill
 
 
 sol=m2.bestSolution();
-cout << "MEMETIC 10 0,1 false:" << endl;
+cout << "MEMETIC 10 0,1 true:" << endl;
   for(int i=0;i<sol->solution.size();i++){
     cout << " "<< sol->solution[i];
   }
@@ -380,7 +396,7 @@ cout << "MEMETIC 10 0,1 false:" << endl;
 */
 
     //Tercero
-    Memetic m3(10,0.1,true);
+    Memetic m3(10,1,false);
     m3.setProblem(*qap);
 
 
@@ -397,7 +413,7 @@ cout << "MEMETIC 10 0,1 false:" << endl;
 
 
     sol=m3.bestSolution();
-    cout << "MEMETIC 10 0.1 true:" << endl;
+    cout << "MEMETIC 10 1 false:" << endl;
       for(int i=0;i<sol->solution.size();i++){
         cout << " "<< sol->solution[i];
       }

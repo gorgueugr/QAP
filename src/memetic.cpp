@@ -60,6 +60,7 @@ void Memetic::executeGenerationalPMX(){
       (*s[j])=l[j].getActualSolution();
     }
     delete[] s;
+    cout << "\r Iteración:  " << i;
   }
   delete[] l;
 }
@@ -88,6 +89,7 @@ void Memetic::executeGenerationalOrder(){
       (*s[j])=l[j].getActualSolution();
     }
     delete[] s;
+    cout << "\r Iteración:  " << i;
   }
   delete[] l;
 }
@@ -117,6 +119,7 @@ void Memetic::executeStationaryPMX(){
       (*s[j])=l[j].getActualSolution();
     }
     delete[] s;
+    cout << "\r Iteración:  " << i;
   }
   delete[] l;
 }
@@ -145,6 +148,7 @@ void Memetic::executeStationaryOrder(){
       (*s[j])=l[j].getActualSolution();
     }
     delete[] s;
+    cout << "\r Iteración:  " << i;
   }
   delete[] l;
 }

@@ -4,6 +4,8 @@ LocalSearch::LocalSearch(){
   iteration=0;
   maxIterations=0;
   improve=true;
+  int actual=0;
+  unsigned int r[4];
 }
 
 LocalSearch::LocalSearch(Problem &p,int i){
@@ -37,7 +39,7 @@ void LocalSearch::generateInitialSolution(){
   for(int i=0;i<problem->getSize();i++)
     initial.solution[i]=i;
 
-  random_shuffle ( initial.solution.begin(), initial.solution.end());
+  random_shuffle ( initial.solution.begin(), initial.solution.end(),getRandomMax);
 
   initial.cost=problem->calculateCost(initial.solution);
 }

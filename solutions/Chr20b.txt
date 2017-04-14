@@ -1,13 +1,13 @@
 DATA: ./bin/data/chr20b.dat
 NumThreads: 4
 Size:20
-Time: = 0
+Time: = 0.004
 Greedy solution:
  16 17 6 3 7 13 18 2 1 14 5 9 8 11 10 15 12 19 0 4
 Coste: 8916
 correct Solution: 1
 
-Time: = 0
+Time: = 0.008
 Random solution cost: 9386
 LocalSearch initializated with random solution :
  2 9 3 16 1 4 18 10 17 8 19 0 5 12 13 15 11 7 6 14
@@ -23,48 +23,48 @@ iterations: 400
 correct Solution: 1
 
 
-Time: = 0.317
+Time: = 0.956
 GenerationalPMX:
- 3 12 8 5 0 10 15 17 13 1 4 7 9 19 14 2 18 6 16 11
-Cost: 7250
-Generations: 2368
+ 8 0 15 19 3 14 2 18 6 13 11 12 4 10 7 1 9 16 5 17
+Cost: 6408
+Generations: 2942
 correct Solution: 1
 
-Time: = 0.275
+Time: = 0.964
 GenerationalPosition:
- 18 16 1 7 13 17 0 3 2 8 9 14 19 10 5 12 11 15 6 4
-Cost: 7726
-Generations: 2363
+ 10 12 13 9 15 11 6 18 2 1 19 3 14 5 16 0 17 8 7 4
+Cost: 6788
+Generations: 2942
 correct Solution: 1
 
-Time: = 0.282
+Time: = 0.35
 StationaryPMX:
- 4 10 5 14 9 3 11 0 1 16 18 17 7 13 6 15 2 8 19 12
-Cost: 6586
+ 10 4 18 3 13 16 12 5 15 17 1 19 11 2 6 9 0 7 8 14
+Cost: 4422
 correct Solution: 1
 
-Time: = 0.574
+Time: = 0.329
 StationaryPos:
- 15 0 1 19 11 8 7 4 5 10 3 12 6 14 2 17 9 16 13 18
-Cost: 5378
+ 7 19 14 2 16 6 5 8 12 10 0 1 15 4 18 3 13 9 11 17
+Cost: 5716
 correct Solution: 1
 
-Time: = 0.031
+Time: = 0.054
 MEMETIC 10 0.1 false:
- 6 2 11 9 13 7 14 15 3 0 5 19 4 8 10 16 1 17 12 18
-Cost: 3384
+ 10 4 8 12 0 1 14 6 3 2 5 19 16 17 18 9 13 7 11 15
+Cost: 3342
 correct Solution: 1
 
-Time: = 0.03
+Time: = 0.054
 MEMETIC 10 0,1 true:
- 13 5 9 3 2 14 6 10 7 4 15 16 1 17 12 19 0 11 8 18
-Cost: 2992
+ 19 17 13 7 18 15 1 14 10 16 4 11 12 6 3 0 9 8 5 2
+Cost: 4328
 correct Solution: 1
 
-Time: = 0.007
+Time: = 0.011
 MEMETIC 10 1 false:
- 9 3 7 13 15 18 0 16 8 4 19 12 5 1 11 10 6 17 2 14
-Cost: 2692
+ 17 18 15 4 12 16 1 5 3 11 13 6 14 2 10 19 8 7 0 9
+Cost: 2776
 correct Solution: 1
 
-Time Total: = 1.52
+Time Total: = 2.735

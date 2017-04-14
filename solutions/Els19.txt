@@ -23,48 +23,48 @@ iterations: 361
 correct Solution: 1
 
 
-Time: = 0.287
+Time: = 0.628
 GenerationalPMX:
- 15 14 16 13 10 6 0 3 2 9 8 17 18 1 7 12 4 11 5
-Cost: 34106916
-Generations: 2370
+ 15 14 3 13 10 6 0 16 2 9 8 17 18 1 11 12 7 4 5
+Cost: 31518514
+Generations: 2942
 correct Solution: 1
 
-Time: = 0.298
+Time: = 0.667
 GenerationalPosition:
- 8 9 18 13 15 14 6 0 2 10 4 3 7 11 12 17 1 5 16
-Cost: 34867410
-Generations: 2383
+ 9 16 8 10 18 11 7 0 12 5 14 15 4 3 6 13 1 17 2
+Cost: 34935878
+Generations: 2942
 correct Solution: 1
 
-Time: = 0.269
+Time: = 0.313
 StationaryPMX:
- 14 15 10 11 17 8 7 5 4 13 16 3 18 2 6 12 0 1 9
-Cost: 24497802
+ 11 8 18 17 10 6 16 9 5 13 2 4 7 3 15 14 12 0 1
+Cost: 19459806
 correct Solution: 1
 
-Time: = 0.545
+Time: = 0.319
 StationaryPos:
- 8 10 13 12 16 4 6 7 3 18 2 11 9 5 15 14 17 0 1
-Cost: 26354966
+ 2 1 0 7 16 12 5 6 18 17 10 3 4 13 15 14 8 9 11
+Cost: 22956130
 correct Solution: 1
 
-Time: = 0.021
+Time: = 0.036
 MEMETIC 10 0.1 false:
- 14 15 7 6 11 17 12 16 5 10 9 4 8 3 18 13 0 1 2
-Cost: 18039214
+ 8 7 5 10 13 17 4 3 9 18 0 12 11 6 14 15 16 2 1
+Cost: 19211668
 correct Solution: 1
 
-Time: = 0.041
+Time: = 0.054
 MEMETIC 10 0,1 true:
- 14 7 5 15 10 18 4 12 6 11 9 16 8 3 13 17 0 1 2
-Cost: 21248134
+ 15 14 7 17 10 18 12 6 9 11 0 3 5 4 13 8 16 2 1
+Cost: 20290794
 correct Solution: 1
 
-Time: = 0.005
+Time: = 0.011
 MEMETIC 10 1 false:
- 10 6 9 11 18 17 12 16 5 13 3 4 8 7 15 14 0 1 2
-Cost: 17397290
+ 14 15 7 17 13 18 9 16 3 10 4 12 11 5 6 8 0 1 2
+Cost: 17937024
 correct Solution: 1
 
-Time Total: = 1.471
+Time Total: = 2.034

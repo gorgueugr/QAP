@@ -25,11 +25,13 @@ int main(int argc,char *argv[]){
   omp_set_num_threads(omp_get_max_threads());
 
 
+
   int Seed=123581321;
   //int actual=0;
 
   //srand(Seed);
   srand_sse(Seed);
+
 
   Input i(argv[1]);
   Problem * qap=i.read();
@@ -82,7 +84,7 @@ cout << "Greedy solution:" << endl;
   }
   cout << endl;
   cout << "Coste: " << sol->cost << endl;
-  cout << "correct Solution: " << sol->checkSolution() << endl;
+  cout << "correct Solution: " << (int) sol->checkSolution() << endl;
 
 lb.setMaxIterations(10000);
 begin = std::chrono::steady_clock::now();

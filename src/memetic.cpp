@@ -54,8 +54,9 @@ void Memetic::executeGenerationalPMX(){
   }
   for(int i=0;i<5000;++i){
     gen.executeGenerationalPMX();
-    if(best) s=getBestOnes();
-    else s=getPopulation();
+    //if(best) s=getBestOnes();
+    //else s=getPopulation();
+    s = best ? getBestOnes() : getPopulation();
    #pragma omp parallel for
     for(int j=0;j<size;++j){
       l[j].setInitialSolution(*s[j]);
@@ -83,8 +84,9 @@ void Memetic::executeGenerationalOrder(){
   }
   for(int i=0;i<5000;++i){
     gen.executeGenerationalOrder();
-    if(best) s=getBestOnes();
-    else s=getPopulation();
+    //if(best) s=getBestOnes();
+    //else s=getPopulation();
+    s = best ? getBestOnes() : getPopulation();
    #pragma omp parallel for
     for(int j=0;j<size;++j){
       l[j].setInitialSolution(*s[j]);
@@ -113,8 +115,9 @@ void Memetic::executeStationaryPMX(){
   }
   for(int i=0;i<5000;++i){
     gen.executeStationaryPMX();
-    if(best) s=getBestOnes();
-    else s=getPopulation();
+    //if(best) s=getBestOnes();
+    //else s=getPopulation();
+    s = best ? getBestOnes() : getPopulation();
    #pragma omp parallel for
     for(int j=0;j<size;++j){
       l[j].setInitialSolution(*s[j]);
@@ -142,8 +145,9 @@ void Memetic::executeStationaryOrder(){
   }
   for(int i=0;i<5000;++i){
     gen.executeStationaryOrder();
-    if(best) s=getBestOnes();
-    else s=getPopulation();
+    //if(best) s=getBestOnes();
+    //else s=getPopulation();
+    s = best ? getBestOnes() : getPopulation();
    #pragma omp parallel for
     for(int j=0;j<size;++j){
       l[j].setInitialSolution(*s[j]);

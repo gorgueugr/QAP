@@ -35,8 +35,8 @@ struct Solution{
     for(int i=0;i<solution.size();++i)
       mc[i]=false;
 
-    for(int i=0;i<solution.size();+i){
-      mc[solution[i]] ? ok=false: mc[solution[i]]=true;
+    for(int i=0;i<solution.size();++i){
+      mc[solution[i]] ? ok=false : mc[solution[i]]=true;
     }
     delete[] mc;
     return ok;

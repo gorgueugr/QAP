@@ -22,8 +22,8 @@ void Genetic::generatePopulation(){
       #pragma omp critical
       {
       random_shuffle(population[i].solution.begin(), population[i].solution.end(),getRandomMax);
-      }
       population[i].cost=problem->calculateCost(population[i].solution);
+      }
     }
 
 }
@@ -32,6 +32,7 @@ Solution & Genetic::crossPosition(const Solution &a,const Solution &b){
   int s=a.solution.size();
   Solution * t=new Solution(); //Son
   t->solution.resize(s);
+  #pragma omp parallel for
   for(int i=0;i<s;++i) //fill with -1
     t->solution[i]=-1;
 
@@ -76,11 +77,11 @@ Solution & Genetic::crossPMX(const Solution &a,const Solution &b){
   }
   t->solution=b.solution;
 
-    int min,max; //points to cross
+    //int min,max; //points to cross
     //C=A%B; == C=A-B*(A/B);
-    min = getRandomMax(s-1);
+    int min = getRandomMax(s-1);
     //min = (rand() % (int)(s - 1)); //first point OLD
-    max = getRandomRange(min,s);
+    int max = getRandomRange(min,s);
     //max= min+1 + (max - (s - 1 - min))*(max/d2);
     //max = min+1 + (rand() % (int)(s-1 - min) ); //second point //OLD
 
@@ -93,12 +94,13 @@ Solution & Genetic::crossPMX(const Solution &a,const Solution &b){
       v[a.solution[i]]=b.solution[i]; //Define relation between parent 1 and 2
     }
 
-    for(int i=0;i<s;++i){
-      if(i<min||i>=max){
-        while(m[t->solution[i]]==1)
-          t->solution[i]=v[t->solution[i]];
-      }
-    }
+    for(int i=0;i<min;++i)
+      while(m[t->solution[i]]==1)
+        t->solution[i]=v[t->solution[i]];
+
+    for(int i=max;i<s;i++)
+      while(m[t->solution[i]]==1)
+        t->solution[i]=v[t->solution[i]];
 
 
     delete[] v;
@@ -238,8 +240,10 @@ void Genetic::executeGenerationalOrder(){
 
         #pragma omp parallel for
           for(int i=0;i<numPopulation;++i){
+            #pragma omp critical
               a=binaryTournament();
             if(contCross<numCross){
+              #pragma omp critical
               b=binaryTournament();
               selection[i]=crossPosition(population[a],population[b]);
               contCross++;
@@ -252,8 +256,7 @@ void Genetic::executeGenerationalOrder(){
           /*Mutation*/
           mutate();
 
-          best.cost=bestSolution()->cost;
-          best.solution=bestSolution()->solution;
+          best=*bestSolution();
 
           population=selection;
 

@@ -2,6 +2,7 @@
 
 int Problem::calculateCost(const vector<int> &s)const{
     int cost = 0;
+    #pragma omp parallel for reduction(+:cost)
     for (int i = 0; i < size;++i)
     {
         for (int j = 0; j < size;++j)
@@ -15,7 +16,7 @@ int Problem::calculateCost(const vector<int> &s)const{
 int Problem::moveCost(const vector<int> &ant, int r, int s)
 {
   int cost = 0;
-
+  //#pragma omp parallel for reduction(+:cost)
     for (int k = 0; k < size; ++k)
     {
         if (k != r && k != s)

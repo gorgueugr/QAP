@@ -36,6 +36,7 @@ void LocalSearch::generateInitialSolution(){
   if(!problem)
     return;
   initial.solution.resize(problem->getSize());
+  #pragma omp parallel for
   for(int i=0;i<problem->getSize();++i)
     initial.solution[i]=i;
 
@@ -67,7 +68,7 @@ void LocalSearch::startDlb(){
 void LocalSearch::step(){
     int size=problem->getSize();
     int tempCost=0;
-    actual.cost=problem->calculateCost(actual.solution);
+    //actual.cost=problem->calculateCost(actual.solution);
     for(int i=0;i<size;++i){
         if(!dlb[i]){
           improve=false;
@@ -94,15 +95,17 @@ bool LocalSearch::checkDlb(){
   }
   return ok;
 }
+
 void LocalSearch::execute(){
   if(!problem)
     return;
     startDlb();
     if(initial.solution.size()<1)
       generateInitialSolution();
+      improve=true;
       iteration=0;
       actual=initial;
-    while (iteration<maxIterations && (improve || checkDlb() )) {
+    while (iteration<maxIterations && (improve)) { //(improve || checkDlb())
       step();
       ++iteration;
     }

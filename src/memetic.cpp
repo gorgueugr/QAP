@@ -45,7 +45,7 @@ void Memetic::executeGenerationalPMX(){
   gen.generatePopulation();
   gen.setMaxGenerations(generations);
   gen.setMaxIterations(INT_MAX);
-  maxIt=50000;
+  maxIt=500000;
   it=0;
 
   int size=gen.getPopulationSize()*percent;
@@ -57,7 +57,7 @@ void Memetic::executeGenerationalPMX(){
 
   #pragma omp parallel for
   for(int j=0;j<size;++j){
-    l[j].setMaxIterations(400);
+    l[j].setMaxIterations(INT_MAX);
     l[j].setProblem(*problem);
   }
   while(it<maxIt){
@@ -88,7 +88,7 @@ void Memetic::executeGenerationalOrder(){
   gen.generatePopulation();
   gen.setMaxGenerations(generations);
   gen.setMaxIterations(INT_MAX);
-  maxIt=50000;
+  maxIt=500000;
   it=0;
 
   int size=gen.getPopulationSize()*percent;
@@ -100,7 +100,7 @@ void Memetic::executeGenerationalOrder(){
 
   #pragma omp parallel for
   for(int j=0;j<size;++j){
-    l[j].setMaxIterations(400);
+    l[j].setMaxIterations(INT_MAX);
     l[j].setProblem(*problem);
   }
   while(it<maxIt){

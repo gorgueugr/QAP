@@ -1,0 +1,70 @@
+DATA: ./bin/data/els19.dat
+NumThreads: 4
+Size:19
+Time: = 0
+Greedy solution:
+ 6 5 7 11 8 17 12 4 3 10 1 9 2 14 18 13 16 0 15
+Coste: 38627698
+correct Solution: 1
+
+Time: = 0
+Random solution cost: 60675016
+LocalSearch initializated with random solution :
+ 0 1 16 11 10 6 5 4 12 8 15 7 9 17 13 18 3 2 14
+Cost: 27650458
+iterations: 361
+correct Solution: 1
+
+Time: = 0
+LocalSearch initializated with greedy solution :
+ 10 11 16 5 7 17 8 12 4 3 1 9 2 6 18 13 14 15 0
+Cost: 24638060
+iterations: 361
+correct Solution: 1
+
+
+Time: = 0.287
+GenerationalPMX:
+ 15 14 16 13 10 6 0 3 2 9 8 17 18 1 7 12 4 11 5
+Cost: 34106916
+Generations: 2370
+correct Solution: 1
+
+Time: = 0.298
+GenerationalPosition:
+ 8 9 18 13 15 14 6 0 2 10 4 3 7 11 12 17 1 5 16
+Cost: 34867410
+Generations: 2383
+correct Solution: 1
+
+Time: = 0.269
+StationaryPMX:
+ 14 15 10 11 17 8 7 5 4 13 16 3 18 2 6 12 0 1 9
+Cost: 24497802
+correct Solution: 1
+
+Time: = 0.545
+StationaryPos:
+ 8 10 13 12 16 4 6 7 3 18 2 11 9 5 15 14 17 0 1
+Cost: 26354966
+correct Solution: 1
+
+Time: = 0.021
+MEMETIC 10 0.1 false:
+ 14 15 7 6 11 17 12 16 5 10 9 4 8 3 18 13 0 1 2
+Cost: 18039214
+correct Solution: 1
+
+Time: = 0.041
+MEMETIC 10 0,1 true:
+ 14 7 5 15 10 18 4 12 6 11 9 16 8 3 13 17 0 1 2
+Cost: 21248134
+correct Solution: 1
+
+Time: = 0.005
+MEMETIC 10 1 false:
+ 10 6 9 11 18 17 12 16 5 13 3 4 8 7 15 14 0 1 2
+Cost: 17397290
+correct Solution: 1
+
+Time Total: = 1.471

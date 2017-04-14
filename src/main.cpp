@@ -21,6 +21,8 @@ int main(int argc,char *argv[]){
     cout << "ERROR: Numero de parametros" << endl;
     return -1;
   }
+  cout << "DATA: " <<  argv[1] << endl;
+
   cout << "NumThreads: " <<  omp_get_max_threads() << endl;
   omp_set_num_threads(omp_get_max_threads());
 
@@ -64,6 +66,8 @@ int main(int argc,char *argv[]){
 
 //Ejecucion greedy
   //greedy.calculatePotential();
+  std::chrono::steady_clock::time_point begin_total = std::chrono::steady_clock::now();
+
   std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
   greedy.execute();
   std::chrono::steady_clock::time_point end= std::chrono::steady_clock::now();
@@ -85,12 +89,16 @@ cout << "Greedy solution:" << endl;
   cout << endl;
   cout << "Coste: " << sol->cost << endl;
   cout << "correct Solution: " << (int) sol->checkSolution() << endl;
+  cout << endl;
 
-lb.setMaxIterations(10000);
+
+lb.setMaxIterations(50000);
 begin = std::chrono::steady_clock::now();
   lb.execute();
 end= std::chrono::steady_clock::now();
 std::cout << "Time: = " << (double) std::chrono::duration_cast<std::chrono::milliseconds>(end - begin).count() /1000.0 <<std::endl;
+
+
 sol=&lb.getActualSolution();
 Solution ran=lb.getInitialSolution();
 ran.cost = qap->calculateCost(ran.solution);
@@ -103,6 +111,7 @@ cout << "LocalSearch initializated with random solution :" << endl;
   cout << "Cost: " << sol->cost << endl;
 cout << "iterations: " << lb.getIterations() << endl;
 cout << "correct Solution: " << sol->checkSolution() << endl;
+cout << endl;
 
 
 
@@ -130,9 +139,13 @@ cout << "correct Solution: " << sol->checkSolution() << endl;
 
 
 gen.setNumPopulation(50);
+gen.setMaxGenerations(INT_MAX);
+gen.setMaxIterations(50000);
+
 cout << endl;
 gen.generatePopulation();
 
+//cout << "ok"<<endl;
 
 begin = std::chrono::steady_clock::now();
 
@@ -149,6 +162,7 @@ cout << "GenerationalPMX:" << endl;
   }
   cout << endl;
   cout << "Cost: " << sol->cost << endl;
+  cout << "Generations: " << gen.getGenerations() << endl;
   cout << "correct Solution: " << sol->checkSolution() << endl;
 
   //cout << "iterations: " << lb.getIterations() << endl;
@@ -172,6 +186,7 @@ cout << "GenerationalPMX:" << endl;
     }
     cout << endl;
     cout << "Cost: " << sol->cost << endl;
+    cout << "Generations: " << gen.getGenerations() << endl;
     cout << "correct Solution: " << sol->checkSolution() << endl;
 
     //cout << "iterations: " << lb.getIterations() << endl;
@@ -534,6 +549,8 @@ optimal.cost=qap->calculateCost(optimal.solution);
 
 cout << "Optimal cost moved:" << optimal.cost <<endl;
 */
+std::chrono::steady_clock::time_point end_total = std::chrono::steady_clock::now();
+std::cout << "Time Total: = " << (double) std::chrono::duration_cast<std::chrono::milliseconds>(end_total - begin_total).count() /1000.0 <<std::endl;
 
 
 }

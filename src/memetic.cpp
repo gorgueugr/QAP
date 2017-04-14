@@ -62,7 +62,7 @@ void Memetic::executeGenerationalPMX(){
   }
   while(it<maxIt){
     //cout << "Iterations: " << it << endl;
-    gen.executeStationaryPMX();
+    gen.executeGenerationalPMX();
     //cout << "GenGenerationsAndIterations: " << gen.getGenerations() <<" :/: "<< gen.getIterations()  << endl;
     //if(best) s=getBestOnes();
     //else s=getPopulation();

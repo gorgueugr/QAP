@@ -18,8 +18,11 @@ protected:
   float mutationP,crossP;
   Solution best;
   std::vector<Solution> selection;
+  int iteration;
+  int generations;
+  int maxGenerations;
 public:
-  Genetic(){maxIterations=50000;mutationP=0.001;crossP=0.7;};
+  Genetic(){maxIterations=50000;mutationP=0.001;crossP=0.7;maxGenerations=INT_MAX;};
   ~Genetic(){population.clear();};
   Genetic(int pop,int max,float mutation,float cross);
 
@@ -33,6 +36,7 @@ public:
 
   void setNumPopulation(int p){numPopulation=p;}
   void setMaxIterations(int m){maxIterations=m;}
+  void setMaxGenerations(int g){maxGenerations=g;}
 
 
   Solution & crossPosition(const Solution &a,const Solution &b);
@@ -41,6 +45,9 @@ public:
 
   Solution * getPopulation(){return population.data();}
   int getPopulationSize(){return numPopulation;}
+
+  int getIterations()const{return iteration;}
+  int getGenerations()const{return generations;}
 
   int binaryTournament();
 

@@ -42,7 +42,7 @@ class LocalSearch{
     void clearProblem(){problem=0;}
     Problem& getProblem(){return *problem;}
 
-    int getIterations()const;
+    int getIterations() const {return iteration;}
 
     void setIterations(int i);
     void setMaxIterations(int i);

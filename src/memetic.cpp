@@ -43,25 +43,38 @@ void Memetic::executeGenerationalPMX(){
   gen.setProblem(*problem);
   gen.setNumPopulation(50);
   gen.generatePopulation();
-  gen.setMaxIterations(generations);
+  gen.setMaxGenerations(generations);
+  gen.setMaxIterations(INT_MAX);
+  maxIt=50000;
+  it=0;
+
   int size=gen.getPopulationSize()*percent;
   Solution ** s;
   LocalSearch * l = new LocalSearch[size];
+
+  getPop = best ? &Memetic::getBestOnes : &Memetic::getPopulation;
+
+
   #pragma omp parallel for
   for(int j=0;j<size;++j){
     l[j].setMaxIterations(400);
     l[j].setProblem(*problem);
   }
-  for(int i=0;i<5000;++i){
-    gen.executeGenerationalPMX();
+  while(it<maxIt){
+    //cout << "Iterations: " << it << endl;
+    gen.executeStationaryPMX();
+    //cout << "GenGenerationsAndIterations: " << gen.getGenerations() <<" :/: "<< gen.getIterations()  << endl;
     //if(best) s=getBestOnes();
     //else s=getPopulation();
-    s = best ? getBestOnes() : getPopulation();
+    it += gen.getIterations();
+    s = (this->*getPop)();
    #pragma omp parallel for
     for(int j=0;j<size;++j){
       l[j].setInitialSolution(*s[j]);
       l[j].execute();
       (*s[j])=l[j].getActualSolution();
+      #pragma omp critical
+      it += l[j].getIterations();
     }
     delete[] s;
     //cout << "\r Iteración:  " << i;
@@ -73,25 +86,38 @@ void Memetic::executeGenerationalOrder(){
   gen.setProblem(*problem);
   gen.setNumPopulation(50);
   gen.generatePopulation();
-  gen.setMaxIterations(generations);
+  gen.setMaxGenerations(generations);
+  gen.setMaxIterations(INT_MAX);
+  maxIt=50000;
+  it=0;
+
   int size=gen.getPopulationSize()*percent;
   Solution ** s;
   LocalSearch * l = new LocalSearch[size];
+
+  getPop = best ? &Memetic::getBestOnes : &Memetic::getPopulation;
+
+
   #pragma omp parallel for
   for(int j=0;j<size;++j){
     l[j].setMaxIterations(400);
     l[j].setProblem(*problem);
   }
-  for(int i=0;i<5000;++i){
+  while(it<maxIt){
+    //cout << "Iterations: " << it << endl;
     gen.executeGenerationalOrder();
+    //cout << "GenGenerationsAndIterations: " << gen.getGenerations() <<" :/: "<< gen.getIterations()  << endl;
     //if(best) s=getBestOnes();
     //else s=getPopulation();
-    s = best ? getBestOnes() : getPopulation();
+    it += gen.getIterations();
+    s = (this->*getPop)();
    #pragma omp parallel for
     for(int j=0;j<size;++j){
       l[j].setInitialSolution(*s[j]);
       l[j].execute();
       (*s[j])=l[j].getActualSolution();
+      #pragma omp critical
+      it += l[j].getIterations();
     }
     delete[] s;
     //cout << "\r Iteración:  " << i;

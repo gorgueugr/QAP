@@ -55,9 +55,6 @@ void LocalSearch::setMaxIterations(int i){
 void LocalSearch::setIterations(int i){
   iteration=i;
 }
-int LocalSearch::getIterations()const{
-  return iteration;
-}
 
 void LocalSearch::startDlb(){
   dlb.resize(problem->getSize());
@@ -74,6 +71,7 @@ void LocalSearch::step(){
           improve=false;
           for(int j=0;j<size;j++){
             tempCost=problem->moveCost(actual.solution,i,j);
+            ++iteration;
               if(0>tempCost){
                 actual.move(i,j);
                 actual.cost+=tempCost;
@@ -107,6 +105,6 @@ void LocalSearch::execute(){
       actual=initial;
     while (iteration<maxIterations && (improve)) { //(improve || checkDlb())
       step();
-      ++iteration;
+      //++iteration;
     }
 }

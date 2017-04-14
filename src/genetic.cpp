@@ -13,12 +13,13 @@ void Genetic::generatePopulation(){
     return;
     int size=problem->getSize();
     population.resize(numPopulation);
-    #pragma omp parallel for
+    #pragma omp parallel for ordered
     for(int i=0;i<numPopulation;++i){
       population[i].solution.resize(size);
       for(int j=0;j<size;++j){
         population[i].solution[j]=j;
       }
+      #pragma omp ordered
       #pragma omp critical
       {
       random_shuffle(population[i].solution.begin(), population[i].solution.end(),getRandomMax);
@@ -38,12 +39,12 @@ Solution & Genetic::crossPosition(const Solution &a,const Solution &b){
 
   vector<int> v; //vector to save the numbers that do not coincide
 
-  #pragma omp parallel for
+  #pragma omp parallel for ordered
     for(int i=0;i<s;++i){
       if(a.solution[i]==b.solution[i])
         t->solution[i]=b.solution[i];
       else{
-        #pragma omp critical
+        #pragma omp ordered
         v.push_back(a.solution[i]); //if father1[i] and father2[i] are equal then copy it in son
       }
     }
@@ -188,17 +189,15 @@ void Genetic::executeGenerationalPMX(){
         while(iteration<maxIterations && generations<maxGenerations){
               contCross=0;
 
-              #pragma omp parallel for
+              //#pragma omp parallel for
                 for(int i=0;i<numPopulation;++i){
-                  #pragma omp critical
-                    a=binaryTournament();
+                  //#pragma omp critical
+                      a=binaryTournament();
                   if(contCross<numCross){
-                    #pragma omp critical
-                    b=binaryTournament();
-                    selection[i]=crossPosition(population[a],population[b]);
+                      b=binaryTournament();
+                      contCross++;
+                    selection[i]=crossPMX(population[a],population[b]);
                     update[i]=true;
-                    contCross++;
-
                   }else{
                     selection[i]=population[a];
                     update[i]=false;
@@ -257,16 +256,16 @@ void Genetic::executeGenerationalOrder(){
       while(iteration<maxIterations && generations<maxGenerations){
             contCross=0;
 
-            #pragma omp parallel for
+            //#pragma omp parallel for
               for(int i=0;i<numPopulation;++i){
-                #pragma omp critical
                   a=binaryTournament();
                 if(contCross<numCross){
-                  #pragma omp critical
-                  b=binaryTournament();
-                  selection[i]=crossPMX(population[a],population[b]);
+
+                    b=binaryTournament();
+                    contCross++;
+
+                  selection[i]=crossPosition(population[a],population[b]);
                   update[i]=true;
-                  contCross++;
 
                 }else{
                   selection[i]=population[a];

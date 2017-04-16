@@ -4,8 +4,6 @@ LocalSearch::LocalSearch(){
   iteration=0;
   maxIterations=0;
   improve=true;
-  int actual=0;
-  unsigned int r[4];
 }
 
 LocalSearch::LocalSearch(Problem &p,int i){
@@ -80,8 +78,8 @@ void LocalSearch::step(){
                 improve=true;
               }
             }
+            improve ? :dlb[i]=1;
           }
-        improve ? :dlb[i]=1;
     }
 }
 

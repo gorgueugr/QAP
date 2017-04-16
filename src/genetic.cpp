@@ -242,7 +242,7 @@ void Genetic::executeGenerationalOrder(){
       selection.resize(numPopulation);
       iteration=0;
       int numCross=crossP*(numPopulation/2);
-      //cout<< "numcross:" << numCross<<endl;
+      cout<< "numcross:" << numCross<<endl;
       int a,b;
       generations=0;
       iteration=0;

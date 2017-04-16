@@ -80,8 +80,8 @@ void LocalSearch::step(){
                 improve=true;
               }
             }
+            improve ? :dlb[i]=1;
           }
-        improve ? :dlb[i]=1;
     }
 }
 

@@ -7,7 +7,7 @@ Greedy solution:
 Coste: 1387185541
 correct Solution: 1
 
-Time: = 0.014
+Time: = 0.009
 Random solution cost: 1407338584
 LocalSearch initializated with random solution :
  29 4 13 14 16 10 20 3 7 19 25 12 18 21 17 8 28 26 1 23 22 27 6 9 11 5 2 0 15 24
@@ -15,7 +15,7 @@ Cost: 642017146
 iterations: 1770
 correct Solution: 1
 
-Time: = 0.004
+Time: = 0.006
 LocalSearch initializated with greedy solution :
  7 12 26 19 16 11 6 22 17 20 27 3 14 25 21 8 10 23 29 5 1 28 13 9 18 4 24 15 2 0
 Cost: 724146628
@@ -23,48 +23,48 @@ iterations: 900
 correct Solution: 1
 
 
-Time: = 0.839
+Time: = 0.392
 GenerationalPMX:
- 27 19 24 14 22 18 20 4 10 29 0 8 25 21 1 26 9 28 12 15 6 23 17 3 13 11 16 5 7 2
-Cost: 1030586081
-Generations: 2942
+ 5 19 24 14 22 6 20 13 16 29 0 15 25 3 1 17 9 28 12 8 18 21 11 23 7 26 10 27 4 2
+Cost: 970328106
+Generations: 2365
 correct Solution: 1
 
-Time: = 0.656
+Time: = 0.353
 GenerationalPosition:
- 8 20 1 12 22 25 11 24 26 6 4 27 10 2 0 23 3 18 21 17 15 16 13 29 7 19 28 9 14 5
-Cost: 956322556
-Generations: 2942
+ 29 19 11 14 7 20 16 15 22 12 23 9 5 0 25 21 17 26 8 28 24 18 4 1 10 3 6 2 13 27
+Cost: 980825371
+Generations: 2378
 correct Solution: 1
 
-Time: = 0.386
+Time: = 0.398
 StationaryPMX:
- 27 24 14 2 23 29 22 18 21 12 1 4 6 8 15 13 3 19 26 0 17 7 10 20 16 25 28 11 9 5
-Cost: 890579539
+ 0 10 1 3 19 4 16 15 7 6 27 21 24 18 5 25 12 17 28 8 20 9 22 26 23 11 14 29 2 13
+Cost: 813995702
 correct Solution: 1
 
-Time: = 0.436
+Time: = 0.515
 StationaryPos:
- 0 16 4 2 21 6 15 3 19 1 5 11 12 24 23 14 28 27 29 25 26 22 18 8 13 9 10 7 17 20
-Cost: 899584250
+ 27 8 10 14 19 25 1 0 3 16 23 4 22 15 12 28 24 26 6 21 18 20 11 5 9 17 13 29 7 2
+Cost: 892805636
 correct Solution: 1
 
-Time: = 0.033
+Time: = 0.031
 MEMETIC 10 0.1 false:
- 27 9 28 1 22 8 26 5 6 25 12 15 20 19 16 18 4 7 11 29 2 14 13 10 0 3 17 21 23 24
-Cost: 677452761
+ 7 26 22 19 11 17 16 6 12 20 29 21 8 5 25 27 10 9 14 28 23 18 13 3 1 4 2 15 0 24
+Cost: 713343002
 correct Solution: 1
 
-Time: = 0.039
+Time: = 0.03
 MEMETIC 10 0,1 true:
- 21 25 23 28 1 8 5 26 22 9 15 4 29 14 2 27 3 10 0 19 7 16 24 20 13 17 18 12 11 6
-Cost: 681351968
+ 20 22 1 17 0 26 25 3 15 8 19 12 29 14 27 10 21 28 16 5 18 7 2 9 11 23 13 6 4 24
+Cost: 805785943
 correct Solution: 1
 
-Time: = 0.016
+Time: = 0.027
 MEMETIC 10 1 false:
- 27 25 5 28 21 8 23 1 24 9 29 15 19 20 16 7 3 2 14 4 12 10 11 18 0 13 17 22 26 6
-Cost: 657930346
+ 10 20 7 3 16 19 14 13 4 29 28 12 8 25 1 5 17 23 27 21 18 9 22 26 11 6 24 0 15 2
+Cost: 644513665
 correct Solution: 1
 
-Time Total: = 2.471
+Time Total: = 1.801

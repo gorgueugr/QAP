@@ -1,13 +1,13 @@
 DATA: ./bin/data/chr20b.dat
 NumThreads: 4
 Size:20
-Time: = 0.007
+Time: = 0.004
 Greedy solution:
  16 17 6 3 7 13 18 2 1 14 5 9 8 11 10 15 12 19 0 4
 Coste: 8916
 correct Solution: 1
 
-Time: = 0.013
+Time: = 0.012
 Random solution cost: 9386
 LocalSearch initializated with random solution :
  2 9 3 16 1 4 18 10 17 8 19 0 5 12 13 15 11 7 6 14
@@ -15,7 +15,7 @@ Cost: 3618
 iterations: 400
 correct Solution: 1
 
-Time: = 0.002
+Time: = 0.004
 LocalSearch initializated with greedy solution :
  7 15 6 13 11 5 0 16 4 14 18 3 17 9 10 2 1 19 12 8
 Cost: 3520
@@ -23,48 +23,48 @@ iterations: 400
 correct Solution: 1
 
 
-Time: = 0.892
+Time: = 0.458
 GenerationalPMX:
- 8 0 15 19 3 14 2 18 6 13 11 12 4 10 7 1 9 16 5 17
-Cost: 6408
-Generations: 2942
+ 3 8 0 19 15 14 2 18 6 13 11 12 4 10 7 1 9 16 5 17
+Cost: 7312
+Generations: 2391
 correct Solution: 1
 
-Time: = 0.803
+Time: = 0.443
 GenerationalPosition:
- 10 12 13 9 15 11 6 18 2 1 19 3 14 5 16 0 17 8 7 4
-Cost: 6788
-Generations: 2942
+ 19 1 14 15 2 12 18 17 4 7 0 6 16 9 5 3 8 13 10 11
+Cost: 7112
+Generations: 2379
 correct Solution: 1
 
-Time: = 0.451
+Time: = 0.491
 StationaryPMX:
- 10 4 18 3 13 16 12 5 15 17 1 19 11 2 6 9 0 7 8 14
-Cost: 4422
+ 5 11 13 6 18 9 8 16 19 4 2 10 15 17 7 3 12 1 0 14
+Cost: 3692
 correct Solution: 1
 
-Time: = 0.846
+Time: = 0.916
 StationaryPos:
- 7 19 14 2 16 6 5 8 12 10 0 1 15 4 18 3 13 9 11 17
-Cost: 5716
+ 16 14 4 12 10 0 1 6 15 11 7 5 13 9 3 2 17 19 18 8
+Cost: 3720
 correct Solution: 1
 
-Time: = 0.095
+Time: = 0.115
 MEMETIC 10 0.1 false:
- 10 4 8 12 0 1 14 6 3 2 5 19 16 17 18 9 13 7 11 15
-Cost: 3342
+ 16 4 2 10 6 8 11 9 19 5 7 13 12 15 0 1 17 3 18 14
+Cost: 3210
 correct Solution: 1
 
-Time: = 0.119
+Time: = 0.077
 MEMETIC 10 0,1 true:
- 19 17 13 7 18 15 1 14 10 16 4 11 12 6 3 0 9 8 5 2
-Cost: 4328
+ 1 3 10 12 14 4 18 16 13 17 5 2 15 9 0 7 6 19 11 8
+Cost: 3592
 correct Solution: 1
 
-Time: = 0.108
+Time: = 0.04
 MEMETIC 10 1 false:
- 17 18 15 4 12 16 1 5 3 11 13 6 14 2 10 19 8 7 0 9
-Cost: 2776
+ 10 1 14 12 16 15 11 13 6 5 2 3 7 9 19 17 8 18 0 4
+Cost: 2826
 correct Solution: 1
 
-Time Total: = 3.395
+Time Total: = 2.596

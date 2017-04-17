@@ -113,14 +113,7 @@ Solution & Genetic::crossPMX(const Solution &a,const Solution &b){
 int  Genetic::binaryTournament(){
   int a = getRandomMax(numPopulation);
   int b = getRandomMax(numPopulation);
-  //cout <<" a: " << a <<" b: " << b << endl;
-  //C=A%B; == C=A-B*(A/B);
-//  a = (a-numPopulation)*(a/d1);
-//  b = (b-numPopulation)*(b/d1);
-  //cout <<" a: " << a <<" b: " << b << endl;
 
-  //int a = rand() % numPopulation; //first random player
-  //int b = rand() % numPopulation; //Second random player
 
   return (population[a].cost>population[b].cost) ? a : b;
 }
@@ -239,7 +232,6 @@ void Genetic::executeGenerationalPMX(){
 }
 
 void Genetic::executeGenerationalOrder(){
-
       //generatePopulation();
 
       crossP=0.7;
@@ -263,18 +255,18 @@ void Genetic::executeGenerationalOrder(){
       while(iteration<maxIterations && generations<maxGenerations){
             contCross=0;
 
-            #pragma omp parallel for ordered
+            //#pragma omp parallel for ordered
               for(int i=0;i<numPopulation;++i){
-                #pragma omp ordered
-                #pragma omp critical
+              //  #pragma omp ordered
+              //  #pragma omp critical
                   a=binaryTournament();
                 if(contCross<numCross){
-                  #pragma omp ordered
-                  #pragma omp critical
-                  {
+                //  #pragma omp ordered
+                //  #pragma omp critical
+                //  {
                     b=binaryTournament();
                     selection[i]=crossPosition(population[a],population[b]);
-                  }
+                //  }
                   update[i]=true;
                   contCross++;
 

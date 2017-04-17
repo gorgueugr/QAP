@@ -1,6 +1,6 @@
 #include "random.h"
 
-int actual=4;
+int actual=3;
 unsigned int r[4];
 
 
@@ -91,17 +91,15 @@ cur_seed = _mm_set_epi32( seed, seed+1, seed, seed+1 );
 }
 
 int getRandom(){
-  if(actual==4){
-    actual=0;
+  if(actual==3){
+    actual=-1;
     rand_sse(r);
-    return (unsigned short) r[0];
-
   }
   ++actual;
   return ( unsigned short) r[actual];
 
-
 }
+
 int getRandomMax(int b){
   return (unsigned short) getRandomRange(0,b);
 }

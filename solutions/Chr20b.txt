@@ -8,14 +8,14 @@ Coste: 8916
 correct Solution: 1
 
 Time: = 0.012
-Random solution cost: 9386
+Random solution cost: 10278
 LocalSearch initializated with random solution :
- 2 9 3 16 1 4 18 10 17 8 19 0 5 12 13 15 11 7 6 14
-Cost: 3618
+ 7 9 19 4 2 12 0 1 17 3 18 13 16 15 5 8 11 10 6 14
+Cost: 3894
 iterations: 400
 correct Solution: 1
 
-Time: = 0.004
+Time: = 0.005
 LocalSearch initializated with greedy solution :
  7 15 6 13 11 5 0 16 4 14 18 3 17 9 10 2 1 19 12 8
 Cost: 3520
@@ -23,48 +23,48 @@ iterations: 400
 correct Solution: 1
 
 
-Time: = 0.458
+Time: = 1.074
 GenerationalPMX:
- 3 8 0 19 15 14 2 18 6 13 11 12 4 10 7 1 9 16 5 17
-Cost: 7312
-Generations: 2391
+ 11 8 18 14 0 1 10 16 9 6 7 13 3 15 5 12 17 4 19 2
+Cost: 7438
+Generations: 2942
 correct Solution: 1
 
-Time: = 0.443
+Time: = 1.369
 GenerationalPosition:
- 19 1 14 15 2 12 18 17 4 7 0 6 16 9 5 3 8 13 10 11
-Cost: 7112
-Generations: 2379
+ 0 6 19 14 7 8 1 10 11 4 5 18 12 16 3 13 17 15 2 9
+Cost: 6384
+Generations: 2942
 correct Solution: 1
 
-Time: = 0.491
+Time: = 0.498
 StationaryPMX:
- 5 11 13 6 18 9 8 16 19 4 2 10 15 17 7 3 12 1 0 14
-Cost: 3692
+ 7 15 10 12 14 1 9 19 2 11 6 5 8 3 0 13 17 18 16 4
+Cost: 3400
 correct Solution: 1
 
-Time: = 0.916
+Time: = 0.505
 StationaryPos:
- 16 14 4 12 10 0 1 6 15 11 7 5 13 9 3 2 17 19 18 8
-Cost: 3720
+ 12 0 14 1 7 15 9 17 8 2 10 6 3 13 4 5 16 11 18 19
+Cost: 5054
 correct Solution: 1
 
-Time: = 0.115
+Time: = 0.088
 MEMETIC 10 0.1 false:
- 16 4 2 10 6 8 11 9 19 5 7 13 12 15 0 1 17 3 18 14
-Cost: 3210
+ 15 7 5 6 13 11 14 18 3 16 9 4 8 10 0 17 12 19 1 2
+Cost: 3100
 correct Solution: 1
 
-Time: = 0.077
+Time: = 0.076
 MEMETIC 10 0,1 true:
- 1 3 10 12 14 4 18 16 13 17 5 2 15 9 0 7 6 19 11 8
-Cost: 3592
+ 0 8 14 10 13 4 5 15 11 12 6 3 2 1 19 18 7 17 9 16
+Cost: 3050
 correct Solution: 1
 
-Time: = 0.04
+Time: = 0.029
 MEMETIC 10 1 false:
- 10 1 14 12 16 15 11 13 6 5 2 3 7 9 19 17 8 18 0 4
-Cost: 2826
+ 16 4 9 10 7 17 15 2 1 6 12 11 5 19 13 8 3 0 14 18
+Cost: 2820
 correct Solution: 1
 
-Time Total: = 2.596
+Time Total: = 3.705

@@ -8,11 +8,11 @@ Coste: 38627698
 correct Solution: 1
 
 Time: = 0.01
-Random solution cost: 60675016
+Random solution cost: 66731636
 LocalSearch initializated with random solution :
- 0 1 16 11 10 6 5 4 12 8 15 7 9 17 13 18 3 2 14
-Cost: 27650458
-iterations: 361
+ 7 3 4 12 0 16 14 18 6 1 9 15 2 5 17 13 10 11 8
+Cost: 27614198
+iterations: 627
 correct Solution: 1
 
 Time: = 0.004
@@ -23,48 +23,48 @@ iterations: 361
 correct Solution: 1
 
 
-Time: = 1.01
+Time: = 0.818
 GenerationalPMX:
- 15 14 16 13 10 6 0 3 2 9 8 17 18 1 7 12 11 4 5
-Cost: 34004700
-Generations: 2396
+ 11 2 9 12 0 16 8 18 17 3 6 5 1 7 14 15 4 13 10
+Cost: 29979380
+Generations: 2942
 correct Solution: 1
 
-Time: = 0.636
+Time: = 1.102
 GenerationalPosition:
- 9 16 2 8 6 11 5 15 13 7 18 10 17 12 3 4 14 0 1
-Cost: 34569888
-Generations: 2380
+ 18 6 12 8 11 10 1 9 5 7 4 16 13 0 14 15 2 17 3
+Cost: 30601328
+Generations: 2942
 correct Solution: 1
 
-Time: = 0.408
+Time: = 0.427
 StationaryPMX:
- 11 7 5 10 8 18 4 16 6 17 9 12 13 3 15 14 2 1 0
-Cost: 17946052
+ 10 5 6 11 15 18 12 9 7 14 4 2 13 3 17 8 0 1 16
+Cost: 21837850
 correct Solution: 1
 
-Time: = 0.8
+Time: = 0.477
 StationaryPos:
- 9 12 17 13 5 8 18 2 16 7 6 4 3 10 14 15 1 0 11
-Cost: 25230116
+ 6 9 5 10 13 8 16 4 12 18 0 2 11 3 7 17 14 15 1
+Cost: 22155630
 correct Solution: 1
 
-Time: = 0.084
+Time: = 0.055
 MEMETIC 10 0.1 false:
- 14 15 7 18 13 17 9 16 3 10 4 12 11 5 6 8 0 1 2
-Cost: 17937024
+ 14 15 7 6 10 11 12 16 5 13 9 4 8 3 17 18 0 1 2
+Cost: 18054452
 correct Solution: 1
 
-Time: = 0.09
+Time: = 0.07
 MEMETIC 10 0,1 true:
- 9 1 0 8 15 6 5 4 17 14 7 3 11 10 13 18 16 2 12
-Cost: 27323300
+ 14 15 5 10 11 13 12 9 7 17 2 4 6 3 8 18 16 0 1
+Cost: 19752814
 correct Solution: 1
 
-Time: = 0.031
+Time: = 0.045
 MEMETIC 10 1 false:
- 14 15 7 18 13 17 9 16 3 10 4 12 11 5 8 6 0 1 2
-Cost: 17937024
+ 14 15 7 6 11 17 12 16 5 10 9 4 8 3 13 18 0 1 2
+Cost: 18039214
 correct Solution: 1
 
-Time Total: = 3.121
+Time Total: = 3.048

@@ -127,61 +127,9 @@ void Memetic::executeGenerationalOrder(){
 
 
 void Memetic::executeStationaryPMX(){
-  gen.setProblem(*problem);
-  gen.setNumPopulation(50);
-  gen.generatePopulation();
-  gen.setMaxIterations(generations);
-  int size=gen.getPopulationSize()*percent;
-  Solution ** s;
-  LocalSearch * l = new LocalSearch[size];
-  #pragma omp parallel for
-  for(int j=0;j<size;++j){
-    l[j].setMaxIterations(400);
-    l[j].setProblem(*problem);
-  }
-  for(int i=0;i<5000;++i){
-    gen.executeStationaryPMX();
-    //if(best) s=getBestOnes();
-    //else s=getPopulation();
-    s = best ? getBestOnes() : getPopulation();
-   #pragma omp parallel for
-    for(int j=0;j<size;++j){
-      l[j].setInitialSolution(*s[j]);
-      l[j].execute();
-      (*s[j])=l[j].getActualSolution();
-    }
-    delete[] s;
-    //cout << "\r Iteración:  " << i;
-  }
-  delete[] l;
+
 }
 
 void Memetic::executeStationaryOrder(){
-  gen.setProblem(*problem);
-  gen.setNumPopulation(50);
-  gen.generatePopulation();
-  gen.setMaxIterations(generations);
-  int size=gen.getPopulationSize()*percent;
-  Solution ** s;
-  LocalSearch * l = new LocalSearch[size];
-  #pragma omp parallel for
-  for(int j=0;j<size;++j){
-    l[j].setMaxIterations(400);
-    l[j].setProblem(*problem);
-  }
-  for(int i=0;i<5000;++i){
-    gen.executeStationaryOrder();
-    //if(best) s=getBestOnes();
-    //else s=getPopulation();
-    s = best ? getBestOnes() : getPopulation();
-   #pragma omp parallel for
-    for(int j=0;j<size;++j){
-      l[j].setInitialSolution(*s[j]);
-      l[j].execute();
-      (*s[j])=l[j].getActualSolution();
-    }
-    delete[] s;
-    //cout << "\r Iteración:  " << i;
-  }
-  delete[] l;
+
 }

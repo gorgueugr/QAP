@@ -190,14 +190,18 @@ void Genetic::executeGenerationalPMX(){
         while(iteration<maxIterations && generations<maxGenerations){
               contCross=0;
 
-              //#pragma omp parallel for ordered
+              #pragma omp parallel for ordered
                 for(int i=0;i<numPopulation;++i){
-                  //#pragma omp ordered
+                  #pragma omp ordered
+                  #pragma omp critical
                     a=binaryTournament();
                   if(contCross<numCross){
-                    //#pragma omp ordered
+                    #pragma omp ordered
+                    #pragma omp critical
+                    {
                     b=binaryTournament();
                     selection[i]=crossPMX(population[a],population[b]);
+                    }
                     update[i]=true;
                     contCross++;
 
@@ -259,16 +263,18 @@ void Genetic::executeGenerationalOrder(){
       while(iteration<maxIterations && generations<maxGenerations){
             contCross=0;
 
-          //  #pragma omp parallel for ordered
+            #pragma omp parallel for ordered
               for(int i=0;i<numPopulation;++i){
-                //#pragma omp ordered
+                #pragma omp ordered
+                #pragma omp critical
                   a=binaryTournament();
                 if(contCross<numCross){
-                  //#pragma omp ordered
-                  //{
-                  b=binaryTournament();
-                  selection[i]=crossPosition(population[a],population[b]);
-                  //}
+                  #pragma omp ordered
+                  #pragma omp critical
+                  {
+                    b=binaryTournament();
+                    selection[i]=crossPosition(population[a],population[b]);
+                  }
                   update[i]=true;
                   contCross++;
 

@@ -1,13 +1,13 @@
 DATA: ./bin/data/nug25.dat
 NumThreads: 4
 Size:25
-Time: = 0.004
+Time: = 0.001
 Greedy solution:
  11 16 2 1 23 17 15 8 9 0 20 6 5 18 22 10 7 24 13 3 12 14 19 21 4
 Coste: 4462
 correct Solution: 1
 
-Time: = 0.01
+Time: = 0.008
 Random solution cost: 4936
 LocalSearch initializated with random solution :
  4 19 14 1 21 16 2 24 18 0 22 6 15 5 8 11 13 20 9 7 12 3 23 17 10
@@ -23,48 +23,48 @@ iterations: 625
 correct Solution: 1
 
 
-Time: = 1.068
+Time: = 0.875
 GenerationalPMX:
  14 22 8 11 21 20 16 18 19 17 0 12 24 3 1 15 23 13 4 10 2 6 5 9 7
 Cost: 4586
 Generations: 2942
 correct Solution: 1
 
-Time: = 1.09
+Time: = 0.768
 GenerationalPosition:
  21 3 1 10 12 16 9 24 23 4 18 15 22 20 17 11 0 8 5 7 19 14 6 2 13
 Cost: 4496
 Generations: 2942
 correct Solution: 1
 
-Time: = 0.413
+Time: = 0.437
 StationaryPMX:
  4 1 7 10 17 8 22 5 13 24 14 9 20 23 2 0 19 6 15 3 21 12 18 16 11
 Cost: 4078
 correct Solution: 1
 
-Time: = 0.554
+Time: = 0.534
 StationaryPos:
  14 1 10 4 24 21 8 0 17 2 9 18 15 19 5 12 3 13 22 7 23 20 6 16 11
 Cost: 4372
 correct Solution: 1
 
-Time: = 0.046
+Time: = 0.044
 MEMETIC 10 0.1 false:
  12 21 18 0 23 14 9 8 6 20 19 22 7 5 13 11 16 24 15 3 4 1 2 17 10
 Cost: 3856
 correct Solution: 1
 
-Time: = 0.058
+Time: = 0.057
 MEMETIC 10 0,1 true:
  11 22 12 2 4 16 7 3 17 1 19 9 13 18 24 21 8 5 15 10 14 6 0 20 23
 Cost: 3998
 correct Solution: 1
 
-Time: = 0.017
+Time: = 0.013
 MEMETIC 10 1 false:
  11 22 13 3 12 16 2 5 6 9 24 7 15 18 19 1 17 8 0 21 4 10 23 20 14
 Cost: 3844
 correct Solution: 1
 
-Time Total: = 3.286
+Time Total: = 2.765

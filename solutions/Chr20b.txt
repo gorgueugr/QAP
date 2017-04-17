@@ -7,7 +7,7 @@ Greedy solution:
 Coste: 8916
 correct Solution: 1
 
-Time: = 0.012
+Time: = 0.015
 Random solution cost: 10278
 LocalSearch initializated with random solution :
  7 9 19 4 2 12 0 1 17 3 18 13 16 15 5 8 11 10 6 14
@@ -15,7 +15,7 @@ Cost: 3894
 iterations: 400
 correct Solution: 1
 
-Time: = 0.005
+Time: = 0.006
 LocalSearch initializated with greedy solution :
  7 15 6 13 11 5 0 16 4 14 18 3 17 9 10 2 1 19 12 8
 Cost: 3520
@@ -23,48 +23,48 @@ iterations: 400
 correct Solution: 1
 
 
-Time: = 1.074
+Time: = 1.777
 GenerationalPMX:
  11 8 18 14 0 1 10 16 9 6 7 13 3 15 5 12 17 4 19 2
 Cost: 7438
 Generations: 2942
 correct Solution: 1
 
-Time: = 1.369
+Time: = 0.957
 GenerationalPosition:
  0 6 19 14 7 8 1 10 11 4 5 18 12 16 3 13 17 15 2 9
 Cost: 6384
 Generations: 2942
 correct Solution: 1
 
-Time: = 0.498
+Time: = 0.523
 StationaryPMX:
  7 15 10 12 14 1 9 19 2 11 6 5 8 3 0 13 17 18 16 4
 Cost: 3400
 correct Solution: 1
 
-Time: = 0.505
+Time: = 0.565
 StationaryPos:
  12 0 14 1 7 15 9 17 8 2 10 6 3 13 4 5 16 11 18 19
 Cost: 5054
 correct Solution: 1
 
-Time: = 0.088
+Time: = 0.109
 MEMETIC 10 0.1 false:
  15 7 5 6 13 11 14 18 3 16 9 4 8 10 0 17 12 19 1 2
 Cost: 3100
 correct Solution: 1
 
-Time: = 0.076
+Time: = 0.124
 MEMETIC 10 0,1 true:
  0 8 14 10 13 4 5 15 11 12 6 3 2 1 19 18 7 17 9 16
 Cost: 3050
 correct Solution: 1
 
-Time: = 0.029
+Time: = 0.051
 MEMETIC 10 1 false:
  16 4 9 10 7 17 15 2 1 6 12 11 5 19 13 8 3 0 14 18
 Cost: 2820
 correct Solution: 1
 
-Time Total: = 3.705
+Time Total: = 4.167

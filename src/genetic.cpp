@@ -370,47 +370,68 @@ void Genetic::executeStationaryPMX(){
         delete[] update;
 }
 void Genetic::executeStationaryOrder(){
+  //generatePopulation();
 
-//  generatePopulation();
-
-  crossP=1;
+  crossP=0.7;
   mutationP=0.001;
+
+
+  selection.resize(numPopulation);
+  iteration=0;
+  int numCross=crossP*(numPopulation/2);
+  //cout<< "numcross:" << numCross<<endl;
+  int a,b;
+  generations=0;
   iteration=0;
 
-
-  selection.resize(2);
-  int iteration=0;
-  int a,b,c;
-
+  bool * update = new bool[numPopulation];
+  for(int i=0;i<numPopulation;++i){
+    update[i]=false;
+  }
 
   int contCross;
-  while(iteration<maxIterations){
-            //Selection
-              a=binaryTournament();
-              b=binaryTournament();
-              //Cross
-              selection[0]=crossPosition(population[a],population[b]);
-              selection[1]=crossPosition(population[b],population[a]);
+  while(iteration<maxIterations && generations<maxGenerations){
+        contCross=0;
 
+        #pragma omp parallel for
+          for(int i=0;i<numPopulation;++i){
+            #pragma omp critical
+              a=binaryTournament();
+            if(contCross<numCross){
+              #pragma omp critical
+              b=binaryTournament();
+              selection[i]=crossPMX(population[a],population[b]);
+              update[i]=true;
+              contCross++;
+
+            }else{
+              selection[i]=population[a];
+              update[i]=false;
+            }
+          }
 
           /*Mutation*/
           mutate();
 
-          Solution * worst;
-          for(int i=0;i<selection.size();++i){
-              worst = worstSolution();
-              selection[i].cost=problem->calculateCost(selection[i].solution);
-              if(worst->cost > selection[i].cost ){
-                worst->solution=selection[i].solution;
-                worst->cost=selection[i].cost;
-              }
+          best=*bestSolution();
+
+          population=selection;
+
+          //#pragma omp parallel for
+          for(int i=0;i<numPopulation;++i){
+            if(update[i]){
+              population[i].cost=problem->calculateCost(population[i].solution);
+              ++iteration;
+            }
           }
 
+          Solution * worst = worstSolution();
+          worst->solution=best.solution;
+          worst->cost=best.cost;
+          ++generations;
 
-          //cout << "\e[A" << "iteration: " << iteration << " of " << maxIterations << ". Best solution cost: " << bestSolution()->cost << " worst Solution:" << worstSolution()->cost << endl;
-          iteration++;
+        //  cout << "\e[A" << "iteration: " << iteration << " of " << maxIterations << ". Best solution cost: " << bestSolution()->cost << " worst Solution:" << worstSolution()->cost << endl;
+        //  iteration++;
   }
-
-
-
+  delete[] update;
 }

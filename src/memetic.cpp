@@ -45,7 +45,7 @@ void Memetic::executeGenerationalPMX(){
   gen.generatePopulation();
   gen.setMaxGenerations(generations);
   gen.setMaxIterations(INT_MAX);
-  maxIt=500000;
+  maxIt=500000000;
   it=0;
 
   int size=gen.getPopulationSize()*percent;
@@ -88,7 +88,7 @@ void Memetic::executeGenerationalOrder(){
   gen.generatePopulation();
   gen.setMaxGenerations(generations);
   gen.setMaxIterations(INT_MAX);
-  maxIt=500000;
+  maxIt=500000000;
   it=0;
 
   int size=gen.getPopulationSize()*percent;

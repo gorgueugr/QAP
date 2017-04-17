@@ -139,8 +139,8 @@ cout << endl;
 
 
 gen.setNumPopulation(50);
-gen.setMaxGenerations(INT_MAX);
-gen.setMaxIterations(50000);
+gen.setMaxGenerations(50000);
+gen.setMaxIterations(INT_MAX);
 
 cout << endl;
 gen.generatePopulation();

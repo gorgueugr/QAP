@@ -128,7 +128,7 @@ void Genetic::mutate(){
     a = getRandomMax(problem->getSize()) ;
     c = getRandomMax(problem->getSize()) ;
     b = getRandomMax(selection.size()) ;
-
+    selection[b].cost+=problem->moveCost(selection[b].solution,a,c);
     selection[b].move(a,c);
   }
 }
@@ -318,7 +318,6 @@ void Genetic::executeStationaryPMX(){
     int a,b,c;
 
 
-    int contCross;
     while(iteration<maxIterations && generations<maxGenerations){
               //Selection
                 a=binaryTournament();

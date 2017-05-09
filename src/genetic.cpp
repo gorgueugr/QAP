@@ -13,6 +13,7 @@ void Genetic::generatePopulation(){
     return;
     int size=problem->getSize();
     population.resize(numPopulation);
+
     #pragma omp parallel for ordered
     for(int i=0;i<numPopulation;++i){
       population[i].solution.resize(size);
@@ -128,8 +129,9 @@ void Genetic::mutate(){
     a = getRandomMax(problem->getSize()) ;
     c = getRandomMax(problem->getSize()) ;
     b = getRandomMax(selection.size()) ;
-    selection[b].cost+=problem->moveCost(selection[b].solution,a,c);
+    //selection[b].cost+=problem->moveCost(selection[b].solution,a,c);
     selection[b].move(a,c);
+    update[b]=true;
   }
 }
 
@@ -174,10 +176,7 @@ void Genetic::executeGenerationalPMX(){
         generations=0;
         iteration=0;
 
-        bool * update = new bool[numPopulation];
-        for(int i=0;i<numPopulation;++i){
-          update[i]=false;
-        }
+
 
         int contCross;
         while(iteration<maxIterations && generations<maxGenerations){
@@ -192,8 +191,11 @@ void Genetic::executeGenerationalPMX(){
                     #pragma omp ordered
                     #pragma omp critical
                     {
-                    b=binaryTournament();
-                    selection[i]=crossPMX(population[a],population[b]);
+                      b=binaryTournament();
+                        while (a==b) {
+                          b=binaryTournament();
+                        }
+                        selection[i]=crossPMX(population[a],population[b]);
                     }
                     update[i]=true;
                     contCross++;
@@ -246,10 +248,6 @@ void Genetic::executeGenerationalOrder(){
       generations=0;
       iteration=0;
 
-      bool * update = new bool[numPopulation];
-      for(int i=0;i<numPopulation;++i){
-        update[i]=false;
-      }
 
       int contCross;
       while(iteration<maxIterations && generations<maxGenerations){
@@ -264,7 +262,10 @@ void Genetic::executeGenerationalOrder(){
                 //  #pragma omp ordered
                 //  #pragma omp critical
                 //  {
+                b=binaryTournament();
+                  while (a==b) {
                     b=binaryTournament();
+                  }
                     selection[i]=crossPosition(population[a],population[b]);
                 //  }
                   update[i]=true;
@@ -322,7 +323,9 @@ void Genetic::executeStationaryPMX(){
               //Selection
                 a=binaryTournament();
                 b=binaryTournament();
-                //Cross
+                  while (a==b) {
+                    b=binaryTournament();
+                  }                //Cross
                 selection[0]=crossPMX(population[a],population[b]);
                 selection[1]=crossPMX(population[b],population[a]);
 
@@ -367,7 +370,9 @@ void Genetic::executeStationaryOrder(){
             //Selection
               a=binaryTournament();
               b=binaryTournament();
-              //Cross
+                while (a==b) {
+                  b=binaryTournament();
+                }              //Cross
               selection[0]=crossPosition(population[a],population[b]);
               selection[1]=crossPosition(population[b],population[a]);
 

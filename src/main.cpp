@@ -6,6 +6,7 @@
 #include "solution.h"
 #include "greedy.h"
 #include "localsearch.h"
+#include "bmb.h"
 #include "genetic.h"
 #include "memetic.h"
 #include <chrono>
@@ -40,6 +41,8 @@ int main(int argc,char *argv[]){
   Greedy greedy;
   LocalSearch lb;
   Genetic gen;
+  bmb b;
+  b.setProblem(*qap);
   lb.setProblem(*qap);
   greedy.setProblem(*qap);
   gen.setProblem(*qap);
@@ -67,7 +70,22 @@ int main(int argc,char *argv[]){
 //Ejecucion greedy
   //greedy.calculatePotential();
   std::chrono::steady_clock::time_point begin_total = std::chrono::steady_clock::now();
+  std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
+  b.execute();
+  std::chrono::steady_clock::time_point end= std::chrono::steady_clock::now();
+  std::cout << "Time: = " << (double) std::chrono::duration_cast<std::chrono::milliseconds>(end - begin).count() /1000.0 <<std::endl;
+  Solution * sol=&b.getBestSolution();
 
+cout << "BMB solution:" << endl;
+  for(int i=0;i<sol->solution.size();++i){
+    cout << " "<< sol->solution[i];
+  }
+  cout << endl;
+  cout << "Coste: " << sol->cost << endl;
+  cout << "correct Solution: " << (int) sol->checkSolution() << endl;
+  cout << endl;
+
+/*
   std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
   greedy.execute();
   std::chrono::steady_clock::time_point end= std::chrono::steady_clock::now();
@@ -334,6 +352,7 @@ cout << "MEMETIC 10 0.1 false:" << endl;
         cout << endl;
 */
 //Segundo memetico
+/*
 
 Memetic m2(10,0.1,true);
 m2.setProblem(*qap);
@@ -360,7 +379,7 @@ cout << "MEMETIC 10 0,1 true:" << endl;
   cout << "correct Solution: " << sol->checkSolution() << endl;
   //cout << "iterations: " << lb.getIterations() << endl;
 
-  cout << endl;/*
+  cout << endl;*//*
 
   begin = std::chrono::steady_clock::now();
 
@@ -424,7 +443,7 @@ cout << "MEMETIC 10 0,1 true:" << endl;
 
         cout << endl;
 */
-
+/*
     //Tercero
     Memetic m3(10,1,false);
     m3.setProblem(*qap);
@@ -453,7 +472,7 @@ cout << "MEMETIC 10 0,1 true:" << endl;
 
       //cout << "iterations: " << lb.getIterations() << endl;
 
-      cout << endl;
+      cout << endl;*/
       /*
       begin = std::chrono::steady_clock::now();
 

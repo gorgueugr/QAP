@@ -21,6 +21,7 @@ protected:
   int iteration;
   int generations;
   int maxGenerations;
+  bool * update;
 public:
   Genetic(){maxIterations=50000;mutationP=0.001;crossP=0.7;maxGenerations=INT_MAX;};
   ~Genetic(){population.clear();};

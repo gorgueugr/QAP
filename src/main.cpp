@@ -9,6 +9,7 @@
 #include "bmb.h"
 #include "genetic.h"
 #include "memetic.h"
+#include "es.h"
 #include <chrono>
 #include <omp.h>
 
@@ -38,14 +39,17 @@ int main(int argc,char *argv[]){
 
   Input i(argv[1]);
   Problem * qap=i.read();
-  Greedy greedy;
-  LocalSearch lb;
-  Genetic gen;
+  //Greedy greedy;
+  //LocalSearch lb;
+  //Genetic gen;
   bmb b;
   b.setProblem(*qap);
-  lb.setProblem(*qap);
-  greedy.setProblem(*qap);
-  gen.setProblem(*qap);
+  Es es;
+  es.setProblem(*qap);
+
+  //lb.setProblem(*qap);
+  //greedy.setProblem(*qap);
+  //gen.setProblem(*qap);
 
   int s=qap->getSize();
 
@@ -77,6 +81,23 @@ int main(int argc,char *argv[]){
   Solution * sol=&b.getBestSolution();
 
 cout << "BMB solution:" << endl;
+  for(int i=0;i<sol->solution.size();++i){
+    cout << " "<< sol->solution[i];
+  }
+  cout << endl;
+  cout << "Coste: " << sol->cost << endl;
+  cout << "correct Solution: " << (int) sol->checkSolution() << endl;
+  cout << endl;
+
+
+
+  begin = std::chrono::steady_clock::now();
+  es.execute();
+  end= std::chrono::steady_clock::now();
+  std::cout << "Time: = " << (double) std::chrono::duration_cast<std::chrono::milliseconds>(end - begin).count() /1000.0 <<std::endl;
+  sol=&es.getBestSolution();
+
+cout << "ES solution:" << endl;
   for(int i=0;i<sol->solution.size();++i){
     cout << " "<< sol->solution[i];
   }

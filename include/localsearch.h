@@ -12,7 +12,7 @@
 using namespace std;
 
 class LocalSearch{
-  private:
+protected:
     Solution initial;
     Solution actual;
 
@@ -47,8 +47,8 @@ class LocalSearch{
     void setIterations(int i);
     void setMaxIterations(int i);
 
-    void execute();
-    void step();
+  virtual  void execute();
+  virtual  void step();
 
 
 };

@@ -118,3 +118,7 @@ int getRandomRange(int a,int b){
   //return (unsigned short) (r - ( division * divider)) + a;
 
 }
+
+float getRandomFloat(){
+  return (float) getRandomRange(0,10000-1) / 10000;
+}

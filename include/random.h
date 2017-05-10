@@ -70,6 +70,7 @@ void rand_sse( unsigned int* );
 int getRandom();
 int getRandomMax(int b);
 int getRandomRange(int a,int b);
+float getRandomFloat();
 
 
 static __m128i cur_seed;

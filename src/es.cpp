@@ -40,7 +40,9 @@ void Es::execute(){
       maxNeighbours = 10*initial.solution.size();
       maxSucces = 0.1 * maxNeighbours;
       maxIt = 50000;
-      beta = (tempInitial-tempFinal)/(maxIt*tempInitial*tempFinal);
+      //TODO:CHECH THIS
+      beta = (tempInitial-tempFinal)/((maxIt)*tempInitial*tempFinal);
+      it = 0;
 
       actual=initial;
       tempActual=tempInitial;

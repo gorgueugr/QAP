@@ -13,9 +13,10 @@
 
 using namespace std;
 
-class Es : protected LocalSearch {
+class Es : public LocalSearch {
 private:
   Solution  * best;
+  int it;
   int maxIt;
   float beta;
   float tempActual;
@@ -31,10 +32,6 @@ private:
 public:
   Es():u(0.3){};
   ~Es(){};
-
-  void setProblem(Problem &p){problem=&p;}
-  void clearProblem(){problem=0;}
-  Problem& getProblem(){return *problem;}
 
   float getTempInitial(){return tempInitial;}
   float getTempFinal(){return tempFinal;}

@@ -1,0 +1,17 @@
+DATA: ./bin/data/esc32b.dat
+NumThreads: 4
+Size:32
+Time: = 0.027
+BMB solution:
+ 31 23 29 28 21 20 15 7 11 27 3 19 13 12 9 25 30 24 5 4 1 17 22 16 18 8 26 0 10 2 14 6
+Coste: 192
+correct Solution: 1
+
+Time: = 0.011
+ES solution:
+ 17 23 20 16 18 4 21 31 25 19 7 3 28 24 29 27 14 26 2 0 10 11 12 9 22 13 15 6 30 8 5 1
+Coste: 260
+correct Solution: 1
+
+Time: = 0.012
+ILS solution:

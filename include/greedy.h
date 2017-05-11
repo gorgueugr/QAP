@@ -10,7 +10,7 @@
 using namespace std;
 
 class Greedy{
-private:
+protected:
   vector<int> distancePotential;
   vector<int> flowPotential;
   Solution sol;
@@ -28,7 +28,7 @@ public:
   void calculatePotential();
   vector<int> getDistancePotential(){return distancePotential;}
   vector<int> getFlowPotential(){return flowPotential;}
-  void execute();
+  virtual void execute();
 };
 
 #endif

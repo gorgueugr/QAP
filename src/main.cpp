@@ -11,6 +11,7 @@
 #include "memetic.h"
 #include "es.h"
 #include "ils.h"
+#include "grasp.h"
 #include <chrono>
 #include <omp.h>
 
@@ -51,7 +52,8 @@ int main(int argc,char *argv[]){
   ils.setProblem(*qap);
   Ils_es ilsEs;
   ilsEs.setProblem(*qap);
-
+  grasp gr;
+  gr.setProblem(*qap);
 
   //lb.setProblem(*qap);
   //greedy.setProblem(*qap);
@@ -136,6 +138,22 @@ cout << "ES solution:" << endl;
     sol=&ilsEs.getBestSolution();
 
   cout << "ILS_ES solution:" << endl;
+    for(int i=0;i<sol->solution.size();++i){
+      cout << " "<< sol->solution[i];
+    }
+    cout << endl;
+    cout << "Coste: " << sol->cost << endl;
+    cout << "correct Solution: " << (int) sol->checkSolution() << endl;
+    cout << endl;
+
+
+    begin = std::chrono::steady_clock::now();
+    gr.execute();
+    end= std::chrono::steady_clock::now();
+    std::cout << "Time: = " << (double) std::chrono::duration_cast<std::chrono::milliseconds>(end - begin).count() /1000.0 <<std::endl;
+    sol=&gr.getBestSolution();
+
+  cout << "GRASP solution:" << endl;
     for(int i=0;i<sol->solution.size();++i){
       cout << " "<< sol->solution[i];
     }

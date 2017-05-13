@@ -2,15 +2,15 @@
 
 void GreedyRandomized::execute(){
 
-  cout <<"ok"<<endl;
+  //cout <<"ok"<<endl;
   step1();
-  cout <<"ok1"<<endl;
+  //cout <<"ok1"<<endl;
 
   step2();
-  cout <<"ok2"<<endl;
+  //cout <<"ok2"<<endl;
 
   buildSolution();
-  cout <<"ok3"<<endl;
+  //cout <<"ok3"<<endl;
 
 
 }
@@ -46,10 +46,12 @@ void GreedyRandomized::step1(){
   float uF = maxF - (alfa * (maxF-minF));
   float uD = minD + (alfa * (maxD-minD));
 
+
+  //#pragma omp parallel for
   for(int i=0;i<problem->getSize();i++){
-    if(flowPotential[i] > uF)
+    if(flowPotential[i] >= uF)
       LRCF.push_back(i);
-    if(distancePotential[i] < uD)
+    if(distancePotential[i] <= uD)
       LRCD.push_back(i);
   }
 
@@ -57,17 +59,22 @@ void GreedyRandomized::step1(){
   int firstF = getRandomMax(LRCF.size());
   int secondF = getRandomMax(LRCF.size());
 
+
   while (firstF==secondF) {
     secondF = getRandomMax(LRCF.size());
   }
 
+  //cout << LRCD.size() << endl;
+
   int firstD = getRandomMax(LRCD.size());
   int secondD = getRandomMax(LRCD.size());
+
 
   while (firstD==secondD) {
     secondD = getRandomMax(LRCD.size());
   }
 //
+
   f[firstF]  = 1;
   f[secondF] = 1;
   d[firstD]  = 1;
@@ -78,15 +85,13 @@ void GreedyRandomized::step1(){
   SOL.push_back(pair(firstF,firstD));
   SOL.push_back(pair(secondF,secondD));
 
+
 }
 
 void GreedyRandomized::step2(){
-  LRCD.clear();
-  LRCF.clear();
-
-
-  for(int i=0;i<problem->getSize()-2;++i){
+    for(int i=0;i<problem->getSize()-2;++i){
     calculateCandidates();
+    //cout << "candidatos:" << LC.size() << endl;
     cost.clear();
     cost.resize(LC.size());
     float min = INT_MAX, max = 0;
@@ -102,11 +107,13 @@ void GreedyRandomized::step2(){
     }
     //Calculate the bound and Calculate LRC
     float u = min + (alfa * (max-min));
-
+      LRC.clear();
     for(int j=0;j<LC.size();++j){
       if(cost[j] <= u)
         LRC.push_back(LC[j]);
     }
+    //cout << "candidatos Restringidos:" << LRC.size() << endl;
+
     //pick a random one
     int r = getRandomMax(LRC.size());
     SOL.push_back(LRC[r]);
@@ -120,8 +127,9 @@ void GreedyRandomized::step2(){
 void GreedyRandomized::calculateCandidates(){
   LC.clear();
   for(int i=0;i<problem->getSize();++i){
+    if(!f[i])
     for(int j=0;j<problem->getSize();++j){
-      if(!f[i] && !d[j])
+      if(!d[j])
       LC.push_back(pair(i,j));
     }
   }
@@ -134,25 +142,34 @@ void GreedyRandomized::buildSolution(){
   for(int i=0;i<problem->getSize();++i){
     result->solution[SOL[i].u]=SOL[i].l;
   }
+  result->cost = problem->calculateCost(result->solution);
 
 }
 
 
 void grasp::execute(){
   best = new Solution;
+  best->cost = INT_MAX;
+
   LocalSearch ls;
   ls.setProblem(*problem);
   ls.setMaxIterations(50000);
+
   GreedyRandomized gr;
   gr.setProblem(*problem);
+
   it=0;
   while(it<maxIt){
     gr.execute();
+
     Solution s=gr.getSolution();
+
     ls.setInitialSolution(s);
     ls.execute();
+
     s = ls.getActualSolution();
     *best = *best < s ? *best : s;
+    ++it;
   }
 
 }

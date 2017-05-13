@@ -153,7 +153,7 @@ cout << "ES solution:" << endl;
     std::cout << "Time: = " << (double) std::chrono::duration_cast<std::chrono::milliseconds>(end - begin).count() /1000.0 <<std::endl;
     sol=&gr.getBestSolution();
 
-  cout << "GRASP solution:" << endl;
+    cout << "GRASP solution:" << endl;
     for(int i=0;i<sol->solution.size();++i){
       cout << " "<< sol->solution[i];
     }
@@ -161,7 +161,6 @@ cout << "ES solution:" << endl;
     cout << "Coste: " << sol->cost << endl;
     cout << "correct Solution: " << (int) sol->checkSolution() << endl;
     cout << endl;
-
 
 
 

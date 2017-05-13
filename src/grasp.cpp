@@ -1,5 +1,6 @@
 #include "grasp.h"
 
+
 void GreedyRandomized::execute(){
 
   //cout <<"ok"<<endl;
@@ -152,8 +153,6 @@ void GreedyRandomized::buildSolution(){
 
 
 void grasp::execute(){
-  best = new Solution;
-  best->cost = INT_MAX;
 
   LocalSearch ls;
   ls.setProblem(*problem);
@@ -172,7 +171,7 @@ void grasp::execute(){
     ls.execute();
 
     s = ls.getActualSolution();
-    *best = *best < s ? *best : s;
+    *result = *result < s ? *result : s;
     ++it;
   }
 

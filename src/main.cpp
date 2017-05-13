@@ -12,6 +12,7 @@
 #include "es.h"
 #include "ils.h"
 #include "grasp.h"
+#include "base.h"
 #include <chrono>
 #include <omp.h>
 
@@ -151,7 +152,7 @@ cout << "ES solution:" << endl;
     gr.execute();
     end= std::chrono::steady_clock::now();
     std::cout << "Time: = " << (double) std::chrono::duration_cast<std::chrono::milliseconds>(end - begin).count() /1000.0 <<std::endl;
-    sol=&gr.getBestSolution();
+    sol=&gr.getSolution();
 
     cout << "GRASP solution:" << endl;
     for(int i=0;i<sol->solution.size();++i){

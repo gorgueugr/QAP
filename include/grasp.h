@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <climits>
+#include "base.h"
 #include "solution.h"
 #include "problem.h"
 #include "greedy.h"
@@ -52,25 +53,15 @@ void execute();
 
 
 
-class grasp{
+class grasp : public base{
 private:
-Solution * best;
 int it;
 int maxIt;
-
-Problem *problem;
 public:
-
 grasp():maxIt(25){};
 ~grasp(){};
 
-void setProblem(Problem &p){problem=&p;}
-void clearProblem(){problem=0;}
-Problem& getProblem(){return *problem;}
-
 void execute();
-Solution & getBestSolution(){return *best;}
-
 
 };
 

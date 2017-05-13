@@ -47,7 +47,6 @@ void GreedyRandomized::step1(){
   float uD = minD + (alfa * (maxD-minD));
 
 
-  //#pragma omp parallel for
   for(int i=0;i<problem->getSize();i++){
     if(flowPotential[i] >= uF)
       LRCF.push_back(i);
@@ -91,28 +90,31 @@ void GreedyRandomized::step1(){
 void GreedyRandomized::step2(){
     for(int i=0;i<problem->getSize()-2;++i){
     calculateCandidates();
-    //cout << "candidatos:" << LC.size() << endl;
     cost.clear();
     cost.resize(LC.size());
     float min = INT_MAX, max = 0;
+    #pragma omp parallel for
     for(int j=0;j<LC.size();++j){
 
       for(int k=0;k<SOL.size();++k)
         cost[j] += problem->atf(LC[j].u,SOL[k].u) * problem->atd(LC[j].l,SOL[k].l);
 
         //Find the min and max cost
-
+        #pragma omp critical
+        {
         min = cost[j] < min ? cost[j] : min;
         max = cost[j] > max ? cost[j] : max;
+      }
     }
     //Calculate the bound and Calculate LRC
     float u = min + (alfa * (max-min));
       LRC.clear();
+      #pragma omp parallel for ordered
     for(int j=0;j<LC.size();++j){
+      #pragma omp ordered
       if(cost[j] <= u)
         LRC.push_back(LC[j]);
     }
-    //cout << "candidatos Restringidos:" << LRC.size() << endl;
 
     //pick a random one
     int r = getRandomMax(LRC.size());
@@ -126,10 +128,12 @@ void GreedyRandomized::step2(){
 
 void GreedyRandomized::calculateCandidates(){
   LC.clear();
+  #pragma omp parallel for ordered
   for(int i=0;i<problem->getSize();++i){
     if(!f[i])
     for(int j=0;j<problem->getSize();++j){
       if(!d[j])
+      #pragma omp ordered
       LC.push_back(pair(i,j));
     }
   }

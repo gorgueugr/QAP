@@ -2,69 +2,33 @@ DATA: ./bin/data/nug25.dat
 NumThreads: 4
 Size:25
 Time: = 0.004
-Greedy solution:
- 11 16 2 1 23 17 15 8 9 0 20 6 5 18 22 10 7 24 13 3 12 14 19 21 4
-Coste: 4462
+BMB solution:
+ 4 2 7 19 21 1 17 5 9 0 22 10 8 6 18 16 24 15 20 14 11 3 13 23 12
+Coste: 3832
 correct Solution: 1
 
-Time: = 0.01
-Random solution cost: 4936
-LocalSearch initializated with random solution :
- 4 19 14 1 21 16 2 24 18 0 22 6 15 5 8 11 13 20 9 7 12 3 23 17 10
-Cost: 4008
-iterations: 625
+Time: = 0.011
+ES solution:
+ 12 16 11 3 23 22 6 2 13 20 18 9 5 15 17 0 8 7 24 10 14 21 19 1 4
+Coste: 3754
 correct Solution: 1
 
 Time: = 0.004
-LocalSearch initializated with greedy solution :
- 23 0 18 22 12 20 15 6 16 11 17 5 9 2 13 10 8 7 19 3 1 24 21 14 4
-Cost: 3924
-iterations: 625
+ILS solution:
+ 17 10 1 21 4 24 7 8 19 14 15 5 9 18 0 2 13 6 20 23 11 3 22 16 12
+Coste: 3872
 correct Solution: 1
 
-
-Time: = 0.94
-GenerationalPMX:
- 14 22 8 11 21 20 16 18 19 17 0 12 24 3 1 15 23 13 4 10 2 6 5 9 7
-Cost: 4586
-Generations: 2942
+Time: = 0.372
+ILS_ES solution:
+ 12 19 0 14 4 22 9 18 8 21 2 6 5 7 1 3 13 20 15 24 11 16 23 17 10
+Coste: 3768
 correct Solution: 1
 
-Time: = 1.117
-GenerationalPosition:
- 21 3 1 10 12 16 9 24 23 4 18 15 22 20 17 11 0 8 5 7 19 14 6 2 13
-Cost: 4496
-Generations: 2942
+Time: = 0.071
+GRASP solution:
+ 4 11 21 19 14 16 24 3 9 12 1 23 22 20 18 17 2 8 6 15 10 7 13 5 0
+Coste: 3916
 correct Solution: 1
 
-Time: = 0.781
-StationaryPMX:
- 4 1 7 10 17 8 22 5 13 24 14 9 20 23 2 0 19 6 15 3 21 12 18 16 11
-Cost: 4078
-correct Solution: 1
-
-Time: = 0.832
-StationaryPos:
- 14 1 10 4 24 21 8 0 17 2 9 18 15 19 5 12 3 13 22 7 23 20 6 16 11
-Cost: 4372
-correct Solution: 1
-
-Time: = 0.055
-MEMETIC 10 0.1 false:
- 12 21 18 0 23 14 9 8 6 20 19 22 7 5 13 11 16 24 15 3 4 1 2 17 10
-Cost: 3856
-correct Solution: 1
-
-Time: = 0.073
-MEMETIC 10 0,1 true:
- 11 22 12 2 4 16 7 3 17 1 19 9 13 18 24 21 8 5 15 10 14 6 0 20 23
-Cost: 3998
-correct Solution: 1
-
-Time: = 0.013
-MEMETIC 10 1 false:
- 11 22 13 3 12 16 2 5 6 9 24 7 15 18 19 1 17 8 0 21 4 10 23 20 14
-Cost: 3844
-correct Solution: 1
-
-Time Total: = 3.874
+Time Total: = 0.464

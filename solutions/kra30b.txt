@@ -1,70 +1,34 @@
 DATA: ./bin/data/kra30b.dat
 NumThreads: 4
 Size:30
-Time: = 0.004
-Greedy solution:
- 13 8 23 2 25 5 3 15 4 21 6 19 27 17 9 24 22 26 7 0 11 10 16 12 14 1 20 29 28 18
-Coste: 120890
+Time: = 0.006
+BMB solution:
+ 20 2 11 5 1 21 4 16 0 3 15 10 14 25 29 28 23 18 22 19 7 9 6 8 27 12 13 26 17 24
+Coste: 95640
 correct Solution: 1
 
-Time: = 0.015
-Random solution cost: 138830
-LocalSearch initializated with random solution :
- 25 17 13 29 10 16 26 15 12 24 11 8 18 23 28 14 5 21 2 1 4 3 0 6 27 7 19 9 22 20
-Cost: 101610
-iterations: 900
+Time: = 0.013
+ES solution:
+ 5 3 14 2 4 25 19 1 29 22 20 24 28 23 18 11 10 21 0 16 15 8 7 17 12 6 13 27 9 26
+Coste: 95090
 correct Solution: 1
 
-Time: = 0.004
-LocalSearch initializated with greedy solution :
- 14 17 26 4 5 25 3 1 24 19 22 29 28 23 27 21 11 13 2 15 10 0 16 12 6 7 8 20 18 9
-Cost: 100100
-iterations: 900
+Time: = 0.006
+ILS solution:
+ 3 5 21 4 16 15 1 0 10 7 6 11 19 8 12 14 24 26 25 2 17 23 22 13 28 20 9 29 18 27
+Coste: 94770
 correct Solution: 1
 
-
-Time: = 0.846
-GenerationalPMX:
- 28 5 16 8 25 3 0 1 10 12 19 24 9 15 6 20 29 23 26 7 11 22 17 21 18 2 4 27 13 14
-Cost: 125850
-Generations: 2942
+Time: = 0.389
+ILS_ES solution:
+ 8 19 20 6 7 4 10 0 1 16 15 2 21 3 14 9 18 28 27 22 23 12 11 29 13 5 25 26 17 24
+Coste: 95530
 correct Solution: 1
 
-Time: = 1.296
-GenerationalPosition:
- 0 26 24 11 2 22 14 15 16 4 19 7 18 8 27 25 17 13 3 12 21 29 1 5 23 10 20 28 9 6
-Cost: 121570
-Generations: 2942
+Time: = 0.153
+GRASP solution:
+ 22 3 14 2 0 16 5 4 15 19 1 7 28 23 18 9 11 27 21 10 12 29 25 8 20 6 13 26 24 17
+Coste: 99100
 correct Solution: 1
 
-Time: = 0.626
-StationaryPMX:
- 13 8 29 25 6 18 17 24 0 9 19 28 26 20 23 27 12 11 4 7 15 16 10 3 1 2 14 5 21 22
-Cost: 108880
-correct Solution: 1
-
-Time: = 0.574
-StationaryPos:
- 26 28 18 23 7 22 5 11 20 16 1 25 24 13 17 21 6 19 2 0 4 12 15 14 10 3 29 27 8 9
-Cost: 116400
-correct Solution: 1
-
-Time: = 0.049
-MEMETIC 10 0.1 false:
- 7 21 11 15 10 6 16 0 8 17 13 12 26 27 9 14 2 5 3 1 19 25 4 20 24 23 22 29 18 28
-Cost: 95890
-correct Solution: 1
-
-Time: = 0.057
-MEMETIC 10 0,1 true:
- 12 6 19 16 0 8 15 1 7 10 4 3 11 5 2 27 9 18 13 20 28 17 21 22 26 25 14 24 29 23
-Cost: 97110
-correct Solution: 1
-
-Time: = 0.033
-MEMETIC 10 1 false:
- 29 25 24 2 3 14 5 4 1 22 0 19 28 20 23 26 17 13 21 16 27 10 15 12 11 6 8 18 7 9
-Cost: 93310
-correct Solution: 1
-
-Time Total: = 3.536
+Time Total: = 0.569

@@ -18,6 +18,7 @@ private:
   Solution  * best;
   int it;
   int maxIt;
+  float alfa;
   float beta;
   float tempActual;
   float tempInitial;
@@ -26,11 +27,13 @@ private:
   int maxNeighbours;
   int maxSucces;
 
+  float calculateNextTempLineal();
+
   float calculateNextTemp();
   float calculateInitialTemp();
   float calculateFinalTemp();
 public:
-  Es():u(0.3){};
+  Es():u(0.3){alfa=0.99;};
   ~Es(){};
 
   float getTempInitial(){return tempInitial;}

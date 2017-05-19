@@ -14,8 +14,12 @@ void Es::step(){
       b = getRandomMax(problem->getSize());
 
       tempCost=problem->moveCost(actual.solution,a,b);
+      ++it;
       neighbours++;
-      if(tempCost<0 || getRandomFloat() < exp((-tempCost)/tempActual) ){
+      double r = getRandomFloat();
+      double e = exp((-tempCost)/tempActual);
+      //cout << "Random/Exp" << r << " " << e <<endl;
+      if(tempCost<0 || r < e ){
         accepted++;
         actual.move(a,b);
         actual.cost+=tempCost;
@@ -25,6 +29,8 @@ void Es::step(){
       }
       tempActual = calculateNextTemp();
     }
+    //cout << "neighbours/Accepted: " << neighbours <<" "<< accepted << endl;
+
 }
 
 
@@ -35,21 +41,25 @@ void Es::execute(){
     if(initial.solution.size()<1)
       generateInitialSolution();
 
+      //cout << "Cost Random:" << initial.cost << endl;
       tempInitial = calculateInitialTemp();
       tempFinal = calculateFinalTemp();
-      maxNeighbours = 10*initial.solution.size();
+      maxNeighbours = 10*problem->getSize();
       maxSucces = 0.1 * maxNeighbours;
       maxIt = 50000;
-      //TODO:CHECH THIS
-      beta = (tempInitial-tempFinal)/((maxIt)*tempInitial*tempFinal);
+      float m = (maxIt/maxNeighbours);
+      //TODO:CHECK THIS
+      beta = (tempInitial-tempFinal)/(m*tempInitial*tempFinal);
       it = 0;
 
       actual=initial;
       tempActual=tempInitial;
       best=&initial;
-    while (tempActual>=tempFinal) { //(improve || checkDlb())
+    while (it<maxIt) {
       step();
     }
+    //cout << "tempInitial/tempActual/tempFinal: " << tempInitial << " " << tempActual << " " << tempFinal << endl;
+    //cout << "it: " << it << endl;
 }
 
 float Es::calculateInitialTemp(){
@@ -57,9 +67,13 @@ float Es::calculateInitialTemp(){
 }
 
 float Es::calculateFinalTemp(){
-  return 0,001 < tempInitial ? 0,001 : tempInitial;
+  return 0.001 < tempInitial ? 0.001 : tempInitial;
 }
 
 float Es::calculateNextTemp(){
   return (float) tempActual/(1+beta*tempActual);
+}
+
+float Es::calculateNextTempLineal(){
+  return (float) alfa*tempActual;
 }

@@ -9,25 +9,21 @@
 #include "problem.h"
 #include "localsearch.h"
 #include "random.h"
+#include "base.h"
 
 
 
 using namespace std;
 
-class bmb {
+class bmb : public base {
 private:
-  Problem * problem;
-  Solution best;
   int maxIt;
+  Solution * initial;
 public:
   bmb():maxIt(25){};
   ~bmb(){};
-  Solution & getBestSolution(){return best;}
 
-  void setProblem(Problem &p){problem=&p;}
-  void clearProblem(){problem=0;}
-  Problem& getProblem(){return *problem;}
-
+  void generateInitialsSolutions();
   void execute();
 
 

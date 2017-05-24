@@ -7,17 +7,16 @@ void Ils::execute(){
   l.setProblem(*problem);
   l.setMaxIterations(50000);
   l.execute();
-  best = new Solution;
-  *best=l.getActualSolution();
+  *result=l.getSolution();
   t = problem->getSize()/4;
   it=1;
   while(it<maxIt){
-    mutate(*best);
-    best->cost = problem->calculateCost(best->solution);
-    l.setInitialSolution(*best);
+    mutate(*result);
+    result->cost = problem->calculateCost(result->solution);
+    l.setInitialSolution(*result);
     l.execute();
-    Solution  actual = l.getActualSolution();
-    *best = best->cost < actual.cost ? *best : actual;
+    Solution  actual = l.getSolution();
+    *result = result->cost < actual.cost ? *result : actual;
     it++;
   }
 
@@ -40,19 +39,18 @@ void Ils::mutate(Solution &s){
 void Ils_es::execute(){
   Es l;
   l.setProblem(*problem);
-  //l.setMaxIterations(50000);
+  l.setMaxIterations(50000);
   l.execute();
-  best = new Solution;
-  *best=l.getBestSolution();
+  *result=l.getSolution();
   t = problem->getSize()/4;
   it=1;
   while(it<maxIt){
-    mutate(*best);
-    best->cost = problem->calculateCost(best->solution);
-    l.setInitialSolution(*best);
+    mutate(*result);
+    result->cost = problem->calculateCost(result->solution);
+    l.setInitialSolution(*result);
     l.execute();
-    Solution  actual = l.getBestSolution();
-    *best = best->cost < actual.cost ? *best : actual;
+    Solution  actual = l.getSolution();
+    *result = result->cost < actual.cost ? *result : actual;
     it++;
   }
 

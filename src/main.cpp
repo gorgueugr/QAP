@@ -87,7 +87,7 @@ int main(int argc,char *argv[]){
   b.execute();
   std::chrono::steady_clock::time_point end= std::chrono::steady_clock::now();
   std::cout << "Time: = " << (double) std::chrono::duration_cast<std::chrono::milliseconds>(end - begin).count() /1000.0 <<std::endl;
-  Solution * sol=&b.getBestSolution();
+  Solution * sol=&b.getSolution();
 
 cout << "BMB solution:" << endl;
   for(int i=0;i<sol->solution.size();++i){
@@ -104,7 +104,7 @@ cout << "BMB solution:" << endl;
   es.execute();
   end= std::chrono::steady_clock::now();
   std::cout << "Time: = " << (double) std::chrono::duration_cast<std::chrono::milliseconds>(end - begin).count() /1000.0 <<std::endl;
-  sol=&es.getBestSolution();
+  sol=&es.getSolution();
 
 cout << "ES solution:" << endl;
   for(int i=0;i<sol->solution.size();++i){
@@ -120,7 +120,7 @@ cout << "ES solution:" << endl;
     ils.execute();
     end= std::chrono::steady_clock::now();
     std::cout << "Time: = " << (double) std::chrono::duration_cast<std::chrono::milliseconds>(end - begin).count() /1000.0 <<std::endl;
-    sol=&ils.getBestSolution();
+    sol=&ils.getSolution();
 
 
   cout << "ILS solution:" << endl;
@@ -137,7 +137,7 @@ cout << "ES solution:" << endl;
     ilsEs.execute();
     end= std::chrono::steady_clock::now();
     std::cout << "Time: = " << (double) std::chrono::duration_cast<std::chrono::milliseconds>(end - begin).count() /1000.0 <<std::endl;
-    sol=&ilsEs.getBestSolution();
+    sol=&ilsEs.getSolution();
 
   cout << "ILS_ES solution:" << endl;
     for(int i=0;i<sol->solution.size();++i){

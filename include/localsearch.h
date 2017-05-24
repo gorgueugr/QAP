@@ -7,11 +7,12 @@
 #include "solution.h"
 #include "problem.h"
 #include "random.h"
+#include "base.h"
 
 
 using namespace std;
 
-class LocalSearch{
+class LocalSearch : public base {
 protected:
     Solution initial;
     Solution actual;
@@ -20,8 +21,6 @@ protected:
 
     int iteration;
     int maxIterations;
-
-    Problem * problem;
 
     bool improve;
 
@@ -38,16 +37,12 @@ protected:
 
     Solution& getActualSolution();
 
-    void setProblem(Problem &p){problem=&p;}
-    void clearProblem(){problem=0;}
-    Problem& getProblem(){return *problem;}
-
     int getIterations() const {return iteration;}
 
     void setIterations(int i);
     void setMaxIterations(int i);
 
-  virtual  void execute();
+  void execute();
   virtual  void step();
 
 

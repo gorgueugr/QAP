@@ -9,28 +9,22 @@
 #include "problem.h"
 #include "localsearch.h"
 #include "es.h"
+#include "base.h"
 #include "random.h"
 
 using namespace std;
 
-class Ils {
+class Ils : public base {
 protected:
-  Solution * best;
   int t;
   int it;
   int maxIt;
-  Problem * problem;
   void mutate(Solution &s);
 public:
   Ils():maxIt(25){};
   ~Ils(){};
 
-  void setProblem(Problem &p){problem=&p;}
-  void clearProblem(){problem=0;}
-  Problem& getProblem(){return *problem;}
-
-  Solution & getBestSolution(){return *best;}
-  virtual void execute();
+  void execute();
 
 
 };

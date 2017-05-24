@@ -15,7 +15,6 @@ using namespace std;
 
 class Es : public LocalSearch {
 private:
-  Solution  * best;
   int it;
   int maxIt;
   float alfa;
@@ -39,7 +38,6 @@ public:
   float getTempInitial(){return tempInitial;}
   float getTempFinal(){return tempFinal;}
 
-  Solution & getBestSolution(){return *best;}
   void execute();
   void step();
 

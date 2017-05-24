@@ -24,8 +24,8 @@ void Es::step(){
         actual.move(a,b);
         actual.cost+=tempCost;
 
-          if(best->cost > actual.cost)
-            best = &actual;
+          if(result->cost > actual.cost)
+            result = &actual;
       }
       tempActual = calculateNextTemp();
     }
@@ -48,13 +48,12 @@ void Es::execute(){
       maxSucces = 0.1 * maxNeighbours;
       maxIt = 50000;
       float m = (maxIt/maxNeighbours);
-      //TODO:CHECK THIS
       beta = (tempInitial-tempFinal)/(m*tempInitial*tempFinal);
       it = 0;
 
       actual=initial;
       tempActual=tempInitial;
-      best=&initial;
+      result=&initial;
     while (it<maxIt) {
       step();
     }

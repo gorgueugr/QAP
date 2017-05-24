@@ -105,4 +105,5 @@ void LocalSearch::execute(){
       step();
       //++iteration;
     }
+    *result = actual;
 }

@@ -12,8 +12,9 @@ class Input{
   private:
       string filename;
   public:
+    Input(){};
     Input(const string &file){filename=file;}
-    void setFile(const string &file){filename=file;}
+    void setFile(const string &file){filename.resize(0); filename=file;}
     string getFile()const{return filename;}
     Problem * read() const;
 };

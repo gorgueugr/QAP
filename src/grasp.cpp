@@ -5,13 +5,10 @@ void GreedyRandomized::execute(){
 
   //cout <<"ok"<<endl;
   step1();
-  //cout <<"ok1"<<endl;
 
   step2();
-  //cout <<"ok2"<<endl;
 
   buildSolution();
-  //cout <<"ok3"<<endl;
 
 
 }
@@ -34,8 +31,8 @@ void GreedyRandomized::step1(){
     f[i]=0;
   }
 
-  float minF=INT_MAX,minD=INT_MAX;
-  float maxF=0,maxD=0;
+  int minF=INT_MAX,minD=INT_MAX;
+  int maxF=0,maxD=0;
 
   for(int i=0;i<problem->getSize();i++){
     maxF = flowPotential[i]>maxF ? flowPotential[i] : maxF;
@@ -90,35 +87,42 @@ void GreedyRandomized::step1(){
 
 void GreedyRandomized::step2(){
     for(int i=0;i<problem->getSize()-2;++i){
+    std::cout << "ok.1" << '\n';
+
     calculateCandidates();
+    std::cout << "ok" << '\n';
     cost.clear();
     cost.resize(LC.size());
-    float min = INT_MAX, max = 0;
-    #pragma omp parallel for
+    int min = INT_MAX, max = 0;
+    //#pragma omp parallel for
     for(int j=0;j<LC.size();++j){
 
       for(int k=0;k<SOL.size();++k)
         cost[j] += problem->atf(LC[j].u,SOL[k].u) * problem->atd(LC[j].l,SOL[k].l);
 
         //Find the min and max cost
-        #pragma omp critical
-        {
+        //#pragma omp critical
+        //{
         min = cost[j] < min ? cost[j] : min;
         max = cost[j] > max ? cost[j] : max;
-      }
+      //}
     }
     //Calculate the bound and Calculate LRC
-    float u = min + (alfa * (max-min));
+    double u = min + (alfa * (max-min));
       LRC.clear();
-      #pragma omp parallel for ordered
     for(int j=0;j<LC.size();++j){
-      #pragma omp ordered
       if(cost[j] <= u)
         LRC.push_back(LC[j]);
     }
 
+    std::cout << "ok2" << '\n';
+
+    std::cout << LC.size() << '\n';
+    std::cout << LRC.size() << '\n';
     //pick a random one
     int r = getRandomMax(LRC.size());
+    std::cout << "ok3" << '\n';
+
     SOL.push_back(LRC[r]);
     f[LRC[r].u]=1;
     d[LRC[r].l]=1;
@@ -129,12 +133,10 @@ void GreedyRandomized::step2(){
 
 void GreedyRandomized::calculateCandidates(){
   LC.clear();
-  #pragma omp parallel for ordered
   for(int i=0;i<problem->getSize();++i){
     if(!f[i])
     for(int j=0;j<problem->getSize();++j){
       if(!d[j])
-      #pragma omp ordered
       LC.push_back(pair(i,j));
     }
   }
@@ -163,6 +165,7 @@ void grasp::execute(){
 
   it=0;
   while(it<maxIt){
+
     gr.execute();
 
     Solution s=gr.getSolution();
@@ -172,6 +175,7 @@ void grasp::execute(){
 
     s = ls.getActualSolution();
     *result = *result < s ? *result : s;
+
     ++it;
   }
 

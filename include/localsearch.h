@@ -34,6 +34,7 @@ protected:
     void setInitialSolution(Solution &i);
     Solution& getInitialSolution();
     void generateInitialSolution();
+    void clearInitialSolution(){initial.solution.resize(0);};
 
     Solution& getActualSolution();
 

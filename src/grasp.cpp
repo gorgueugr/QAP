@@ -4,12 +4,13 @@
 void GreedyRandomized::execute(){
 
   //cout <<"ok"<<endl;
+  SOL.clear();
+
   step1();
 
   step2();
 
   buildSolution();
-
 
 }
 
@@ -31,8 +32,8 @@ void GreedyRandomized::step1(){
     f[i]=0;
   }
 
-  int minF=INT_MAX,minD=INT_MAX;
-  int maxF=0,maxD=0;
+  long int minF=LONG_MAX,minD=LONG_MAX;
+  long int maxF=0,maxD=0;
 
   for(int i=0;i<problem->getSize();i++){
     maxF = flowPotential[i]>maxF ? flowPotential[i] : maxF;
@@ -87,41 +88,43 @@ void GreedyRandomized::step1(){
 
 void GreedyRandomized::step2(){
     for(int i=0;i<problem->getSize()-2;++i){
-    std::cout << "ok.1" << '\n';
 
     calculateCandidates();
-    std::cout << "ok" << '\n';
     cost.clear();
     cost.resize(LC.size());
-    int min = INT_MAX, max = 0;
-    //#pragma omp parallel for
-    for(int j=0;j<LC.size();++j){
+    int r;
+    LRC.clear();
+    if(LC.size()>1){
+        long int min = LONG_MAX , max = LONG_MIN;
+        //#pragma omp parallel for
+        for(int j=0;j<LC.size();++j){
 
-      for(int k=0;k<SOL.size();++k)
-        cost[j] += problem->atf(LC[j].u,SOL[k].u) * problem->atd(LC[j].l,SOL[k].l);
+          for(int k=0;k<SOL.size();++k)
+            cost[j] += problem->atf(LC[j].u,SOL[k].u) * problem->atd(LC[j].l,SOL[k].l);
 
-        //Find the min and max cost
-        //#pragma omp critical
-        //{
-        min = cost[j] < min ? cost[j] : min;
-        max = cost[j] > max ? cost[j] : max;
-      //}
-    }
-    //Calculate the bound and Calculate LRC
-    double u = min + (alfa * (max-min));
-      LRC.clear();
-    for(int j=0;j<LC.size();++j){
-      if(cost[j] <= u)
-        LRC.push_back(LC[j]);
-    }
+            //Find the min and max cost
+          //  #pragma omp critical
+            {
+            min = cost[j] < min ? cost[j] : min;
+            max = cost[j] > max ? cost[j] : max;
+            }
+        }
+        //Calculate the bound and Calculate LRC
+        long int u = min + (alfa * (max-min));
+        for(int j=0;j<LC.size();++j){
+          if(cost[j] <= u)
+            LRC.push_back(LC[j]);
+        }
+        int r = getRandomMax(LRC.size());
+  }else{
+        LRC.push_back(LC[0]);
+        r = 0;
+  }
 
-    std::cout << "ok2" << '\n';
 
-    std::cout << LC.size() << '\n';
-    std::cout << LRC.size() << '\n';
+    //std::cout << LC.size() << '\n';
+    //std::cout << LRC.size() << '\n';
     //pick a random one
-    int r = getRandomMax(LRC.size());
-    std::cout << "ok3" << '\n';
 
     SOL.push_back(LRC[r]);
     f[LRC[r].u]=1;
@@ -155,28 +158,30 @@ void GreedyRandomized::buildSolution(){
 
 
 void grasp::execute(){
-
-  LocalSearch ls;
-  ls.setProblem(*problem);
-  ls.setMaxIterations(50000);
-
-  GreedyRandomized gr;
-  gr.setProblem(*problem);
-
+  delete result;
+  result = new Solution;
+  result->cost = INT_MAX;
   it=0;
   while(it<maxIt){
+      LocalSearch * ls = new LocalSearch;
+      ls->setProblem(*problem);
 
-    gr.execute();
+      GreedyRandomized * gr = new GreedyRandomized;
+      gr->setProblem(*problem);
 
-    Solution s=gr.getSolution();
+    gr->execute();
 
-    ls.setInitialSolution(s);
-    ls.execute();
+    Solution s=gr->getSolution();
 
-    s = ls.getActualSolution();
+    ls->setInitialSolution(s);
+    ls->execute();
+
+    s = ls->getActualSolution();
     *result = *result < s ? *result : s;
 
     ++it;
+    delete ls;
+    delete gr;
   }
 
 }

@@ -3,7 +3,7 @@
 void Greedy::calculateDistancePotential(){
   if(!problem)
     return;
-
+  distancePotential.clear();
   int s=problem->getSize();
   distancePotential.resize(s);
   int sum;
@@ -20,6 +20,7 @@ void Greedy::calculateFlowPotential(){
   if(!problem)
     return;
 
+  flowPotential.clear();
   int s=problem->getSize();
   flowPotential.resize(s);
 
@@ -45,7 +46,7 @@ void Greedy::calculatePotential(){
 void Greedy::execute(){
   if(!problem)
     return;
-  if(distancePotential.size()==0||flowPotential.size()==0)
+
     calculatePotential();
 
     int psize=problem->getSize();
@@ -86,4 +87,7 @@ void Greedy::execute(){
 
 sol.cost=problem->calculateCost(sol.solution);
 
+  *result = sol;
+  sol.solution.resize(0);
+  sol.cost=0;
 }

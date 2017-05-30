@@ -2,7 +2,7 @@
 
 LocalSearch::LocalSearch(){
   iteration=0;
-  maxIterations=0;
+  maxIterations=50000;
   improve=true;
 }
 
@@ -98,6 +98,7 @@ void LocalSearch::execute(){
     startDlb();
     if(initial.solution.size()<1)
       generateInitialSolution();
+      
       improve=true;
       iteration=0;
       actual=initial;
@@ -106,4 +107,6 @@ void LocalSearch::execute(){
       //++iteration;
     }
     *result = actual;
+    initial.solution.resize(0);
+
 }

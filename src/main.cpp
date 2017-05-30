@@ -37,13 +37,13 @@ int main(int argc,char *argv[]){
 
 
   if(f=="all"){
-  numCasos = 19;
+  numCasos = 20;
   ficheros.resize(numCasos);
   mejorCoste.resize(numCasos);
 
   ficheros[0] =     "./bin/data/chr20b.dat";
-  ficheros[2] =     "./bin/data/chr22a.dat";
-  ficheros[1] =     "./bin/data/els19.dat";
+  ficheros[1] =     "./bin/data/chr22a.dat";
+  ficheros[2] =     "./bin/data/els19.dat";
   ficheros[3] =     "./bin/data/esc32b.dat";
   ficheros[4] =     "./bin/data/kra30b.dat";
   ficheros[5] =     "./bin/data/lipa90b.dat";
@@ -59,7 +59,7 @@ int main(int argc,char *argv[]){
   ficheros[15] =    "./bin/data/tai30b.dat";
   ficheros[16] =    "./bin/data/tai50b.dat";
   ficheros[17] =    "./bin/data/tai60a.dat";
-  ficheros[18] =    "./bin/data/tai256.dat";
+  ficheros[18] =    "./bin/data/tai256c.dat";
   ficheros[19] =    "./bin/data/tho150.dat";
 
   mejorCoste[0] =  2298;
@@ -114,7 +114,7 @@ int main(int argc,char *argv[]){
   grasp gr;
 
 
-    html h_greedy("greedy");
+    html h_greedy("GREEDY");
     html h_lb("LocalSearch");
     html h_bmb("BMB");
     html h_es("Enfriamiento Simulado");
@@ -127,9 +127,10 @@ int main(int argc,char *argv[]){
 
 for(int i=0;i<numCasos;i++){
 
-  cout << ficheros[i] << endl;
+  //cout << ficheros[i] << endl;
 
   in.setFile(ficheros[i]);
+  string nombre = ficheros[i].substr(ficheros[i].find_last_of("/")+1,ficheros[i].size());
 
   Problem * qap=in.read();
 
@@ -149,12 +150,54 @@ for(int i=0;i<numCasos;i++){
   //Genetic gen;
   int s=qap->getSize();
 
-  std::chrono::steady_clock::time_point begin_total = std::chrono::steady_clock::now();
+
+
+
   std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
-  b.execute();
+  lb.execute();
   std::chrono::steady_clock::time_point end= std::chrono::steady_clock::now();
   //std::cout << "Time: = " << (double) std::chrono::duration_cast<std::chrono::milliseconds>(end - begin).count() /1000.0 <<std::endl;
-  Solution * sol=&b.getSolution();
+  Solution * sol=&lb.getSolution();
+
+  //  cout << "GRASP solution:" << endl;
+  //  for(int i=0;i<sol->solution.size();++i){
+  //    cout << " "<< sol->solution[i];
+  //  }
+  //  cout << endl;
+  //  cout << "Coste: " << sol->cost << endl;
+  h_lb.add(nombre,sol->cost,mejorCoste[i],(double) std::chrono::duration_cast<std::chrono::milliseconds>(end - begin).count() /1000.0);
+  //  cout << "correct Solution: " << (int) sol->checkSolution() << endl;
+  //  cout << endl;
+
+  //std::cout << "ok7" << '\n';
+
+
+
+
+    begin = std::chrono::steady_clock::now();
+    greedy.execute();
+    end= std::chrono::steady_clock::now();
+    //std::cout << "Time: = " << (double) std::chrono::duration_cast<std::chrono::milliseconds>(end - begin).count() /1000.0 <<std::endl;
+    sol=&greedy.getSolution();
+
+  //  cout << "GRASP solution:" << endl;
+  //  for(int i=0;i<sol->solution.size();++i){
+  //    cout << " "<< sol->solution[i];
+  //  }
+  //  cout << endl;
+  //  cout << "Coste: " << sol->cost << endl;
+    h_greedy.add(nombre,sol->cost,mejorCoste[i],(double) std::chrono::duration_cast<std::chrono::milliseconds>(end - begin).count() /1000.0);
+  //  cout << "correct Solution: " << (int) sol->checkSolution() << endl;
+  //  cout << endl;
+
+  //std::cout << "ok6" << '\n';
+
+
+   begin = std::chrono::steady_clock::now();
+   b.execute();
+   end= std::chrono::steady_clock::now();
+  //std::cout << "Time: = " << (double) std::chrono::duration_cast<std::chrono::milliseconds>(end - begin).count() /1000.0 <<std::endl;
+    sol=&b.getSolution();
 
   //cout << "BMB solution:" << endl;
   //for(int i=0;i<sol->solution.size();++i){
@@ -162,11 +205,11 @@ for(int i=0;i<numCasos;i++){
   //}
   //cout << endl;
   //cout << "Coste: " << sol->cost << endl;
-  h_bmb.add(ficheros[i],sol->cost,mejorCoste[i],(double) std::chrono::duration_cast<std::chrono::milliseconds>(end - begin).count() /1000.0);
+  h_bmb.add(nombre,sol->cost,mejorCoste[i],(double) std::chrono::duration_cast<std::chrono::milliseconds>(end - begin).count() /1000.0);
   //cout << "correct Solution: " << (int) sol->checkSolution() << endl;
   //cout << endl;
 
-  std::cout << "ok" << '\n';
+  //std::cout << "ok" << '\n';
 
 
 
@@ -183,10 +226,10 @@ for(int i=0;i<numCasos;i++){
   //}
   //cout << endl;
   //cout << "Coste: " << sol->cost << endl;
-  h_es.add(ficheros[i],sol->cost,mejorCoste[i],(double) std::chrono::duration_cast<std::chrono::milliseconds>(end - begin).count() /1000.0);
+  h_es.add(nombre,sol->cost,mejorCoste[i],(double) std::chrono::duration_cast<std::chrono::milliseconds>(end - begin).count() /1000.0);
   //cout << "correct Solution: " << (int) sol->checkSolution() << endl;
   //cout << endl;
-  std::cout << "ok2" << '\n';
+  //std::cout << "ok2" << '\n';
 
 
 
@@ -203,11 +246,11 @@ for(int i=0;i<numCasos;i++){
   //  }
   //  cout << endl;
   //  cout << "Coste: " << sol->cost << endl;
-    h_ils.add(ficheros[i],sol->cost,mejorCoste[i],(double) std::chrono::duration_cast<std::chrono::milliseconds>(end - begin).count() /1000.0);
+    h_ils.add(nombre,sol->cost,mejorCoste[i],(double) std::chrono::duration_cast<std::chrono::milliseconds>(end - begin).count() /1000.0);
   //  cout << "correct Solution: " << (int) sol->checkSolution() << endl;
   //  cout << endl;
 
-  std::cout << "ok3" << '\n';
+  //std::cout << "ok3" << '\n';
 
     begin = std::chrono::steady_clock::now();
     ilsEs.execute();
@@ -221,11 +264,11 @@ for(int i=0;i<numCasos;i++){
   //  }
   //  cout << endl;
   //  cout << "Coste: " << sol->cost << endl;
-    h_ilses.add(ficheros[i],sol->cost,mejorCoste[i],(double) std::chrono::duration_cast<std::chrono::milliseconds>(end - begin).count() /1000.0);
+    h_ilses.add(nombre,sol->cost,mejorCoste[i],(double) std::chrono::duration_cast<std::chrono::milliseconds>(end - begin).count() /1000.0);
   //  cout << "correct Solution: " << (int) sol->checkSolution() << endl;
   //  cout << endl;
 
-  std::cout << "ok4" << '\n';
+  //std::cout << "ok4" << '\n';
 
 
     begin = std::chrono::steady_clock::now();
@@ -240,55 +283,15 @@ for(int i=0;i<numCasos;i++){
   //  }
   //  cout << endl;
   //  cout << "Coste: " << sol->cost << endl;
-    h_grasp.add(ficheros[i],sol->cost,mejorCoste[i],(double) std::chrono::duration_cast<std::chrono::milliseconds>(end - begin).count() /1000.0);
+    h_grasp.add(nombre,sol->cost,mejorCoste[i],(double) std::chrono::duration_cast<std::chrono::milliseconds>(end - begin).count() /1000.0);
   //  cout << "correct Solution: " << (int) sol->checkSolution() << endl;
   //  cout << endl;
-  std::cout << "ok5" << '\n';
-
-
-  begin = std::chrono::steady_clock::now();
-  greedy.execute();
-  end= std::chrono::steady_clock::now();
-  //std::cout << "Time: = " << (double) std::chrono::duration_cast<std::chrono::milliseconds>(end - begin).count() /1000.0 <<std::endl;
-  sol=&greedy.getSolution();
-
-//  cout << "GRASP solution:" << endl;
-//  for(int i=0;i<sol->solution.size();++i){
-//    cout << " "<< sol->solution[i];
-//  }
-//  cout << endl;
-//  cout << "Coste: " << sol->cost << endl;
-  h_greedy.add(ficheros[i],sol->cost,mejorCoste[i],(double) std::chrono::duration_cast<std::chrono::milliseconds>(end - begin).count() /1000.0);
-//  cout << "correct Solution: " << (int) sol->checkSolution() << endl;
-//  cout << endl;
-
-std::cout << "ok6" << '\n';
-
-begin = std::chrono::steady_clock::now();
-lb.execute();
-end= std::chrono::steady_clock::now();
-//std::cout << "Time: = " << (double) std::chrono::duration_cast<std::chrono::milliseconds>(end - begin).count() /1000.0 <<std::endl;
-sol=&lb.getSolution();
-
-//  cout << "GRASP solution:" << endl;
-//  for(int i=0;i<sol->solution.size();++i){
-//    cout << " "<< sol->solution[i];
-//  }
-//  cout << endl;
-//  cout << "Coste: " << sol->cost << endl;
-h_lb.add(ficheros[i],sol->cost,mejorCoste[i],(double) std::chrono::duration_cast<std::chrono::milliseconds>(end - begin).count() /1000.0);
-//  cout << "correct Solution: " << (int) sol->checkSolution() << endl;
-//  cout << endl;
-
-std::cout << "ok7" << '\n';
-
-
-
-
+  //std::cout << "ok5" << '\n';
 
 
 
 }
+
   std::cout << h_lb << '\n';
   std::cout << h_greedy << '\n';
   std::cout << h_bmb << '\n';
@@ -296,524 +299,6 @@ std::cout << "ok7" << '\n';
   std::cout << h_ils << '\n';
   std::cout << h_ilses << '\n';
   std::cout << h_grasp << '\n';
-
-
-
-
-
-  //lb.setProblem(*qap);
-  //greedy.setProblem(*qap);
-  //gen.setProblem(*qap);
-
-
-//  cout << "Size:" << s << endl;
-/*  1
-  cout << "Distance:" << endl;
-  for(int i=0;i<s;++i){
-    for (int j=0;j<s;j++) {
-      cout << " " << qap->atd(i,j) ;
-    }
-    cout << endl;
-  }
-  cout << "Flow:" << endl;
-  for(int i=0;i<s;++i){
-    for (int j=0;j<s;j++){
-      cout << " " << qap->atf(i,j);
-    }
-    cout << endl;
-  }
-  */
-
-//Ejecucion greedy
-  //greedy.calculatePotential();
-
-
-
-/*
-  std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
-  greedy.execute();
-  std::chrono::steady_clock::time_point end= std::chrono::steady_clock::now();
-  std::cout << "Time: = " << (double) std::chrono::duration_cast<std::chrono::milliseconds>(end - begin).count() /1000.0 <<std::endl;
-
-  //___________________//
-
-
-
-
-
-  //cout <<"Distance size:" <<d.size() << endl;
-  Solution * sol=&greedy.getSolution();
-
-cout << "Greedy solution:" << endl;
-  for(int i=0;i<sol->solution.size();++i){
-    cout << " "<< sol->solution[i];
-  }
-  cout << endl;
-  cout << "Coste: " << sol->cost << endl;
-  cout << "correct Solution: " << (int) sol->checkSolution() << endl;
-  cout << endl;
-
-
-lb.setMaxIterations(50000);
-begin = std::chrono::steady_clock::now();
-  lb.execute();
-end= std::chrono::steady_clock::now();
-std::cout << "Time: = " << (double) std::chrono::duration_cast<std::chrono::milliseconds>(end - begin).count() /1000.0 <<std::endl;
-
-
-sol=&lb.getActualSolution();
-Solution ran=lb.getInitialSolution();
-ran.cost = qap->calculateCost(ran.solution);
-cout << "Random solution cost: " << ran.cost << endl;
-cout << "LocalSearch initializated with random solution :" << endl;
-  for(int i=0;i<sol->solution.size();++i){
-    cout << " "<< sol->solution[i];
-  }
-  cout << endl;
-  cout << "Cost: " << sol->cost << endl;
-cout << "iterations: " << lb.getIterations() << endl;
-cout << "correct Solution: " << sol->checkSolution() << endl;
-cout << endl;
-
-
-
-
-  lb.setInitialSolution(greedy.getSolution());
-
-  begin = std::chrono::steady_clock::now();
-
-  lb.execute();
-  end= std::chrono::steady_clock::now();
-  std::cout << "Time: = " << (double) std::chrono::duration_cast<std::chrono::milliseconds>(end - begin).count() /1000.0 <<std::endl;
-
-  sol=&lb.getActualSolution();
-
-  cout << "LocalSearch initializated with greedy solution :" << endl;
-    for(int i=0;i<sol->solution.size();++i){
-      cout << " "<< sol->solution[i];
-    }
-    cout << endl;
-    cout << "Cost: " << sol->cost << endl;
-    cout << "iterations: " << lb.getIterations() << endl;
-    cout << "correct Solution: " << sol->checkSolution() << endl;
-    cout << endl;
-
-
-
-gen.setNumPopulation(50);
-gen.setMaxGenerations(INT_MAX);
-gen.setMaxIterations(50000);
-
-cout << endl;
-gen.generatePopulation();
-
-//cout << "ok"<<endl;
-
-begin = std::chrono::steady_clock::now();
-
-gen.executeGenerationalPMX();
-end= std::chrono::steady_clock::now();
-std::cout << "Time: = " << (double) std::chrono::duration_cast<std::chrono::milliseconds>(end - begin).count() /1000.0 <<std::endl;
-
-sol=gen.bestSolution();
-Solution genPMX=*sol;
-
-cout << "GenerationalPMX:" << endl;
-  for(int i=0;i<sol->solution.size();++i){
-    cout << " "<< sol->solution[i];
-  }
-  cout << endl;
-  cout << "Cost: " << sol->cost << endl;
-  cout << "Generations: " << gen.getGenerations() << endl;
-  cout << "correct Solution: " << sol->checkSolution() << endl;
-
-  //cout << "iterations: " << lb.getIterations() << endl;
-
-  cout << endl;
-  gen.generatePopulation();
-
-  begin = std::chrono::steady_clock::now();
-
-
-  gen.executeGenerationalOrder();
-
-  end= std::chrono::steady_clock::now();
-  std::cout << "Time: = " << (double) std::chrono::duration_cast<std::chrono::milliseconds>(end - begin).count() /1000.0 <<std::endl;
-
-  sol=gen.bestSolution();
-  Solution genOrder=*sol;
-  cout << "GenerationalPosition:" << endl;
-    for(int i=0;i<sol->solution.size();++i){
-      cout << " "<< sol->solution[i];
-    }
-    cout << endl;
-    cout << "Cost: " << sol->cost << endl;
-    cout << "Generations: " << gen.getGenerations() << endl;
-    cout << "correct Solution: " << sol->checkSolution() << endl;
-
-    //cout << "iterations: " << lb.getIterations() << endl;
-
-    cout << endl;
-    gen.generatePopulation();
-
-    begin = std::chrono::steady_clock::now();
-
-
-    gen.executeStationaryPMX();
-
-    end = std::chrono::steady_clock::now();
-    std::cout << "Time: = " << (double) std::chrono::duration_cast<std::chrono::milliseconds>(end - begin).count() /1000.0 <<std::endl;
-
-
-    sol=gen.bestSolution();
-    cout << "StationaryPMX:" << endl;
-      for(int i=0;i<sol->solution.size();++i){
-        cout << " "<< sol->solution[i];
-      }
-      cout << endl;
-      cout << "Cost: " << sol->cost << endl;
-      cout << "correct Solution: " << sol->checkSolution() << endl;
-
-      //cout << "iterations: " << lb.getIterations() << endl;
-
-      cout << endl;
-      gen.generatePopulation();
-
-      begin = std::chrono::steady_clock::now();
-
-
-      gen.executeStationaryOrder();
-
-      end= std::chrono::steady_clock::now();
-      std::cout << "Time: = " << (double) std::chrono::duration_cast<std::chrono::milliseconds>(end - begin).count() /1000.0 <<std::endl;
-
-
-      sol=gen.bestSolution();
-
-      cout << "StationaryPos:" << endl;
-        for(int i=0;i<sol->solution.size();++i){
-          cout << " "<< sol->solution[i];
-        }
-        cout << endl;
-        cout << "Cost: " << sol->cost << endl;
-        cout << "correct Solution: " << sol->checkSolution() << endl;
-
-        //cout << "iterations: " << lb.getIterations() << endl;
-
-        cout << endl;
-
-Memetic m1(10,0.1,false);
-m1.setProblem(*qap);
-
-begin = std::chrono::steady_clock::now();
-
-if(genOrder.cost>genPMX.cost){
-  m1.executeGenerationalOrder();
-
-}
-else{
-  m1.executeGenerationalPMX();
-}
-
-end= std::chrono::steady_clock::now();
-std::cout << "Time: = " << (double) std::chrono::duration_cast<std::chrono::milliseconds>(end - begin).count() /1000.0 <<std::endl;
-
-
-sol=m1.bestSolution();
-cout << "MEMETIC 10 0.1 false:" << endl;
-  for(int i=0;i<sol->solution.size();++i){
-    cout << " "<< sol->solution[i];
-  }
-  cout << endl;
-  cout << "Cost: " << sol->cost << endl;
-  cout << "correct Solution: " << sol->checkSolution() << endl;
-  //cout << "iterations: " << lb.getIterations() << endl;
-
-  cout << endl;
-
-/*
-  begin = std::chrono::steady_clock::now();
-
-
-  m1.executeGenerationalOrder();
-
-  end= std::chrono::steady_clock::now();
-  std::cout << "Time: = " << (double) std::chrono::duration_cast<std::chrono::milliseconds>(end - begin).count() /1000.0 <<std::endl;
-
-
-
-  sol=m1.bestSolution();
-  cout << "MEMETIC GenerationalOrder:" << endl;
-    for(int i=0;i<sol->solution.size();++i){
-      cout << " "<< sol->solution[i];
-    }
-    cout << endl;
-    cout << "Cost: " << sol->cost << endl;
-    //cout << "iterations: " << lb.getIterations() << endl;
-
-    cout << endl;
-
-    begin = std::chrono::steady_clock::now();
-
-
-    m1.executeStationaryPMX();
-
-    end= std::chrono::steady_clock::now();
-    std::cout << "Time: = " << (double) std::chrono::duration_cast<std::chrono::milliseconds>(end - begin).count() /1000.0 <<std::endl;
-
-
-
-    sol=m1.bestSolution();
-    cout << "MEMETIC extacionaryPMX:" << endl;
-      for(int i=0;i<sol->solution.size();++i){
-        cout << " "<< sol->solution[i];
-      }
-      cout << endl;
-      cout << "Cost: " << sol->cost << endl;
-      //cout << "iterations: " << lb.getIterations() << endl;
-
-      cout << endl;
-
-      begin = std::chrono::steady_clock::now();
-
-
-      m1.executeStationaryOrder();
-
-      end= std::chrono::steady_clock::now();
-      std::cout << "Time: = " << (double) std::chrono::duration_cast<std::chrono::milliseconds>(end - begin).count() /1000.0 <<std::endl;
-
-
-
-      sol=m1.bestSolution();
-      cout << "MEMETIC extacionaryOrder:" << endl;
-        for(int i=0;i<sol->solution.size();++i){
-          cout << " "<< sol->solution[i];
-        }
-        cout << endl;
-        cout << "Cost: " << sol->cost << endl;
-        //cout << "iterations: " << lb.getIterations() << endl;
-
-        cout << endl;
-*/
-//Segundo memetico
-/*
-
-Memetic m2(10,0.1,true);
-m2.setProblem(*qap);
-
-begin = std::chrono::steady_clock::now();
-
-if(genOrder.cost>genPMX.cost)
-m2.executeGenerationalOrder();
-else
-m2.executeGenerationalPMX();
-
-end= std::chrono::steady_clock::now();
-std::cout << "Time: = " << (double) std::chrono::duration_cast<std::chrono::milliseconds>(end - begin).count() /1000.0 <<std::endl;
-
-
-
-sol=m2.bestSolution();
-cout << "MEMETIC 10 0,1 true:" << endl;
-  for(int i=0;i<sol->solution.size();++i){
-    cout << " "<< sol->solution[i];
-  }
-  cout << endl;
-  cout << "Cost: " << sol->cost << endl;
-  cout << "correct Solution: " << sol->checkSolution() << endl;
-  //cout << "iterations: " << lb.getIterations() << endl;
-
-  cout << endl;*//*
-
-  begin = std::chrono::steady_clock::now();
-
-
-  m2.executeGenerationalOrder();
-
-  end= std::chrono::steady_clock::now();
-  std::cout << "Time: = " << (double) std::chrono::duration_cast<std::chrono::milliseconds>(end - begin).count() /1000.0 <<std::endl;
-
-
-
-  sol=m2.bestSolution();
-  cout << "MEMETIC GenerationalOrder:" << endl;
-    for(int i=0;i<sol->solution.size();++i){
-      cout << " "<< sol->solution[i];
-    }
-    cout << endl;
-    cout << "Cost: " << sol->cost << endl;
-    //cout << "iterations: " << lb.getIterations() << endl;
-
-    cout << endl;
-
-    begin = std::chrono::steady_clock::now();
-
-
-    m2.executeStationaryPMX();
-
-    end= std::chrono::steady_clock::now();
-    std::cout << "Time: = " << (double) std::chrono::duration_cast<std::chrono::milliseconds>(end - begin).count() /1000.0 <<std::endl;
-
-
-
-    sol=m2.bestSolution();
-    cout << "MEMETIC extacionaryPMX:" << endl;
-      for(int i=0;i<sol->solution.size();++i){
-        cout << " "<< sol->solution[i];
-      }
-      cout << endl;
-      cout << "Cost: " << sol->cost << endl;
-      //cout << "iterations: " << lb.getIterations() << endl;
-
-      cout << endl;
-
-      begin = std::chrono::steady_clock::now();
-
-
-      m2.executeStationaryOrder();
-
-      end= std::chrono::steady_clock::now();
-      std::cout << "Time: = " << (double) std::chrono::duration_cast<std::chrono::milliseconds>(end - begin).count() /1000.0 <<std::endl;
-
-
-      sol=m2.bestSolution();
-      cout << "MEMETIC extacionaryOrder:" << endl;
-        for(int i=0;i<sol->solution.size();++i){
-          cout << " "<< sol->solution[i];
-        }
-        cout << endl;
-        cout << "Cost: " << sol->cost << endl;
-        //cout << "iterations: " << lb.getIterations() << endl;
-
-        cout << endl;
-*/
-/*
-    //Tercero
-    Memetic m3(10,1,false);
-    m3.setProblem(*qap);
-
-
-    begin = std::chrono::steady_clock::now();
-
-    if(genOrder.cost>genPMX.cost)
-    m3.executeGenerationalOrder();
-    else
-    m3.executeGenerationalPMX();
-
-
-    end= std::chrono::steady_clock::now();
-    std::cout << "Time: = " << (double) std::chrono::duration_cast<std::chrono::milliseconds>(end - begin).count() /1000.0 <<std::endl;
-
-
-    sol=m3.bestSolution();
-    cout << "MEMETIC 10 1 false:" << endl;
-      for(int i=0;i<sol->solution.size();++i){
-        cout << " "<< sol->solution[i];
-      }
-      cout << endl;
-      cout << "Cost: " << sol->cost << endl;
-      cout << "correct Solution: " << sol->checkSolution() << endl;
-
-      //cout << "iterations: " << lb.getIterations() << endl;
-
-      cout << endl;*/
-      /*
-      begin = std::chrono::steady_clock::now();
-
-
-      m3.executeGenerationalOrder();
-
-      end= std::chrono::steady_clock::now();
-      std::cout << "Time: = " << (double) std::chrono::duration_cast<std::chrono::milliseconds>(end - begin).count() /1000.0 <<std::endl;
-
-
-
-      sol=m3.bestSolution();
-      cout << "MEMETIC GenerationalOrder:" << endl;
-        for(int i=0;i<sol->solution.size();++i){
-          cout << " "<< sol->solution[i];
-        }
-        cout << endl;
-        cout << "Cost: " << sol->cost << endl;
-        //cout << "iterations: " << lb.getIterations() << endl;
-
-        cout << endl;
-
-        begin = std::chrono::steady_clock::now();
-
-
-        m3.executeStationaryPMX();
-
-        end= std::chrono::steady_clock::now();
-        std::cout << "Time: = " << (double) std::chrono::duration_cast<std::chrono::milliseconds>(end - begin).count() /1000.0 <<std::endl;
-
-
-
-        sol=m3.bestSolution();
-        cout << "MEMETIC extacionaryPMX:" << endl;
-          for(int i=0;i<sol->solution.size();++i){
-            cout << " "<< sol->solution[i];
-          }
-          cout << endl;
-          cout << "Cost: " << sol->cost << endl;
-          //cout << "iterations: " << lb.getIterations() << endl;
-
-          cout << endl;
-
-          begin = std::chrono::steady_clock::now();
-
-
-          m3.executeStationaryOrder();
-
-          end= std::chrono::steady_clock::now();
-          std::cout << "Time: = " << (double) std::chrono::duration_cast<std::chrono::milliseconds>(end - begin).count() /1000.0 <<std::endl;
-
-
-          sol=m3.bestSolution();
-          cout << "MEMETIC extacionaryOrder:" << endl;
-            for(int i=0;i<sol->solution.size();++i){
-              cout << " "<< sol->solution[i];
-            }
-            cout << endl;
-            cout << "Cost: " << sol->cost << endl;
-            //cout << "iterations: " << lb.getIterations() << endl;
-
-            cout << endl;
-
-
-*/
-/*
-cout << "Testing calculateCost() function with nug12.dat optimal solution: 578 " << endl;
-//12,7,9,3,4,8,11,1,5,6,10,2
-Solution optimal;
-optimal.solution.resize(qap->getSize());
-optimal.solution[0]=11;
-optimal.solution[1]=6;
-optimal.solution[2]=8;
-optimal.solution[3]=2;
-optimal.solution[4]=3;
-optimal.solution[5]=7;
-optimal.solution[6]=10;
-optimal.solution[7]=0;
-optimal.solution[8]=4;
-optimal.solution[9]=5;
-optimal.solution[10]=9;
-optimal.solution[11]=1;
-
-
-optimal.cost = qap->calculateCost(optimal.solution);
-
-cout << "Optimal cost:" << optimal.cost <<endl;
-
-cout << "Move cost: 0 6 " << qap->moveCost(optimal.solution,0,6) << endl;
-
-optimal.move(0,6);
-optimal.cost=qap->calculateCost(optimal.solution);
-
-cout << "Optimal cost moved:" << optimal.cost <<endl;
-*/
-//std::chrono::steady_clock::time_point end_total = std::chrono::steady_clock::now();
-//std::cout << "Time Total: = " << (double) std::chrono::duration_cast<std::chrono::milliseconds>(end_total - begin_total).count() /1000.0 <<std::endl;
 
 
 }

@@ -30,7 +30,7 @@ std::vector<int> LRCD;
 std::vector<pair > SOL;
 std::vector<pair > LC;
 std::vector<pair > LRC;
-std::vector<int> cost;
+std::vector<long int> cost;
 
 float dMax;
 float dMin;

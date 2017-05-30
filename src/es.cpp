@@ -25,7 +25,7 @@ void Es::step(){
         actual.cost+=tempCost;
 
           if(result->cost > actual.cost)
-            result = &actual;
+            *result = actual;
       }
       tempActual = calculateNextTemp();
     }
@@ -53,12 +53,14 @@ void Es::execute(){
 
       actual=initial;
       tempActual=tempInitial;
-      result=&initial;
+      *result=initial;
     while (it<maxIt) {
       step();
     }
     //cout << "tempInitial/tempActual/tempFinal: " << tempInitial << " " << tempActual << " " << tempFinal << endl;
     //cout << "it: " << it << endl;
+    initial.solution.resize(0);
+
 }
 
 float Es::calculateInitialTemp(){

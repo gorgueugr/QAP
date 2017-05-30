@@ -5,26 +5,20 @@
 #include <climits>
 #include "problem.h"
 #include "solution.h"
-
+#include "base.h"
 
 using namespace std;
 
-class Greedy{
+class Greedy : public base{
 protected:
   vector<int> distancePotential;
   vector<int> flowPotential;
   Solution sol;
-  Problem * problem;
   void calculateDistancePotential();
   void calculateFlowPotential();
 public:
-  Greedy():problem(0){};
+  Greedy(){};
   ~Greedy(){distancePotential.clear();flowPotential.clear();};
-  void setProblem(Problem &p){problem=&p;}
-  void clearProblem(){problem=0;}
-  Problem& getProblem(){return *problem;}
-  void clearSolution(){sol.solution.clear();sol.cost=0;}
-  Solution& getSolution(){return sol;}
   void calculatePotential();
   vector<int> getDistancePotential(){return distancePotential;}
   vector<int> getFlowPotential(){return flowPotential;}

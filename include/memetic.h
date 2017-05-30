@@ -15,21 +15,22 @@ protected:
   int smallPopul;
 
   float percent;
-  bool best;
 public:
-  Memetic(int gen,float p,bool b){Genetic::numPopulation=10;generations=gen;percent=p;best=b;smallPopul=percent*numPopulation;}
+  Memetic(int gen,float p){Genetic::numPopulation=10;generations=gen;percent=p;smallPopul=percent*numPopulation;}
 
 };
 
 class MemeticBasic : public Memetic {
 public:
-  void mutate();
+  MemeticBasic(int gen, float p):Memetic(gen,p){}
+  void mutate() override;
 };
 
 
 class MemeticBest : public Memetic{
 public:
-  void mutate();
+  MemeticBest(int gen, float p):Memetic(gen,p){}
+  void mutate() override;
   Solution ** getBestOnes();
 };
 

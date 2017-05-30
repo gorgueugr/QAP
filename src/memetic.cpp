@@ -39,16 +39,22 @@ void MemeticBasic::mutate(){
 
       LocalSearch *l =new LocalSearch[smallPopul];
 
+
+
       #pragma omp parallel for
       for(int i=0;i<smallPopul;++i){
+        selection[i].cost=problem->calculateCost(selection[i].solution);
         l[i].setProblem(*problem);
         l[i].setInitialSolution(selection[i]);
         l[i].setMaxIterations(400);
         l[i].execute();
         selection[i]=l[i].getSolution();
-        #pragma omp critical
+      }
+
+      for(int i=0;i<smallPopul;i++){
         iteration+=l[i].getIterations();
       }
+      delete l;
     }
 }
 
@@ -58,11 +64,17 @@ void MemeticBest::mutate(){
   GenerationalPMX::mutate();
 
     generations++;
+    std::cout << "ok" << '\n';
+
 
     if(generations==maxGenerations){
       generations=0;
 
+      std::cout << "ok1" << '\n';
+
       Solution ** best = getBestOnes();
+      std::cout << "ok2" << '\n';
+
 
       LocalSearch *l =new LocalSearch[smallPopul];
 
@@ -73,8 +85,13 @@ void MemeticBest::mutate(){
         l[i].setMaxIterations(400);
         l[i].execute();
         *best[i]=l[i].getSolution();
-        #pragma omp critical
+      }
+
+      for(int i=0;i<smallPopul;i++){
         iteration+=l[i].getIterations();
       }
+      delete best;
+      delete l;
+
     }
 }

@@ -1,12 +1,7 @@
 #include "genetic.h"
 
 
-Genetic::Genetic(int pop,int max,float mutation,float cross){
-  numPopulation=pop;
-  maxIterations=max;
-  mutationP=mutation;
-  crossP=cross;
-}
+
 
 void Genetic::generatePopulation(){
   if(!problem)
@@ -34,19 +29,19 @@ Solution & POS::cross(const Solution &a,const Solution &b){
   int s=a.solution.size();
   Solution * t=new Solution; //Son
   t->solution.resize(s);
-  #pragma omp parallel for
+  //#pragma omp parallel for
   for(int i=0;i<s;++i) //fill with -1
     t->solution[i]=-1;
 
   vector<int> v; //vector to save the numbers that do not coincide
 
-  #pragma omp parallel for ordered
+  //#pragma omp parallel for ordered
     for(int i=0;i<s;++i){
       if(a.solution[i]==b.solution[i])
         t->solution[i]=b.solution[i];
       else{
-        #pragma omp ordered
-        #pragma omp critical
+        //#pragma omp ordered
+        //#pragma omp critical
         v.push_back(a.solution[i]); //if father1[i] and father2[i] are equal then copy it in son
       }
     }
@@ -73,7 +68,7 @@ Solution & PMX::cross(const Solution &a,const Solution &b){
   t->solution.resize(s);
   int * v=new int[s]; //vector to save the relations between parents
   bool * m=new bool[s];
-  #pragma omp parallel for
+  //#pragma omp parallel for
   for(int i=0;i<s;++i){ //fill with i
     v[i]=i;
     m[i]=0;
@@ -116,7 +111,7 @@ int  Genetic::binaryTournament(){
   int b = getRandomMax(numPopulation);
 
 
-  return (population[a].cost>population[b].cost) ? a : b;
+  return (population[a].cost<population[b].cost) ? a : b;
 }
 
 void Genetic::mutate(){
@@ -162,14 +157,14 @@ void Generational::execute(){
         generatePopulation();
 
         selection.resize(numPopulation);
-        std::cout << numPopulation << '\n';
+        //std::cout << numPopulation << '\n';
 
-        std::cout << "ok1" << '\n';
+        //std::cout << "ok1" << '\n';
 
         update = new bool[numPopulation];
 
         int numCross=crossP*(numPopulation/2);
-        cout<< "numcross:" << numCross<<endl;
+        //cout<< "numcross:" << numCross<<endl;
         int a,b;
         iteration=0;
 
@@ -184,10 +179,9 @@ void Generational::execute(){
                         while (a==b) {
                           b=binaryTournament();
                         }
-                        std::cout << "ok2" << '\n';
-
+                        //std::cout << "ok2" << '\n';
                         selection[i]=cross(population[a],population[b]);
-                        std::cout << "ok2.2" << '\n';
+                        //std::cout << "ok2.2" << '\n';
 
                     update[i]=true;
                     contCross++;

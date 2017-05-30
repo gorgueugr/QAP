@@ -10,13 +10,13 @@
 #include "random.h"
 #include "base.h"
 
-
+/*
 class Cross{
 public:
- virtual Solution & cross(const Solution &a,const Solution &b){};
-};
+ virtual Solution & cross(const Solution &a,const Solution &b);
+};*/
 
-class Genetic : public base, public Cross  {
+class Genetic : public base {
 protected:
   std::vector<Solution> population;
   std::vector<Solution> selection;
@@ -32,9 +32,8 @@ protected:
 
   bool * update;
 public:
-  Genetic(){maxIterations=50000;mutationP=0.001;crossP=0.7;numPopulation=50;};
+  Genetic(){maxIterations=50000;numPopulation=50;};
   ~Genetic(){population.clear();};
-  Genetic(int pop,int max,float mutation,float cross);
 
   void setMutationP(float a){mutationP=a;}
   void setCrossP(float a){crossP=a;}
@@ -42,11 +41,6 @@ public:
 
   void setNumPopulation(int p){numPopulation=p;}
   void setMaxIterations(int m){maxIterations=m;}
-
-
-  //Solution & crossPosition(const Solution &a,const Solution &b);
-  //Solution & crossPMX(const Solution &a,const Solution &b);
-  //Solution & crossOX(const Solution &a,const Solution &b);
 
   Solution * getPopulation(){return population.data();}
   int getPopulationSize(){return numPopulation;}
@@ -57,14 +51,9 @@ public:
 
   virtual void mutate();
 
-  void generatePopulation();
+  virtual Solution & cross(const Solution &a,const Solution &b){};
 
-/*
-  void executeGenerationalPMX();
-  void executeGenerationalOrder();
-  void executeStationaryPMX();
-  void executeStationaryOrder();
-*/
+  void generatePopulation();
 
   Solution * bestSolution();
   Solution * worstSolution();
@@ -72,39 +61,39 @@ public:
 };
 
 
-class Generational : public Genetic {
+class PMX : virtual public Genetic{
+public:
+  Solution & cross(const Solution &a,const Solution &b) override;
+};
+class POS : virtual public Genetic{
+public:
+  Solution & cross(const Solution &a,const Solution &b) override;
+};
+
+
+class Generational :virtual public Genetic {
 public:
   Generational(){crossP=0.7;mutationP=0.001;};
-  void execute();
+  void execute() override;
 };
 
-class Stationary : public Genetic {
+class Stationary :virtual public Genetic {
 public:
   Stationary(){crossP=1;mutationP=0.001;selection.resize(2);};
-  void execute();
-
+  void execute() override;
 };
 
 
-class PMX : public Cross{
-public:
-  Solution & cross(const Solution &a,const Solution &b);
-};
-class POS : public Cross{
-public:
-  Solution & cross(const Solution &a,const Solution &b);
+class GenerationalPMX : public PMX, public Generational {
 };
 
-class GenerationalPMX : public Generational , public PMX{
+class GenerationalPOS : public POS, public Generational {
 };
 
-class GenerationalPOS : public Generational, public POS{
+class StationaryPMX : public POS, public Stationary{
 };
 
-class StationaryPMX : public Stationary , public PMX{
-};
-
-class StationaryPOS : public Stationary, public POS{
+class StationaryPOS :  public POS, public Stationary{
 };
 
 

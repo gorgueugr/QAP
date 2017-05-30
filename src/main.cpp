@@ -107,6 +107,7 @@ int main(int argc,char *argv[]){
 
   Greedy greedy;
   LocalSearch lb;
+
   bmb b;
   Es es;
   Ils ils;
@@ -114,8 +115,20 @@ int main(int argc,char *argv[]){
   grasp gr;
 
 
+    GenerationalPMX generationalPMX;
+    GenerationalPOS generationalPOS;
+    StationaryPMX stationaryPMX;
+    StationaryPOS stationaryPOS;
+
+
     html h_greedy("GREEDY");
     html h_lb("LocalSearch");
+
+    html h_generationalPMX("GenerationalPMX");
+    html h_generationalPOS("GenerationalPOS");
+    html h_stationaryPMX("stationaryPMX");
+    html h_stationaryPOS("stationaryPOS");
+
     html h_bmb("BMB");
     html h_es("Enfriamiento Simulado");
     html h_ils("ILS");
@@ -141,7 +154,10 @@ for(int i=0;i<numCasos;i++){
   ils.setProblem(*qap);
   es.setProblem(*qap);
   b.setProblem(*qap);
-
+  generationalPMX.setProblem(*qap);
+  generationalPOS.setProblem(*qap);
+  stationaryPMX.setProblem(*qap);
+  stationaryPOS.setProblem(*qap);
 
 
 
@@ -169,7 +185,7 @@ for(int i=0;i<numCasos;i++){
   //  cout << "correct Solution: " << (int) sol->checkSolution() << endl;
   //  cout << endl;
 
-  //std::cout << "ok7" << '\n';
+  std::cout << "LocalSearch" << '\n';
 
 
 
@@ -190,7 +206,7 @@ for(int i=0;i<numCasos;i++){
   //  cout << "correct Solution: " << (int) sol->checkSolution() << endl;
   //  cout << endl;
 
-  //std::cout << "ok6" << '\n';
+  std::cout << "greedy" << '\n';
 
 
    begin = std::chrono::steady_clock::now();
@@ -209,7 +225,7 @@ for(int i=0;i<numCasos;i++){
   //cout << "correct Solution: " << (int) sol->checkSolution() << endl;
   //cout << endl;
 
-  //std::cout << "ok" << '\n';
+  std::cout << "bmb" << '\n';
 
 
 
@@ -229,7 +245,7 @@ for(int i=0;i<numCasos;i++){
   h_es.add(nombre,sol->cost,mejorCoste[i],(double) std::chrono::duration_cast<std::chrono::milliseconds>(end - begin).count() /1000.0);
   //cout << "correct Solution: " << (int) sol->checkSolution() << endl;
   //cout << endl;
-  //std::cout << "ok2" << '\n';
+  std::cout << "es" << '\n';
 
 
 
@@ -250,7 +266,7 @@ for(int i=0;i<numCasos;i++){
   //  cout << "correct Solution: " << (int) sol->checkSolution() << endl;
   //  cout << endl;
 
-  //std::cout << "ok3" << '\n';
+  std::cout << "ils" << '\n';
 
     begin = std::chrono::steady_clock::now();
     ilsEs.execute();
@@ -268,7 +284,7 @@ for(int i=0;i<numCasos;i++){
   //  cout << "correct Solution: " << (int) sol->checkSolution() << endl;
   //  cout << endl;
 
-  //std::cout << "ok4" << '\n';
+  std::cout << "okilses" << '\n';
 
 
     begin = std::chrono::steady_clock::now();
@@ -286,8 +302,81 @@ for(int i=0;i<numCasos;i++){
     h_grasp.add(nombre,sol->cost,mejorCoste[i],(double) std::chrono::duration_cast<std::chrono::milliseconds>(end - begin).count() /1000.0);
   //  cout << "correct Solution: " << (int) sol->checkSolution() << endl;
   //  cout << endl;
-  //std::cout << "ok5" << '\n';
+  std::cout << "grasp" << '\n';
 
+
+
+  begin = std::chrono::steady_clock::now();
+  generationalPMX.execute();
+  end= std::chrono::steady_clock::now();
+  //std::cout << "Time: = " << (double) std::chrono::duration_cast<std::chrono::milliseconds>(end - begin).count() /1000.0 <<std::endl;
+  sol=&generationalPMX.getSolution();
+
+  //  cout << "GRASP solution:" << endl;
+  //  for(int i=0;i<sol->solution.size();++i){
+  //    cout << " "<< sol->solution[i];
+  //  }
+  //  cout << endl;
+  //  cout << "Coste: " << sol->cost << endl;
+  h_generationalPMX.add(nombre,sol->cost,mejorCoste[i],(double) std::chrono::duration_cast<std::chrono::milliseconds>(end - begin).count() /1000.0);
+  //  cout << "correct Solution: " << (int) sol->checkSolution() << endl;
+  //  cout << endl;
+  std::cout << "generationalPMX" << '\n';
+
+
+  begin = std::chrono::steady_clock::now();
+  generationalPOS.execute();
+  end= std::chrono::steady_clock::now();
+  //std::cout << "Time: = " << (double) std::chrono::duration_cast<std::chrono::milliseconds>(end - begin).count() /1000.0 <<std::endl;
+  sol=&generationalPOS.getSolution();
+
+  //  cout << "GRASP solution:" << endl;
+  //  for(int i=0;i<sol->solution.size();++i){
+  //    cout << " "<< sol->solution[i];
+  //  }
+  //  cout << endl;
+  //  cout << "Coste: " << sol->cost << endl;
+  h_generationalPOS.add(nombre,sol->cost,mejorCoste[i],(double) std::chrono::duration_cast<std::chrono::milliseconds>(end - begin).count() /1000.0);
+  //  cout << "correct Solution: " << (int) sol->checkSolution() << endl;
+  //  cout << endl;
+  std::cout << "generationalPOS" << '\n';
+
+
+  begin = std::chrono::steady_clock::now();
+  stationaryPMX.execute();
+  end= std::chrono::steady_clock::now();
+  //std::cout << "Time: = " << (double) std::chrono::duration_cast<std::chrono::milliseconds>(end - begin).count() /1000.0 <<std::endl;
+  sol=&stationaryPMX.getSolution();
+
+  //  cout << "GRASP solution:" << endl;
+  //  for(int i=0;i<sol->solution.size();++i){
+  //    cout << " "<< sol->solution[i];
+  //  }
+  //  cout << endl;
+  //  cout << "Coste: " << sol->cost << endl;
+  h_stationaryPMX.add(nombre,sol->cost,mejorCoste[i],(double) std::chrono::duration_cast<std::chrono::milliseconds>(end - begin).count() /1000.0);
+  //  cout << "correct Solution: " << (int) sol->checkSolution() << endl;
+  //  cout << endl;
+  std::cout << "stationaryPMX" << '\n';
+
+
+
+    begin = std::chrono::steady_clock::now();
+    stationaryPOS.execute();
+    end= std::chrono::steady_clock::now();
+    //std::cout << "Time: = " << (double) std::chrono::duration_cast<std::chrono::milliseconds>(end - begin).count() /1000.0 <<std::endl;
+    sol=&stationaryPOS.getSolution();
+
+    //  cout << "GRASP solution:" << endl;
+    //  for(int i=0;i<sol->solution.size();++i){
+    //    cout << " "<< sol->solution[i];
+    //  }
+    //  cout << endl;
+    //  cout << "Coste: " << sol->cost << endl;
+    h_stationaryPOS.add(nombre,sol->cost,mejorCoste[i],(double) std::chrono::duration_cast<std::chrono::milliseconds>(end - begin).count() /1000.0);
+    //  cout << "correct Solution: " << (int) sol->checkSolution() << endl;
+    //  cout << endl;
+    std::cout << "stationaryPOS" << '\n';
 
 
 }
@@ -299,6 +388,12 @@ for(int i=0;i<numCasos;i++){
   std::cout << h_ils << '\n';
   std::cout << h_ilses << '\n';
   std::cout << h_grasp << '\n';
+
+  std::cout << h_generationalPMX << '\n';
+  std::cout << h_generationalPOS << '\n';
+  std::cout << h_stationaryPMX << '\n';
+  std::cout << h_stationaryPOS << '\n';
+
 
 
 }

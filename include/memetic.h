@@ -7,62 +7,31 @@
 #include "localsearch.h"
 
 
-class Memetic {
-private:
+class Memetic : public GenerationalPMX{
+protected:
   int generations;
+  int maxGenerations;
+
+  int smallPopul;
+
   float percent;
   bool best;
-  LocalSearch lb;
-  Genetic gen;
-  Problem * problem;
-  int maxIt;
-  int it;
 public:
-
-  Memetic(){};
-  ~Memetic(){};
-  Memetic(int gen,float p,bool b){generations=gen;percent=p;best=b;}
-
-  Solution ** getBestOnes();
-  Solution ** getPopulation();
-  //Solution ** Memetic::(*getPop)()=NULL;
-  Solution** (Memetic::*getPop)();
-
-
-
-  void executeGenerationalPMX();
-  void executeGenerationalOrder();
-  void executeStationaryPMX();
-  void executeStationaryOrder();
-
-  void setBest(bool b){best=b;}
-  void setPercent(float p){percent=p;}
-  void setGenerations(int g){generations=g;}
-
-
-    void setProblem(Problem &p){problem=&p;}
-    void clearProblem(){problem=0;}
-    Problem& getProblem(){return *problem;}
-
-    void setMaxIterations(int m){maxIt=m;}
-
-    void setNumPopulation(int p){gen.setNumPopulation(p);}
-
-    Solution * bestSolution(){return gen.bestSolution();}
-
-
-
+  Memetic(int gen,float p,bool b){Genetic::numPopulation=10;generations=gen;percent=p;best=b;smallPopul=percent*numPopulation;}
 
 };
 
+class MemeticBasic : public Memetic {
+public:
+  void mutate();
+};
 
 
-
-
-
-
-
-
+class MemeticBest : public Memetic{
+public:
+  void mutate();
+  Solution ** getBestOnes();
+};
 
 
 

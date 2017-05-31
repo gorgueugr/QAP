@@ -109,6 +109,9 @@ Solution & PMX::cross(const Solution &a,const Solution &b){
 int  Genetic::binaryTournament(){
   int a = getRandomMax(numPopulation);
   int b = getRandomMax(numPopulation);
+  while (a==b) {
+    b = getRandomMax(numPopulation);
+  }
 
 
   return (population[a].cost<population[b].cost) ? a : b;
@@ -176,9 +179,6 @@ void Generational::execute(){
                     a=binaryTournament();
                   if(contCross<numCross){
                       b=binaryTournament();
-                        while (a==b) {
-                          b=binaryTournament();
-                        }
                         //std::cout << "ok2" << '\n';
                         selection[i]=cross(population[a],population[b]);
                         //std::cout << "ok2.2" << '\n';
@@ -237,9 +237,7 @@ void Stationary::execute(){
               //Selection
                 a=binaryTournament();
                 b=binaryTournament();
-                  while (a==b) {
-                    b=binaryTournament();
-                  }                //Cross
+                         //Cross
                 selection[0]=cross(population[a],population[b]);
                 selection[1]=cross(population[b],population[a]);
 

@@ -16,7 +16,13 @@ protected:
 
   float percent;
 public:
-  Memetic(int gen,float p){Genetic::numPopulation=10;generations=gen;percent=p;smallPopul=percent*numPopulation;}
+  Memetic(int gen,float p){
+          Genetic::numPopulation=10;
+          maxGenerations=gen;
+          generations=0;
+          percent=p;
+          smallPopul=percent*numPopulation;
+  }
 
 };
 

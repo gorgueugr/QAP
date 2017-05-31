@@ -201,7 +201,7 @@ for(int i=0;i<numCasos;i++){
 //  std::cout << "LocalSearch" << '\n';
 
 
-/*
+
 
     begin = std::chrono::steady_clock::now();
     greedy.execute();
@@ -392,7 +392,7 @@ for(int i=0;i<numCasos;i++){
 
     //std::cout << "stationaryPOS" << '\n';
 
-    */
+
 
     begin = std::chrono::steady_clock::now();
     Memetic1.execute();
@@ -455,21 +455,24 @@ for(int i=0;i<numCasos;i++){
 
   std::cout << h_lb << '\n';
   std::cout << h_greedy << '\n';
+
+
+    std::cout << h_generationalPMX << '\n';
+    std::cout << h_generationalPOS << '\n';
+    std::cout << h_stationaryPMX << '\n';
+    std::cout << h_stationaryPOS << '\n';
+
+
+    std::cout << h_memetic1 << '\n';
+    std::cout << h_memetic2 << '\n';
+    std::cout << h_memetic3 << '\n';
+
   std::cout << h_bmb << '\n';
   std::cout << h_es << '\n';
   std::cout << h_ils << '\n';
   std::cout << h_ilses << '\n';
   std::cout << h_grasp << '\n';
 
-  std::cout << h_generationalPMX << '\n';
-  std::cout << h_generationalPOS << '\n';
-  std::cout << h_stationaryPMX << '\n';
-  std::cout << h_stationaryPOS << '\n';
-
-
-  std::cout << h_memetic1 << '\n';
-  std::cout << h_memetic2 << '\n';
-  std::cout << h_memetic3 << '\n';
 
 
 }
